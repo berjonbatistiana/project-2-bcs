@@ -3,6 +3,7 @@ import { reduxForm, Field } from 'redux-form';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import SignUpCard from '../../common/components/SignUpCard'
 
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -28,6 +29,7 @@ const TextFieldInput = ({ input, meta, label }) => {
   return <TextField
     {...input}
     label={label}
+    fullWidth
   />;
 };
 
@@ -61,24 +63,28 @@ class SignUp extends Component {
     console.log(this.props);
     const { handleSubmit } = this.props;
     return (
-      <form noValidate autoComplete="off">
-        <Field
-          name='username'
-          label='username'
-          component={TextFieldInput}
-        />
-        <Field
-          name='password'
-          label='password'
-          component={TextFieldInput}
-        />
-        <Button
-          onClick={ handleSubmit(this.handleSignUp) }
-          variant="contained"
-          color="primary">
-          Sign up
-        </Button>
-      </form>
+      <SignUpCard
+        title="Login"
+        content={
+          <form noValidate autoComplete="off">
+            <Field
+              name='Username'
+              label='Username'
+              component={TextFieldInput}
+            />
+            <Field
+              name='Password'
+              label='Password'
+              component={TextFieldInput}
+            />
+            <Button
+              onClick={ handleSubmit(this.handleSignUp) }
+              variant="contained"
+              color="primary">
+              Sign up
+            </Button>
+          </form>
+        }/>
     );
   }
 }

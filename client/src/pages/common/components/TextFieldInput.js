@@ -7,5 +7,6 @@ export const TextFieldInput = ({ input, meta }) => {
     {...input}
     label="Filled"
     variant="filled"
+    fullWidth
   />;
 };
