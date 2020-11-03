@@ -1,12 +1,12 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const {
   findAllUsers,
   findUserByIdQuery,
   findUserByUsername,
   insertUserQuery,
   deleteUserByIdQuery,
-} = require('./userQueries');
-const connection = require('../config/connection');
+} = require("./userQueries");
+const connection = require("../config/connection");
 
 //1st parameter is the password that the person trying to sign in is providing us
 // the 2nd parameter is the actual password that's in the database
@@ -57,8 +57,14 @@ const insertUserToDb = async (username, password) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
   try {
-    const [result] = await connection.query(insertUserQuery, [username, hashedPassword]);
-    const [userResult] = await connection.query(findUserByIdQuery, result.insertId);
+    const [result] = await connection.query(insertUserQuery, [
+      username,
+      hashedPassword,
+    ]);
+    const [userResult] = await connection.query(
+      findUserByIdQuery,
+      result.insertId
+    );
     return userResult[0];
   } catch (e) {
     throw new Error(e);
