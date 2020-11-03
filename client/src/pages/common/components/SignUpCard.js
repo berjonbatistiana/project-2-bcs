@@ -1,32 +1,37 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { Grid } from '@material-ui/core/';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles({
   root: {
     textAlign: 'center',
-  },
-  pos: {
-    marginBottom: 12,
+    maxWidth: '400px',
   },
 });
 
-export default function SignUpCard(props) {
+export const SignUpCard = (props) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography variant="h3" component="h1" >
-          {props.title}
-        </Typography>
+        <Grid item container spacing={10}>
+          <Grid item xs={12}>
+            <Typography variant="h4" component="h1">
+              <Box fontWeight="fontWeightBold" mt={12} mb={2}>
+                {props.title}
+              </Box>
+            </Typography>
+            <Box ml={6} mr={6} mb={12}>
+              {props.content}
+            </Box>
+          </Grid>
+        </Grid>
       </CardContent>
-      <CardActions>
-        {props.content}
-      </CardActions>
     </Card>
+
   );
 }
