@@ -7,6 +7,7 @@ import {
   WrappedSignIn,
 } from './pages/Viewer';
 
+import { Dashboard } from './pages/User'
 // const randomWord = word.generateWord(3, 5);
 
 
@@ -16,6 +17,7 @@ function App() {
       <Navbar/>
       <Route path='/signup' component={WrappedSignUp}/>
       <Route path='/signin' component={WrappedSignIn}/>
+      <Route exact path='/dashboard' component={Dashboard}/>
       <Route exact path="/">
         <h1>Welcome to the </h1>
       </Route>
