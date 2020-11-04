@@ -7,7 +7,7 @@ import {
   WrappedSignIn,
 } from './pages/Viewer';
 
-// const randomWord = word.generateWord(3, 5);
+// const randomWord = word.generateWordRoutes(3, 5);
 
 
 function App() {
