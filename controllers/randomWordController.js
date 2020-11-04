@@ -2,7 +2,7 @@ const randomWord = require('random-word');
 
 module.exports = {
     generateWord: (req, res) => {
-        const {wordCount, minChar} = req.params;
+        const {wordCount, minChar} = req.query;
         const words = [];
 
         // Fill up words upto @wordCount

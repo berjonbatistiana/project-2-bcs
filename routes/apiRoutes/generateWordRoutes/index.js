@@ -4,7 +4,8 @@ const {
     generateWord
 } = require('../../../controllers/randomWordController');
 
-router.route('/:wordCount')
+// /api/words
+router.route('/')
     .get(generateWord);
 
 module.exports = router;
