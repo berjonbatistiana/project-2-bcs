@@ -17,4 +17,3 @@ CREATE TABLE scores (
     user_id INT REFERENCES users (id),
     PRIMARY KEY (id)
 );
-
