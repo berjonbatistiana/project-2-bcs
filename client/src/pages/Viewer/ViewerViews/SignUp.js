@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
-import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import { SignUpCard, TextFieldInput } from '../../common/components';
+import { Grid } from '@material-ui/core/';
+
 
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { setViewerToken } from '../ViewerReducer';
+
 // The Field components job is to render out input html
 // and pass down functions for updating the state
 // as well as check to see if the values being passed are valid
@@ -23,14 +26,6 @@ import { setViewerToken } from '../ViewerReducer';
 //   />;
 // };
 
-const TextFieldInput = ({ input, meta, label }) => {
-  // console.log('FIELD COMPONENT PROPS', props);
-  return <TextField
-    {...input}
-    label={label}
-  />;
-};
-
 // What Redux form does for us
 // It will write the functions for updating form state
 // It will also write state to determine the current state of each field
@@ -40,11 +35,12 @@ const TextFieldInput = ({ input, meta, label }) => {
 //what handleSubmit will do is pass the forms Values as the first parameter
 // handleSubmit also preventsDefault for us right away
 // to the function that it's calling
+
 class SignUp extends Component {
 
   handleSignUp = async (formValues) => {
     console.log(formValues);
-    //{ username: 'Your enterereduseRName', password: 'your password' }
+    // { username: 'Your enterereduseRName', password: 'your password' }
     try {
       const res = await axios.post('/auth/signup', formValues);
       console.log('I AM THE SIGNUP USERS TOKEN', res.data);
@@ -61,24 +57,41 @@ class SignUp extends Component {
     console.log(this.props);
     const { handleSubmit } = this.props;
     return (
-      <form noValidate autoComplete="off">
-        <Field
-          name='username'
-          label='username'
-          component={TextFieldInput}
-        />
-        <Field
-          name='password'
-          label='password'
-          component={TextFieldInput}
-        />
-        <Button
-          onClick={ handleSubmit(this.handleSignUp) }
-          variant="contained"
-          color="primary">
-          Sign up
-        </Button>
-      </form>
+      <Grid container justify="center" direction="column" alignItems="center" style={{ minHeight: '80vh' }}>
+        <Grid item>
+          <SignUpCard
+            title="Sign Up"
+            content={
+              <form noValidate autoComplete="off">
+                <Grid item container spacing={3}>
+                  <Grid item xs={12}>
+                    <Field
+                      name='username'
+                      label='Username'
+                      component={TextFieldInput}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Field
+                      name='password'
+                      label='Password'
+                      component={TextFieldInput}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button
+                      onClick={ handleSubmit(this.handleSignUp) }
+                      variant="contained"
+                      color="primary">
+                      Sign up
+                    </Button>
+                  </Grid>
+                </Grid>
+              </form>
+            }
+          />
+        </Grid>
+      </Grid>
     );
   }
 }
