@@ -35,10 +35,10 @@ export const Dashboard = () => {
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Typography component="h3" variant="h5">
-              Friend High Scores
-            </Typography>
             <Box m={3}>
+              <Typography component="h3" variant="h5">
+                Friend High Scores
+              </Typography>
               <FriendHighScores/>
             </Box>
           </Grid>

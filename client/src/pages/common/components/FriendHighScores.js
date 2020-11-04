@@ -8,14 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
-
-function createData(name, wpm, accuracy) {
-  return { name, wpm, accuracy };
+function createData(name, accuracy, wpm) {
+  return { name, accuracy, wpm };
 }
 
 const rows = [
@@ -25,16 +19,15 @@ const rows = [
 ];
 
 export const FriendHighScores = () => {
-  const classes = useStyles();
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell align="right">WPM</TableCell>
             <TableCell align="right">Accuracy</TableCell>
+            <TableCell align="right">WPM</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -43,8 +36,8 @@ export const FriendHighScores = () => {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
+              <TableCell align="right">{row.accuracy}%</TableCell>
               <TableCell align="right">{row.wpm}</TableCell>
-              <TableCell align="right">{row.accuracy}</TableCell>
             </TableRow>
           ))}
         </TableBody>
