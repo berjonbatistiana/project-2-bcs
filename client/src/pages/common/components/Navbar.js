@@ -41,14 +41,20 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar className={classes.colorNav} position="static">
         <Toolbar>
-          <Button
-            className={classes.menuButton}
-            component={Link}
-            to="/"
-            color="inherit"
-          >
-            About
-          </Button>
+          {token ? (
+            <Button color="inherit" to="/" component={Link}>
+              Dashboard
+            </Button>
+          ) : (
+            <Button
+              className={classes.menuButton}
+              component={Link}
+              to="/"
+              color="inherit"
+            >
+              About
+            </Button>
+          )}
           <Button
             className={classes.menuButton}
             component={Link}
