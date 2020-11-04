@@ -8,4 +8,5 @@ const selectLeadersFromDb = async top => {
 }
 
 module.exports = {
+    selectLeadersFromDb
 };

@@ -10,3 +10,10 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     PRIMARY KEY(id)
 );
+
+CREATE TABLE scores (
+    id INT AUTO_INCREMENT NOT NULL,
+    wpm INT NOT NULL,
+    user_id INT REFERENCES users (id),
+    PRIMARY KEY (id)
+);
