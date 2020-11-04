@@ -1,4 +1,4 @@
-import randomWord from "random-word";
+const randomWord = require('random-word');
 
 
 export default {

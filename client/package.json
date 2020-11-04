@@ -17,6 +17,7 @@
     "ag-grid-react": "^24.0.0",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
+    "fs": "0.0.1-security",
     "random-word": "^2.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
