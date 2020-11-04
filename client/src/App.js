@@ -11,8 +11,6 @@ import {
 } from './pages/Viewer';
 
 import { Dashboard } from './pages/User'
-// const randomWord = word.generateWord(3, 5);
-
 
 function App() {
   const { token } = useSelector((state) => state.viewer);

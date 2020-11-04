@@ -1,8 +1,8 @@
 const randomWord = require('random-word');
 
-
-export default {
-    generateWord: function (minChar = 0, wordCount = 1) {
+module.exports = {
+    generateWord: (req, res) => {
+        const {wordCount, minChar} = req.query;
         const words = [];
 
         // Fill up words upto @wordCount
@@ -17,6 +17,6 @@ export default {
             words.push(newWord)
         }
 
-        return words;
+        res.json(words);
     }
 }
