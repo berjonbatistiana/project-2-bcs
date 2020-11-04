@@ -18,8 +18,7 @@ export class LineGraph extends Component {
           }
         ]
       },
-      options: {
-      }
+      options: {}
     });
   }
 
