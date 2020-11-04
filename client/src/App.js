@@ -7,7 +7,7 @@ import {
   WrappedSignIn,
 } from './pages/Viewer';
 
-import { Leaderboard } from './pages/User'
+import { Dashboard } from './pages/User'
 
 
 function App() {
@@ -16,10 +16,7 @@ function App() {
       <Navbar/>
       <Route path='/signup' component={WrappedSignUp}/>
       <Route path='/signin' component={WrappedSignIn}/>
-      <Route path='/leaderboard' component={Leaderboard}/>
-      <Route exact path="/">
-        <h1>Welcome to the about</h1>
-      </Route>
+      <Route exact path='/dashboard' component={Dashboard}/>
     </Router>
   );
 }

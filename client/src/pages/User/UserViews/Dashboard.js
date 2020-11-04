@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const Leaderboard = () => {
+export const Dashboard = () => {
   const classes = useStyles();
   return (
     <div>
