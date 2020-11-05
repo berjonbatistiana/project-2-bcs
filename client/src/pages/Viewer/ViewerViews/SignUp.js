@@ -19,6 +19,7 @@ class SignUp extends Component {
       dispatch(setUser(formValues.username));
       this.props.history.push("/");
     } catch (e) {
+      console.log(e)
       throw new Error(e);
     }
   };
