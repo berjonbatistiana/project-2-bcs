@@ -1,20 +1,13 @@
-const router = require('express')
-    .Router();
+const router = require("express").Router();
+const authMiddleware = require("../../../middlewares/authorizationMiddleware");
 const {
-    getAllUsersApi,
-    getUserByIdApi,
-    deleteUserByIdApi,
-} = require('../../../controllers/userController');
-
-const authMiddleware = require('../../../middlewares/authorizationMiddleware');
+  getAllUsersApi,
+  getUserByIdApi,
+  deleteUserByIdApi,
+} = require("../../../controllers/userController");
 
 router.use(authMiddleware);
-
-router.route('/')
-    .get(getAllUsersApi);
-
-router.route('/:userId')
-    .get(getUserByIdApi)
-    .delete(deleteUserByIdApi);
+router.route("/").get(getAllUsersApi);
+router.route("/:userId").get(getUserByIdApi).delete(deleteUserByIdApi);
 
 module.exports = router;

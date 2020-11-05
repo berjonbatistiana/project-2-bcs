@@ -1,5 +1,5 @@
-import { useHistory, useParams, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 export const useUtils = () => {
   const history = useHistory();
@@ -14,4 +14,3 @@ export const useUtils = () => {
     dispatch,
   };
 };
-
