@@ -13,6 +13,9 @@ class Challenge extends React.Component {
   };
 
   handleCorrectKeyDown = (e) => {
+    if (e.key !== this.state.word[this.state.index]) {
+      return;
+    }
     let beginning = "";
     let highlighted = "";
     let end = "";
