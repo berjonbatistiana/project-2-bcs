@@ -1,15 +1,13 @@
 import React from "react";
 import { reduxForm, Field } from "redux-form";
-import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 
 import { setViewerToken } from "../ViewerReducer";
 import { setUser } from "../../User/UserReducer";
 
-const TextFieldInput = ({ input, meta, label }) => {
-  return <TextField {...input} label={label} />;
-};
+import { SignCard, TextFieldInput } from "../../common/components";
+import { Grid } from "@material-ui/core/";
 
 const SignIn = (props) => {
   const { handleSubmit, history } = props;
@@ -26,17 +24,48 @@ const SignIn = (props) => {
   };
 
   return (
-    <form noValidate autoComplete="off">
-      <Field name="username" label="username" component={TextFieldInput} />
-      <Field name="password" label="password" component={TextFieldInput} />
-      <Button
-        onClick={handleSubmit(handleSignIn)}
-        variant="contained"
-        color="primary"
-      >
-        Sign in
-      </Button>
-    </form>
+    <Grid
+      container
+      justify="center"
+      direction="column"
+      alignItems="center"
+      style={{ minHeight: "80vh" }}
+    >
+      <Grid item>
+        <SignCard
+          title="Sign In"
+          content={
+            <form noValidate autoComplete="off">
+              <Grid item container spacing={3}>
+                <Grid item xs={12}>
+                  <Field
+                    name="username"
+                    label="Username"
+                    component={TextFieldInput}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field
+                    name="password"
+                    label="Password"
+                    component={TextFieldInput}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    onClick={handleSubmit(handleSignIn)}
+                    variant="contained"
+                    color="primary"
+                  >
+                    Sign in
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          }
+        />
+      </Grid>
+    </Grid>
   );
 };
 

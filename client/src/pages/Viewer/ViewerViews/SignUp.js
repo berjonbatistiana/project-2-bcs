@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
-import { SignUpCard, TextFieldInput } from "../../common/components";
+import { SignCard, TextFieldInput } from "../../common/components";
 import { Grid } from "@material-ui/core/";
 
 import { connect } from "react-redux";
@@ -34,7 +34,7 @@ class SignUp extends Component {
         style={{ minHeight: "80vh" }}
       >
         <Grid item>
-          <SignUpCard
+          <SignCard
             title="Sign Up"
             content={
               <form noValidate autoComplete="off">
