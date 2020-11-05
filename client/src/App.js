@@ -8,6 +8,7 @@ import {
   WrappedSignUp,
   WrappedSignIn,
   About,
+  Leaderboard
 } from './pages/Viewer';
 
 import { Dashboard } from './pages/User'
@@ -20,6 +21,7 @@ function App() {
       <Route path='/signup' component={WrappedSignUp}/>
       <Route path='/signin' component={WrappedSignIn}/>
       <Route exact path='/' component={token ? Dashboard : About}/>
+      <Route exact path='/leaderboard' component={Leaderboard}/>
     </Router>
   );
 }
