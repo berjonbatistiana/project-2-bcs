@@ -7,12 +7,11 @@ export const About = () => {
     <Grid
       container
       justify="center"
-      direction="column"
       alignItems="center"
-      style={{ height: "90vh" }}
+      style={{ height: "94vh", backgroundColor: "#302E2E" }}
     >
       <Grid item>
-        <AnimatedHypetype />
+        <AnimatedHypetype svgWidth={2} strokeColor="white" transform={{transform: "scale(0.5)"}} />
       </Grid>
     </Grid>
   )
