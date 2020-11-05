@@ -1,5 +1,5 @@
-import React from 'react';
-import { useUserView } from '../UserHooks';
+import React from "react";
+import { useUserView } from "../UserHooks";
 
 export const UserSingleView = () => {
   const { selectedUser } = useUserView();

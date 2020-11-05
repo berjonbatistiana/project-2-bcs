@@ -8,7 +8,6 @@ import { Link, useHistory } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setViewerToken } from "../../Viewer";
-import { grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    marginRight: theme.spacing(2),
   },
   colorNav: {
     backgroundColor: "#302E2E",
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
   const classes = useStyles();
   const { token } = useSelector((state) => state.viewer);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -70,9 +71,14 @@ export default function ButtonAppBar() {
           </Typography>
 
           {token ? (
-            <Button color="inherit" onClick={handleSignOut}>
-              Sign Out
-            </Button>
+            <Toolbar>
+              <Typography variant="h6" className={classes.title}>
+                Hello, {user}
+              </Typography>
+              <Button color="inherit" onClick={handleSignOut}>
+                Sign Out
+              </Button>
+            </Toolbar>
           ) : (
             <div>
               <Button to="/signup" component={Link} color="inherit">

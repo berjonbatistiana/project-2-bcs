@@ -1,14 +1,14 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
+import React from "react";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
 
 import { Donut, LineGraph, FriendHighScores } from "../../common";
 
 const useStyles = makeStyles({
   root: {
-    textAlign: 'center'
+    textAlign: "center",
   },
 });
 
@@ -23,7 +23,7 @@ export const Dashboard = () => {
               <Typography component="h3" variant="h5">
                 Accuracy
               </Typography>
-              <Donut/>
+              <Donut />
             </Box>
           </Grid>
           <Grid item xs={6}>
@@ -31,7 +31,7 @@ export const Dashboard = () => {
               <Typography component="h3" variant="h5">
                 Personal High Score
               </Typography>
-              <Donut/>
+              <Donut />
             </Box>
           </Grid>
           <Grid item xs={12}>
@@ -39,7 +39,7 @@ export const Dashboard = () => {
               <Typography component="h3" variant="h5">
                 Friend High Scores
               </Typography>
-              <FriendHighScores/>
+              <FriendHighScores />
             </Box>
           </Grid>
         </Grid>
@@ -48,10 +48,10 @@ export const Dashboard = () => {
             <Typography component="h3" variant="h5">
               Progress
             </Typography>
-            <LineGraph/>
+            <LineGraph />
           </Box>
         </Grid>
       </Grid>
     </div>
   );
-}
+};

@@ -1,19 +1,19 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import { Grid } from '@material-ui/core/';
-import Box from '@material-ui/core/Box';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import { Grid } from "@material-ui/core/";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles({
   root: {
-    textAlign: 'center',
-    maxWidth: '400px',
+    textAlign: "center",
+    maxWidth: "400px",
   },
 });
 
-export const SignUpCard = (props) => {
+export const SignCard = (props) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -32,6 +32,5 @@ export const SignUpCard = (props) => {
         </Grid>
       </CardContent>
     </Card>
-
   );
-}
+};
