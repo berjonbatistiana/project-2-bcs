@@ -30,7 +30,6 @@ export const useUserView = () => {
   const { dispatch } = useUtils();
 
   const params = useParams();
-  console.log(params);
   const { selectedUser } = useSelector((state) => state.user);
   useEffect(() => {
     axios
@@ -50,9 +49,7 @@ export const useUserView = () => {
 
 export const useCreateUser = () => {
   const handleSaveUser = (formValues, dispatch) => {
-    console.log(formValues);
     axios.post("/api/users", formValues).then((res) => {
-      console.log(res);
       dispatch(reset("userCreateForm"));
     });
   };
