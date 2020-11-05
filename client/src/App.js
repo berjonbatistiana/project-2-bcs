@@ -10,7 +10,7 @@ import {
   About,
 } from './pages/Viewer';
 
-import { Dashboard } from './pages/User'
+import { Dashboard, Challenge } from './pages/User'
 
 function App() {
   const { token } = useSelector((state) => state.viewer);
@@ -19,6 +19,7 @@ function App() {
       <Navbar/>
       <Route path='/signup' component={WrappedSignUp}/>
       <Route path='/signin' component={WrappedSignIn}/>
+      <Route path='/challenge' component={token ? Challenge : WrappedSignIn}/>
       <Route exact path='/' component={token ? Dashboard : About}/>
     </Router>
   );
