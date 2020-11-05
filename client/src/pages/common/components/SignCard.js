@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const SignUpCard = (props) => {
+export const SignCard = (props) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
