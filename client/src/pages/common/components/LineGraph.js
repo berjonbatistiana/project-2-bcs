@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import Chart from "chart.js";
 
 export class LineGraph extends Component {
@@ -15,21 +15,18 @@ export class LineGraph extends Component {
           {
             label: "WPM",
             data: [70, 80, 80, 90, 85],
-          }
-        ]
+          },
+        ],
       },
-      options: {}
+      options: {},
     });
   }
 
   render() {
     return (
       <div>
-        <canvas
-          id="myChart"
-          ref={this.chartRef}
-        />
+        <canvas id="myChart" ref={this.chartRef} />
       </div>
-    )
+    );
   }
 }

@@ -1,1 +1,2 @@
-export * from './UserViews';
+export * from "./UserViews";
+export * from "./UserReducer";
