@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navbar from "./pages/common/components/Navbar";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Dashboard } from "./pages/User";
 import { WrappedSignUp, WrappedSignIn, About } from "./pages/Viewer";
 

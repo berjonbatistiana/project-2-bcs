@@ -17,13 +17,10 @@ const localStrategy = new LocalStrategy(async (username, password, done) => {
   if (user) {
     const doesPasswordMatch = await comparePassword(password, user.password);
     if (doesPasswordMatch) {
-      console.log(doesPasswordMatch);
       return done(null, user);
     }
-    console.log("happening");
     return done(null, false);
   } else {
-    console.log("happening");
     return done(null, false);
   }
 });
@@ -34,9 +31,7 @@ const jwtOptions = {
 };
 
 const jwtStrategy = new JwtStrategy(jwtOptions, async (jwtToken, done) => {
-  console.log(jwtToken);
   let user;
-
   try {
     user = await fetchUserByIdFromDb(jwtToken.sub);
   } catch (e) {
