@@ -4,7 +4,7 @@ import Navbar from "./pages/common/components/Navbar";
 import { useSelector } from "react-redux";
 import { Dashboard } from "./pages/User";
 import { WrappedSignUp, WrappedSignIn, About } from "./pages/Viewer";
-import { Challenge } from "./pages/common/components/Challenge";
+import Challenge from "./pages/common/components/Challenge";
 
 function App() {
   const { token } = useSelector((state) => state.viewer);
