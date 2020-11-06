@@ -1,8 +1,9 @@
 import axios from "axios";
 
-export const generateWord = async (wordCount, minChar) => {
+export const generateWord = async (options) => {
     try {
-        const params = {params: {wordCount, minChar}};
+        // possible @options: minChar, maxChar, wordCount
+        const params = {params: options};
         const res = await axios.get('/api/words', params);
         return res.data;
     } catch (e) {
