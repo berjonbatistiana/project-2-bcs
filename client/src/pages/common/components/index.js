@@ -6,3 +6,5 @@ export * from "./SignCard";
 export * from "./Challenge";
 export * from "./TextBoxTypedInput";
 export * from "./BlinkingHeading";
+export * from "./ChatBubble";
+export * from "./ChatContainer"
