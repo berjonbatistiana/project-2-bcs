@@ -13,8 +13,11 @@ class Challenge extends React.Component {
     }
 
     handleNewChallenge = () => {
-        generateWord(this.props.wordCount, this.props.minChar).then(res => {
-
+        let options;
+        const {wordCount, minChar, maxChar} = this.props;
+        options = {wordCount, minChar, maxChar};
+        generateWord(options).then(res => {
+            console.log(res)
             const newWordsToBeTyped = res.join(' ');
             const beginning = newWordsToBeTyped.slice(0, this.state.index);
             const highlighted = newWordsToBeTyped[this.state.index];
@@ -31,7 +34,6 @@ class Challenge extends React.Component {
                 wordsToBeTyped: newWordsToBeTyped,
                 highlightedWord: newHighlightedWord
             })
-            console.log(this.state)
         })
     }
 
