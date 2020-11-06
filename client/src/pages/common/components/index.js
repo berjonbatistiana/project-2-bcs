@@ -4,4 +4,3 @@ export * from "./LineGraph";
 export * from "./FriendHighScores";
 export * from "./SignCard";
 export * from "./Challenge";
-export * from "./TextBoxTypedInput";
