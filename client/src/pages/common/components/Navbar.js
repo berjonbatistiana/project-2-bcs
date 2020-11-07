@@ -28,12 +28,13 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
   const classes = useStyles();
   const { token } = useSelector((state) => state.viewer);
-  const { user } = useSelector((state) => state.user);
+  const user = localStorage.getItem("user");
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleSignOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     dispatch(setViewerToken(null));
     history.push("/");
   };
