@@ -19,7 +19,8 @@ const SignIn = (props) => {
       dispatch(setUser(formValues.username));
       history.push("/");
     } catch (e) {
-      throw new Error(e);
+      const $errorComponent = document.getElementById("on-error");
+      $errorComponent.append("Invalid credentials");
     }
   };
 
@@ -60,6 +61,7 @@ const SignIn = (props) => {
                     Sign in
                   </Button>
                 </Grid>
+                <p style={{ color: "red" }} id="on-error"></p>
               </Grid>
             </form>
           }

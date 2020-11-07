@@ -19,8 +19,11 @@ class SignUp extends Component {
       dispatch(setUser(formValues.username));
       this.props.history.push("/");
     } catch (e) {
-      console.log(e)
-      throw new Error(e);
+      const $errorComponent = document.getElementById("on-error");
+      $errorComponent.innerHTML = "";
+      $errorComponent.append(
+        "Error signing up. Username may already be taken. Please make sure you have entered a username and a password"
+      );
     }
   };
 
@@ -63,6 +66,7 @@ class SignUp extends Component {
                       Sign up
                     </Button>
                   </Grid>
+                  <div style={{ color: "red" }} id="on-error"></div>
                 </Grid>
               </form>
             }
