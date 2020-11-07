@@ -1,7 +1,7 @@
 import React from "react";
 import { generateWord } from "../../../utils";
 
-const tracker = {};
+let tracker = [];
 
 class Challenge extends React.Component {
     state = {
@@ -47,23 +47,23 @@ class Challenge extends React.Component {
         const typedChar = e.key;
         const char = this.state.wordsToBeTyped[this.state.index];
         if (typedChar === char) {
-            tracker[this.state.index] = {char, correct: true,};
-        }
-        if (typedChar !== char) {
-            tracker[this.state.index] = {char, correct: false,};
+            tracker.push({char, correct: true,});
+        } else if (typedChar !== char && typedChar !== "Backspace") {
+            tracker.push({char, correct: false,});
+        } else {
+            tracker.pop();
         }
         console.log(tracker);
         let beginning, highlighted;
         let end = "";
         if (e.key === "Backspace") {
             // beginning = this.state.wordsToBeTyped.slice(0, this.state.index - 1);
-            delete tracker[this.state.index];
             highlighted = this.state.wordsToBeTyped[this.state.index - 1];
             if (this.state.index !== this.state.wordsToBeTyped.length) {
                 end = this.state.wordsToBeTyped.slice(
                   this.state.index - 1,
                   this.state.wordsToBeTyped.length
-                );
+                ).substring(1);
             }
             this.setState({ index: this.state.index - 1 });
         } else {
