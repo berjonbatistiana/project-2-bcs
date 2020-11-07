@@ -1,10 +1,12 @@
 import axios from "axios";
 
-export default {
-  search: function () {
-    return axios.get("https://dog.ceo/api/breeds/image/random");
-  },
-  searchByBreed: function (breed) {
-    return axios.get(`https://dog.ceo/api/breed/${breed}/images`);
-  },
+export const generateWord = async (options) => {
+    try {
+        // possible @options: minChar, maxChar, wordCount
+        const params = {params: options};
+        const res = await axios.get('/api/words', params);
+        return res.data;
+    } catch (e) {
+        throw new Error(e)
+    }
 };
