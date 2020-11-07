@@ -1,6 +1,8 @@
 import React from "react";
 import { generateWord } from "../../../utils";
 
+let tracker = [];
+
 class Challenge extends React.Component {
   state = {
     index: 0,
@@ -26,6 +28,7 @@ class Challenge extends React.Component {
         this.state.index + 1,
         newWordsToBeTyped.length
       );
+
       const newHighlightedWord = (
         <div>
           {beginning}
@@ -41,37 +44,54 @@ class Challenge extends React.Component {
   };
 
   handleCorrectKeyDown = (e) => {
-    if (e.key !== this.state.wordsToBeTyped[this.state.index]) {
-      return;
+    const typedChar = e.key;
+    const char = this.state.wordsToBeTyped[this.state.index];
+    if (typedChar === char) {
+      tracker.push({char, correct: true,});
+    } else if (typedChar !== char && typedChar !== "Backspace") {
+      tracker.push({char, correct: false,});
+    } else {
+      tracker.pop();
     }
-    const beginning = this.state.wordsToBeTyped.slice(0, this.state.index + 1);
-    const highlighted = this.state.wordsToBeTyped[this.state.index + 1];
+    let beginning, highlighted;
     let end = "";
-
-    if (this.state.index !== this.state.wordsToBeTyped.length) {
-      end = this.state.wordsToBeTyped.slice(
-        this.state.index + 2,
-        this.state.wordsToBeTyped.length
-      );
-      if (this.state.index + 1 === this.state.wordsToBeTyped.length) {
-        console.log("refresh");
-        // this.componentDidUpdate() -> could use?
-        this.handleRefreshWords();
-        return;
+    if (e.key === "Backspace") {
+      // beginning = this.state.wordsToBeTyped.slice(0, this.state.index - 1);
+      highlighted = this.state.wordsToBeTyped[this.state.index - 1];
+      if (this.state.index !== this.state.wordsToBeTyped.length) {
+        end = this.state.wordsToBeTyped.slice(
+          this.state.index - 1,
+          this.state.wordsToBeTyped.length
+        ).substring(1);
       }
+      this.setState({ index: this.state.index - 1 });
+    } else {
+      // beginning = this.state.wordsToBeTyped.slice(0, this.state.index + 1);
+      highlighted = this.state.wordsToBeTyped[this.state.index + 1];
+      if (this.state.index !== this.state.wordsToBeTyped.length) {
+        end = this.state.wordsToBeTyped.slice(
+          this.state.index + 2,
+          this.state.wordsToBeTyped.length
+        );
+      }
+      this.setState({ index: this.state.index + 1 });
+    }
+    if (this.state.index + 1 === this.state.wordsToBeTyped.length) {
+      console.log("refresh");
+      // this.componentDidUpdate() -> could use?
+      this.handleRefreshWords();
+      return;
     }
     const newHighlightedWord = (
       <div>
-        {beginning}
+        {Object.values(tracker).map(i => { return ( <span style={{backgroundColor: i.correct ? "green" : "red"}}>{i.char}</span> ) })}
         <span style={{ backgroundColor: "grey" }}>{highlighted}</span>
         {end}
       </div>
     );
     this.setState({ highlightedWord: newHighlightedWord });
-    this.setState({ index: this.state.index + 1 });
   };
 
-  // if last item is crossed, run handleNewChallenge
   handleRefreshWords = () => {
     console.log("refresh Conf");
     // Need to figure out how to set the index back to 0. Maybe a problem with asynchronisity.
