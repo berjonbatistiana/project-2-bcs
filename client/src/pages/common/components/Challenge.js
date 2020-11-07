@@ -84,8 +84,12 @@ class Challenge extends React.Component {
   };
 
   render() {
+    const style = {
+      fontSize: 30,
+      textAlign: "center",
+    };
     return (
-      <div tabIndex="0" onKeyDown={this.handleCorrectKeyDown}>
+      <div style={style}>
         <h1>Typing Challenge</h1>
         {this.state.highlightedWord}
       </div>
