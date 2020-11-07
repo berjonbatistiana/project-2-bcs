@@ -8,15 +8,14 @@ import { Grid } from "@material-ui/core/";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { setViewerToken } from "../ViewerReducer";
-import { setUser } from "../../User/UserReducer";
 
 class SignUp extends Component {
   handleSignUp = async (formValues, dispatch) => {
     try {
       const res = await axios.post("/auth/signup", formValues);
       localStorage.setItem("token", res.data);
+      localStorage.setItem("user", formValues.username);
       this.props.setViewerToken(res.data);
-      dispatch(setUser(formValues.username));
       this.props.history.push("/");
     } catch (e) {
       const $errorComponent = document.getElementById("on-error");

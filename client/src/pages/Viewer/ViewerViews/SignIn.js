@@ -4,7 +4,6 @@ import axios from "axios";
 import Button from "@material-ui/core/Button";
 
 import { setViewerToken } from "../ViewerReducer";
-import { setUser } from "../../User/UserReducer";
 
 import { SignCard, TextFieldInput } from "../../common/components";
 import { Grid } from "@material-ui/core/";
@@ -15,8 +14,8 @@ const SignIn = (props) => {
     try {
       const res = await axios.post("/auth/signin", formValues);
       localStorage.setItem("token", res.data);
+      localStorage.setItem("user", formValues.username);
       dispatch(setViewerToken(res.data));
-      dispatch(setUser(formValues.username));
       history.push("/");
     } catch (e) {
       const $errorComponent = document.getElementById("on-error");
