@@ -23,7 +23,7 @@ export const BlinkingHeading = () => {
     const txt = 'Hype Type!';
     const speed = 60;
     function typeWriter() {
-      if (i < txt.length) {
+      if (i < txt.length && document.getElementById("title")) {
         document.getElementById("title").textContent += txt.charAt(i);
         i++;
         setTimeout(typeWriter, speed);
