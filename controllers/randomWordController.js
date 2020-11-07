@@ -6,12 +6,13 @@ module.exports = {
             wordCount = 100,
             minChar = 3,
             maxChar = 15,
-            punctuation = false
+            punctuation = 'false'
         } = req.query;
-
         const words = [];
 
-        const punctuations = '!?,.;';
+        const punctuations = '!?.;,';
+
+        let hadPunc = false;
 
         // Fill up words upto @wordCount
         while (words.length < wordCount) {
@@ -25,17 +26,30 @@ module.exports = {
             // Generate a word until it character count is at least @minChar or at most @maxChar
             do {
                 newWord = randomWord();
+            } while (!(newWord.length >= minChar && newWord.length <= maxChar));
 
-                // Add punctuation if has option
-                if (punctuation) {
-                    const chance = Math.floor(Math.random() * Math.floor(2));
-                    const whichPunc = Math.floor(Math.random() * Math.floor(punctuations.length))
-                    const puncToAdd = punctuations[whichPunc];
-                    if (chance === 0)
-                        newWord += puncToAdd;
+            // if previous word had a punctuation, capitalize this one.
+            if (hadPunc){
+                hadPunc = false;
+                newWord = newWord.charAt(0).toUpperCase() + newWord.slice(1)
+            }
+
+            // Add punctuation if has option
+            if (punctuation === 'true') {
+                const chance = Math.floor(Math.random() * Math.floor(3));
+                const whichPunc = Math.floor(Math.random() * Math.floor(punctuations.length))
+                const puncToAdd = punctuations[whichPunc];
+
+                if (words.length === 0){
+                    newWord = newWord.charAt(0).toUpperCase() + newWord.slice(1)
                 }
 
-            } while (!(newWord.length >= minChar && newWord.length <= maxChar));
+                if (chance === 0){
+                    hadPunc = whichPunc < 3;
+                    newWord += puncToAdd;
+                }
+
+            }
 
             words.push(newWord);
         }
