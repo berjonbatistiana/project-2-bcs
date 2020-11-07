@@ -26,7 +26,7 @@ export const About = () => {
             </Box>
             <Box m={3}>
               <Typography component="h3" variant="h5" >
-                Learn to type better with Hype Type today.
+                Learn to type faster with Hype Type today.
               </Typography>
             </Box>
             <Box m={3}>
@@ -52,14 +52,21 @@ export const About = () => {
       >
         <Grid item xs={6}>
           <Box m={3} style={{color: "white"}}>
-            <Typography component="h3" variant="button" >
+            {/* <Typography component="h3" variant="button" >
               What is Hype Type?
-            </Typography>
+            </Typography> */}
             <Typography component="h4" variant="h6" >
-              Heading here, maybe add photo or a screenshot of the app to the left
+              Hype Type - The Fastest Way To Test & Increase Your Typing Speed
             </Typography>
             <Typography component="p" variant="body1" >
-              Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus cum cupiditate ex iste iure nulla omnis quos tempora vitae voluptate.
+              <ul>
+                <li>Test your typing speed.</li>
+                <li>Practice lessons to get better.</li>
+                <li>Track your progress.</li>
+                <li>Compare with friends.</li>
+              </ul>
+              Hype Type has helped hundreds of individuals improve their typing speeds by over 20 words per minute on average! <br/>
+              (Add screenshot on either side)
             </Typography>
           </Box>
         </Grid>
@@ -78,12 +85,18 @@ export const About = () => {
               How do I use Hype Type?
             </Typography>
             <Typography component="p" variant="body2">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus cum cupiditate ex iste iure nulla omnis quos tempora vitae voluptate.
+              <ul>
+                <li>Test your words per minute speed and accuracy with our typing challenges.</li>
+                <li>Create an account to save your score, challenge friends and track progress!</li>
+              </ul>
             </Typography>
           </Box>
           <Box m={1}>
+            <Button to="signup" component={Link} variant="outlined" style={{ color: "#0099ff", borderRadius: 25, borderColor: "#0099ff", marginRight: "15%", marginLeft: 'auto'}}>
+              Typing Challenge
+            </Button>
             <Button to="signup" component={Link} variant="outlined" style={{ color: "#0099ff", borderRadius: 25, borderColor: "#0099ff"}}>
-              Get Started Now
+              Create an Account
             </Button>
           </Box>
         </Grid>
