@@ -13,7 +13,9 @@ CREATE TABLE users (
 
 CREATE TABLE scores (
     id INT AUTO_INCREMENT NOT NULL,
-    wpm INT NOT NULL,
-    user_id INT REFERENCES users (id),
+    username VARCHAR(255) NOT NULL ,
+    highScore INT NOT NULL,
+    wordsPerMin INT NOT NULL,
+    accuracy INT NOT NULL,
     PRIMARY KEY (id)
 );
