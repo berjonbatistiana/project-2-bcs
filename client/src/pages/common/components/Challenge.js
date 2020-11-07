@@ -1,6 +1,8 @@
 import React from "react";
 import { generateWord } from "../../../utils";
 
+const tracker = {};
+
 class Challenge extends React.Component {
     state = {
         index: 0,
@@ -42,20 +44,30 @@ class Challenge extends React.Component {
     };
 
     handleCorrectKeyDown = (e) => {
+        const typedChar = e.key;
+        const char = this.state.wordsToBeTyped[this.state.index];
+        if (typedChar === char) {
+            tracker[this.state.index] = {char, correct: true,};
+        }
+        if (typedChar !== char) {
+            tracker[this.state.index] = {char, correct: false,};
+        }
+        console.log(tracker);
         let beginning, highlighted;
         let end = "";
         if (e.key === "Backspace") {
-            beginning = this.state.wordsToBeTyped.slice(0, this.state.index - 1);
+            // beginning = this.state.wordsToBeTyped.slice(0, this.state.index - 1);
+            delete tracker[this.state.index];
             highlighted = this.state.wordsToBeTyped[this.state.index - 1];
             if (this.state.index !== this.state.wordsToBeTyped.length) {
                 end = this.state.wordsToBeTyped.slice(
-                  this.state.index,
+                  this.state.index - 1,
                   this.state.wordsToBeTyped.length
                 );
             }
             this.setState({ index: this.state.index - 1 });
         } else {
-            beginning = this.state.wordsToBeTyped.slice(0, this.state.index + 1);
+            // beginning = this.state.wordsToBeTyped.slice(0, this.state.index + 1);
             highlighted = this.state.wordsToBeTyped[this.state.index + 1];
             if (this.state.index !== this.state.wordsToBeTyped.length) {
                 end = this.state.wordsToBeTyped.slice(
@@ -67,7 +79,7 @@ class Challenge extends React.Component {
         }
         const newHighlightedWord = (
           <div>
-              {beginning}
+              {Object.values(tracker).map(i => { return ( <span style={{backgroundColor: i.correct ? "green" : "red"}}>{i.char}</span> ) })}
               <span style={{ backgroundColor: "grey" }}>{highlighted}</span>
               {end}
           </div>
