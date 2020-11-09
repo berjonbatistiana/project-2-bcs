@@ -1,9 +1,8 @@
 import React from "react";
 import { generateWord } from "../../../utils";
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import ToggleButton from '@material-ui/lab/ToggleButton';
+import { Box, Typography, Grid } from "@material-ui/core";
 import { ChallengeContainer } from "../components";
+import ToggleButton from '@material-ui/lab/ToggleButton';
 
 class Challenge extends React.Component {
   state = {
@@ -17,7 +16,7 @@ class Challenge extends React.Component {
     WPM: 0,
     accuracyPercent: 0,
     correctNum: 0,
-    totalCharSeen: 0,
+    totalCharSeen: 0
   };
 
   componentDidMount() {
@@ -30,7 +29,6 @@ class Challenge extends React.Component {
     const { wordCount, minChar, maxChar } = this.props;
     options = { wordCount, minChar, maxChar, ...this.state.wordOptions };
     generateWord(options).then((res) => {
-      console.log(res);
       const newWordsToBeTyped = res.join(" ");
       const beginning = newWordsToBeTyped.slice(0, this.state.index);
       const highlighted = newWordsToBeTyped[this.state.index];
@@ -58,7 +56,6 @@ class Challenge extends React.Component {
   handleCorrectKeyDown = (e) => {
     const typedChar = e.key;
     const char = this.state.wordsToBeTyped[this.state.index];
-    console.log(char);
 
     if (typedChar === "Shift") return;
 
@@ -66,12 +63,12 @@ class Challenge extends React.Component {
       this.setState({
         tracker: [...this.state.tracker, { char, correct: true }],
       });
-      this.handleAccuracyUpdater();
+      this.handleAccuracyUpdater()
     } else if (typedChar !== char && typedChar !== "Backspace") {
       this.setState({
         tracker: [...this.state.tracker, { char, correct: false }],
       });
-      this.handleAccuracyUpdater();
+      this.handleAccuracyUpdater()
     } else {
       this.setState({
         tracker: [...this.state.tracker].slice(
@@ -80,7 +77,7 @@ class Challenge extends React.Component {
         ),
       });
     }
-    let highlighted;
+    let beginning, highlighted;
     let end = "";
     if (e.key === "Backspace") {
       if (this.state.index === 0) return;
@@ -91,8 +88,10 @@ class Challenge extends React.Component {
           .slice(this.state.index - 1, this.state.wordsToBeTyped.length)
           .substring(1);
       }
-      this.setState({ index: this.state.index - 1 });
-      this.handleAccuracyUpdater();
+      this.setState({
+        index: this.state.index - 1,
+      });
+      this.handleAccuracyUpdater()
     } else {
       // beginning = this.state.wordsToBeTyped.slice(0, this.state.index + 1);
       highlighted = this.state.wordsToBeTyped[this.state.index + 1];
@@ -103,8 +102,6 @@ class Challenge extends React.Component {
         );
       }
       if (this.state.index + 1 === this.state.wordsToBeTyped.length) {
-        console.log("refresh");
-        // this.componentDidUpdate() -> could use?
         this.handleRefreshWords();
         return;
       }
@@ -112,7 +109,6 @@ class Challenge extends React.Component {
     }
 
     const newHighlightedWord = (
-
       <Typography>
         <Box fontFamily="Monospace" fontSize="h5.fontSize">
           {Object.values(this.state.tracker).map((i) => {
@@ -130,6 +126,24 @@ class Challenge extends React.Component {
     this.setState({ highlightedWord: newHighlightedWord });
   };
 
+  handleAddOption = (e) => {
+    // const option = e.target.dataset.value;
+    // switch (option) {
+    //   case "punctuation":
+        this.setState(({ wordOptions: { punctuation } }) => {
+          return { wordOptions: { punctuation: !punctuation } };
+        });
+    //     break;
+    //   default:
+    //     break;
+    // }
+    this.forceUpdate(this.handleRefreshWords);
+  };
+
+  // function is called on a key down event for correct characters, wrong ones, and a backspace.
+  // uses the tracker in state to determine the % of accurate numbers.
+  // if the sequence is refreshed multiple times in a session, the totals will need to be saved
+  // and added to following.
   handleAccuracyUpdater = () => {
     // THIS VERSION WORKS AND IS FAST BUT RESETS AFTER EACH SEQUENCE REFRESH.
     let correctNum = 0;
@@ -166,22 +180,7 @@ class Challenge extends React.Component {
     // });
   }
 
-  handleAddOption = () => {
-    // const option = e.target.dataset.value;
-    // switch (option) {
-    //   case "punctuation":
-        this.setState(({ wordOptions: { punctuation } }) => {
-          return { wordOptions: { punctuation: !punctuation } };
-        });
-    //     break;
-    //   default:
-    //     break;
-    // }
-    this.forceUpdate(this.handleRefreshWords);
-  };
-
   handleRefreshWords = () => {
-    console.log("refresh Conf");
     // Need to figure out how to set the index back to 0. Maybe a problem with asynchronisity.
     this.setState({
       index: 0,
@@ -189,7 +188,6 @@ class Challenge extends React.Component {
       highlightedWord: "",
       tracker: [],
     });
-
     this.handleNewChallenge();
   };
 
@@ -197,7 +195,7 @@ class Challenge extends React.Component {
     return (
       <ToggleButton
         selected={this.state.wordOptions.punctuation}
-        onClick={this.handleAddOption}
+        onMouseDown={this.handleAddOption}
       >
         Punctuation
       </ToggleButton>
@@ -205,14 +203,13 @@ class Challenge extends React.Component {
   }
 
   render() {
-
     return (
       <div>
         <ChallengeContainer
           challenge={this.state.highlightedWord}
-          toggleButton={this.renderToggleButton}
           accuracy={this.state.accuracyPercent}
           wpm={this.state.WPM}
+          toggleButton={this.renderToggleButton}
         />
       </div>
     );
