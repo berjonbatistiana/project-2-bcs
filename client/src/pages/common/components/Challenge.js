@@ -116,7 +116,7 @@ class Challenge extends React.Component {
             </span>
             );
           })}
-          <span style={{ borderBottom: "2px solid #0099ff" }}>{highlighted}</span>
+          <span style={{ borderBottom: "2px solid #0099ff", whiteSpace: "break-spaces" }}>{highlighted}</span>
           {end}
         </Box>
       </Typography>
