@@ -12,7 +12,9 @@ class Challenge extends React.Component {
     },
     tracker: [],
     WPM: 0,
-    accuracyPercent: 0
+    accuracyPercent: 0,
+    correctNum: 0,
+    totalCharSeen: 0
   };
 
   componentDidMount() {
@@ -138,16 +140,40 @@ class Challenge extends React.Component {
   // if the sequence is refreshed multiple times in a session, the totals will need to be saved
   // and added to following.
   handleAccuracyUpdater = () => {
+    // THIS VERSION WORKS AND IS FAST BUT RESETS AFTER EACH SEQUENCE 
+    // REFRESH.
     let correctNum = 0;
+    let totalCharSeen = this.state.tracker.length;
     for(let i=0;i<this.state.tracker.length;i++){
       if(this.state.tracker[i].correct === true){
         correctNum++
       }
     }
-    const accuracyPercent = Math.round(correctNum/this.state.tracker.length*100)
+    console.log(correctNum)
+    console.log(totalCharSeen)
+    const accuracyPercent = Math.round(correctNum/totalCharSeen*100)
     this.setState({
-      accuracyPercent: accuracyPercent
+      accuracyPercent: accuracyPercent,
     });  
+
+    // THIS VERSION WORKS BUT IS SLOW BC ALWAYS UPDATING STATE. CARRIES THE ACCURACY 
+    // VALUES INTO THE SEQUENCE REFRESHES
+    
+    // for(let i=0;i<this.state.tracker.length;i++){
+    //   if(this.state.tracker[i].correct === true){
+    //     this.setState({
+    //       correctNum: this.state.correctNum+1
+    //     });  
+    //   }
+    //   this.setState({
+    //     totalCharSeen: this.state.totalCharSeen+1
+    //   });
+    // }
+    // const accuracyPercent = Math.round(this.state.correctNum/this.state.totalCharSeen*100)
+    // console.log(this.state.correctNum,this.state.totalCharSeen,accuracyPercent)
+    // this.setState({
+    //   accuracyPercent: accuracyPercent,
+    // });  
   }
 
   handleRefreshWords = () => {
