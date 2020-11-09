@@ -1,6 +1,6 @@
 import React from "react";
 import { generateWord } from "../../../utils";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, Grid } from "@material-ui/core";
 
 class Challenge extends React.Component {
   state = {
@@ -11,6 +11,8 @@ class Challenge extends React.Component {
       punctuation: false,
     },
     tracker: [],
+    accuracy: 0,
+    WPM: 0,
   };
 
   componentDidMount() {
@@ -146,12 +148,35 @@ class Challenge extends React.Component {
     const style = {
       fontSize: 30,
       textAlign: "center",
+      margin: 100,
     };
 
     return (
       <div style={style}>
-        <h1>Typing Challenge</h1>
-        {this.state.highlightedWord}
+        <Typography component="h1" variant="h2">
+          Typing Challenge
+        </Typography>        
+        <div style={{ margin: 70 }}>{this.state.highlightedWord}</div>
+        <div>
+            <Grid item container xs={12}>
+              <Grid item xs={12} md={6}>
+                <Box m={3} style={{ textAlign: "center" }}>
+                  <Typography component="h5" variant="h5">
+                    Accuracy
+                  </Typography>
+                  {this.state.accuracy}%
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Box m={3} style={{ textAlign: "center" }}>
+                  <Typography component="h5" variant="h5">
+                    Words Per Minute
+                  </Typography>
+                  {this.state.WPM}
+                </Box>
+              </Grid>
+            </Grid>
+          </div>
         <div>
           <Box mt={6}>
             <Typography
