@@ -1,3 +1,4 @@
-export const getWPM = (typedChars, time) => {
-    return (typedChars/time)/5;
+export const getWPM = (correct, miss, time) => {
+    const allTypedEntries = correct + miss;
+    return ((allTypedEntries/5) - miss)/time;
 }

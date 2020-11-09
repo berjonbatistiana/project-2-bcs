@@ -11,6 +11,8 @@ class Challenge extends React.Component {
       punctuation: false,
     },
     tracker: [],
+    startTime: '',
+    lastWPM: 0
   };
 
   componentDidMount() {
@@ -23,7 +25,6 @@ class Challenge extends React.Component {
     const { wordCount, minChar, maxChar } = this.props;
     options = { wordCount, minChar, maxChar, ...this.state.wordOptions };
     generateWord(options).then((res) => {
-      console.log(res);
       const newWordsToBeTyped = res.join(" ");
       const beginning = newWordsToBeTyped.slice(0, this.state.index);
       const highlighted = newWordsToBeTyped[this.state.index];
@@ -49,7 +50,10 @@ class Challenge extends React.Component {
   handleCorrectKeyDown = (e) => {
     const typedChar = e.key;
     const char = this.state.wordsToBeTyped[this.state.index];
-    console.log(char);
+
+    if (this.state.index === 0){
+      this.state.startTime =  new Date();
+    }
 
     if (typedChar === "Shift") return;
 
@@ -93,7 +97,9 @@ class Challenge extends React.Component {
       if (this.state.index + 1 === this.state.wordsToBeTyped.length) {
         console.log("refresh");
         // this.componentDidUpdate() -> could use?
-        this.handleRefreshWords();
+        // this.handleRefreshWords();
+        this.handleEndOfChallengeResults();
+
         return;
       }
       this.setState({ index: this.state.index + 1 });
@@ -141,6 +147,15 @@ class Challenge extends React.Component {
 
     this.handleNewChallenge();
   };
+
+  handleEndOfChallengeResults(){
+    const time = (new Date().getTime() - this.state.startTime.getTime()) / 1000 / 60;
+    const trackedLetters = this.state.tracker.filter(el => el.correct);
+    const correct = trackedLetters.length;
+    const miss = this.state.tracker.length - correct;
+    this.setState({lastWPM: getWPM(correct, miss, time)});
+    this.handleRefreshWords();
+  }
 
   render() {
     const style = {
