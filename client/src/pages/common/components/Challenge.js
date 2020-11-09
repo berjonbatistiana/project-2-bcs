@@ -1,6 +1,7 @@
 import React from "react";
 import { generateWord } from "../../../utils";
-import { Box, Typography } from "@material-ui/core";
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 class Challenge extends React.Component {
   state = {
@@ -33,11 +34,13 @@ class Challenge extends React.Component {
       );
 
       const newHighlightedWord = (
-        <div>
-          {beginning}
-          <span style={{ backgroundColor: "grey" }}>{highlighted}</span>
-          {end}
-        </div>
+        <Typography>
+          <Box fontFamily="Monospace" fontSize="h5.fontSize">
+            {beginning}
+            <span style={{ borderBottom: "2px solid #0099ff", whiteSpace: "break-spaces" }}>{highlighted}</span>
+            {end}
+          </Box>
+        </Typography>
       );
       this.setState({
         wordsToBeTyped: newWordsToBeTyped,
@@ -100,17 +103,20 @@ class Challenge extends React.Component {
     }
 
     const newHighlightedWord = (
-      <div>
-        {Object.values(this.state.tracker).map((i) => {
-          return (
-            <span style={{ backgroundColor: i.correct ? "green" : "red" }}>
+
+      <Typography>
+        <Box fontFamily="Monospace" fontSize="h5.fontSize">
+          {Object.values(this.state.tracker).map((i) => {
+            return (
+              <span style={{ backgroundColor: i.correct ? "#a5d6a7" : "#ef9a9a" }}>
               {i.char}
             </span>
-          );
-        })}
-        <span style={{ backgroundColor: "grey" }}>{highlighted}</span>
-        {end}
-      </div>
+            );
+          })}
+          <span style={{ borderBottom: "2px solid #0099ff", whiteSpace: "break-spaces"  }}>{highlighted}</span>
+          {end}
+        </Box>
+      </Typography>
     );
     this.setState({ highlightedWord: newHighlightedWord });
   };
@@ -143,30 +149,25 @@ class Challenge extends React.Component {
   };
 
   render() {
-    const style = {
-      fontSize: 30,
-      textAlign: "center",
-    };
+    // const style = {
+    //   fontSize: 30,
+    //   textAlign: "center",
+    // };
 
     return (
-      <div style={style}>
-        <h1>Typing Challenge</h1>
+      <div>
         {this.state.highlightedWord}
-        <div>
-          <Box mt={6}>
-            <Typography
-              style={{
-                color: this.state.wordOptions.punctuation
-                  ? "black"
-                  : "lightgray",
-              }}
-              data-value={"punctuation"}
-              onClick={this.handleAddOption}
-            >
-              Punctuation
-            </Typography>
-          </Box>
-        </div>
+        <Typography
+          style={{
+            color: this.state.wordOptions.punctuation
+              ? "black"
+              : "lightgray",
+          }}
+          data-value={"punctuation"}
+          onClick={this.handleAddOption}
+        >
+          Punctuation
+        </Typography>
       </div>
     );
   }
