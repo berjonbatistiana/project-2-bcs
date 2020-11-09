@@ -77,11 +77,10 @@ class Challenge extends React.Component {
         ),
       });
     }
-    let beginning, highlighted;
+    let highlighted;
     let end = "";
     if (e.key === "Backspace") {
       if (this.state.index === 0) return;
-      // beginning = this.state.wordsToBeTyped.slice(0, this.state.index - 1);
       highlighted = this.state.wordsToBeTyped[this.state.index - 1];
       if (this.state.index !== this.state.wordsToBeTyped.length) {
         end = this.state.wordsToBeTyped
@@ -93,7 +92,6 @@ class Challenge extends React.Component {
       });
       this.handleAccuracyUpdater()
     } else {
-      // beginning = this.state.wordsToBeTyped.slice(0, this.state.index + 1);
       highlighted = this.state.wordsToBeTyped[this.state.index + 1];
       if (this.state.index !== this.state.wordsToBeTyped.length) {
         end = this.state.wordsToBeTyped.slice(
@@ -126,17 +124,10 @@ class Challenge extends React.Component {
     this.setState({ highlightedWord: newHighlightedWord });
   };
 
-  handleAddOption = (e) => {
-    // const option = e.target.dataset.value;
-    // switch (option) {
-    //   case "punctuation":
+  handleAddOption = () => {
     this.setState(({ wordOptions: { punctuation } }) => {
       return { wordOptions: { punctuation: !punctuation } };
     });
-    //     break;
-    //   default:
-    //     break;
-    // }
     this.forceUpdate(this.handleRefreshWords);
   };
 
@@ -204,14 +195,12 @@ class Challenge extends React.Component {
 
   render() {
     return (
-      <div>
-        <ChallengeContainer
-          challenge={this.state.highlightedWord}
-          accuracy={this.state.accuracyPercent}
-          wpm={this.state.WPM}
-          toggleButton={this.renderToggleButton}
-        />
-      </div>
+      <ChallengeContainer
+        challenge={this.state.highlightedWord}
+        accuracy={this.state.accuracyPercent}
+        wpm={this.state.WPM}
+        toggleButton={this.renderToggleButton}
+      />
     );
   }
 }
