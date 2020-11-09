@@ -23,7 +23,7 @@ export const TypingChallenge = () => {
         <Grid container>
           <Grid item xs={9}>
             <Box m={3}>
-              <Challenge wordCount={5} minChar={1}/>
+              <Challenge wordCount={5} minChar={1} maxChar={7}/>
             </Box>
           </Grid>
           <Grid

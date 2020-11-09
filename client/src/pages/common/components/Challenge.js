@@ -2,6 +2,7 @@ import React from "react";
 import { generateWord } from "../../../utils";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import ToggleButton from '@material-ui/lab/ToggleButton';
 
 class Challenge extends React.Component {
   state = {
@@ -72,7 +73,7 @@ class Challenge extends React.Component {
         ),
       });
     }
-    let beginning, highlighted;
+    let highlighted;
     let end = "";
     if (e.key === "Backspace") {
       if (this.state.index === 0) return;
@@ -121,17 +122,17 @@ class Challenge extends React.Component {
     this.setState({ highlightedWord: newHighlightedWord });
   };
 
-  handleAddOption = (e) => {
-    const option = e.target.dataset.value;
-    switch (option) {
-      case "punctuation":
+  handleAddOption = () => {
+    // const option = e.target.dataset.value;
+    // switch (option) {
+    //   case "punctuation":
         this.setState(({ wordOptions: { punctuation } }) => {
           return { wordOptions: { punctuation: !punctuation } };
         });
-        break;
-      default:
-        break;
-    }
+    //     break;
+    //   default:
+    //     break;
+    // }
     this.forceUpdate(this.handleRefreshWords);
   };
 
@@ -149,25 +150,21 @@ class Challenge extends React.Component {
   };
 
   render() {
-    // const style = {
-    //   fontSize: 30,
-    //   textAlign: "center",
-    // };
 
     return (
       <div>
         {this.state.highlightedWord}
-        <Typography
+        <ToggleButton
+          selected={this.state.wordOptions.punctuation}
           style={{
-            color: this.state.wordOptions.punctuation
-              ? "black"
-              : "lightgray",
+            position: "fixed",
+            top: 100,
+            right: 96,
           }}
-          data-value={"punctuation"}
           onClick={this.handleAddOption}
         >
           Punctuation
-        </Typography>
+        </ToggleButton>
       </div>
     );
   }
