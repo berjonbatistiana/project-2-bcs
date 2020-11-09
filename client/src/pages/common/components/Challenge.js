@@ -1,6 +1,6 @@
 import React from "react";
 import { generateWord } from "../../../utils";
-import { Box, Typography, Grid } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import { ChallengeContainer } from "../components";
 import ToggleButton from '@material-ui/lab/ToggleButton';
 
@@ -130,9 +130,9 @@ class Challenge extends React.Component {
     // const option = e.target.dataset.value;
     // switch (option) {
     //   case "punctuation":
-        this.setState(({ wordOptions: { punctuation } }) => {
-          return { wordOptions: { punctuation: !punctuation } };
-        });
+    this.setState(({ wordOptions: { punctuation } }) => {
+      return { wordOptions: { punctuation: !punctuation } };
+    });
     //     break;
     //   default:
     //     break;
