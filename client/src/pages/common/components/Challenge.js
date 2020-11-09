@@ -140,8 +140,7 @@ class Challenge extends React.Component {
   // if the sequence is refreshed multiple times in a session, the totals will need to be saved
   // and added to following.
   handleAccuracyUpdater = () => {
-    // THIS VERSION WORKS AND IS FAST BUT RESETS AFTER EACH SEQUENCE 
-    // REFRESH.
+    // THIS VERSION WORKS AND IS FAST BUT RESETS AFTER EACH SEQUENCE REFRESH.
     let correctNum = 0;
     let totalCharSeen = this.state.tracker.length;
     for(let i=0;i<this.state.tracker.length;i++){
@@ -149,16 +148,16 @@ class Challenge extends React.Component {
         correctNum++
       }
     }
-    console.log(correctNum)
-    console.log(totalCharSeen)
+    console.log(correctNum, totalCharSeen)
     const accuracyPercent = Math.round(correctNum/totalCharSeen*100)
     this.setState({
       accuracyPercent: accuracyPercent,
     });  
 
     // THIS VERSION WORKS BUT IS SLOW BC ALWAYS UPDATING STATE. CARRIES THE ACCURACY 
-    // VALUES INTO THE SEQUENCE REFRESHES
-    
+    // VALUES INTO THE SEQUENCE REFRESHES || BEST SOLUTION MAY BE TO AVERAGE %'s AFTERWARDS
+    // OR TO CALCULATE FINAL % AFTER TIME RUNS OUT
+
     // for(let i=0;i<this.state.tracker.length;i++){
     //   if(this.state.tracker[i].correct === true){
     //     this.setState({
