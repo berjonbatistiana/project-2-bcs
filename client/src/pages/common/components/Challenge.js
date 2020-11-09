@@ -11,8 +11,10 @@ class Challenge extends React.Component {
       punctuation: false,
     },
     tracker: [],
-    accuracy: 0,
     WPM: 0,
+    accuracyPercent: 0,
+    correctNum: 0,
+    totalCharSeen: 0
   };
 
   componentDidMount() {
@@ -51,7 +53,6 @@ class Challenge extends React.Component {
   handleCorrectKeyDown = (e) => {
     const typedChar = e.key;
     const char = this.state.wordsToBeTyped[this.state.index];
-    console.log(char);
 
     if (typedChar === "Shift") return;
 
@@ -59,10 +60,12 @@ class Challenge extends React.Component {
       this.setState({
         tracker: [...this.state.tracker, { char, correct: true }],
       });
+      this.handleAccuracyUpdater()
     } else if (typedChar !== char && typedChar !== "Backspace") {
       this.setState({
         tracker: [...this.state.tracker, { char, correct: false }],
       });
+      this.handleAccuracyUpdater()
     } else {
       this.setState({
         tracker: [...this.state.tracker].slice(
@@ -82,7 +85,10 @@ class Challenge extends React.Component {
           .slice(this.state.index - 1, this.state.wordsToBeTyped.length)
           .substring(1);
       }
-      this.setState({ index: this.state.index - 1 });
+      this.setState({ 
+        index: this.state.index - 1,
+      });
+      this.handleAccuracyUpdater()
     } else {
       // beginning = this.state.wordsToBeTyped.slice(0, this.state.index + 1);
       highlighted = this.state.wordsToBeTyped[this.state.index + 1];
@@ -93,8 +99,6 @@ class Challenge extends React.Component {
         );
       }
       if (this.state.index + 1 === this.state.wordsToBeTyped.length) {
-        console.log("refresh");
-        // this.componentDidUpdate() -> could use?
         this.handleRefreshWords();
         return;
       }
@@ -131,8 +135,47 @@ class Challenge extends React.Component {
     this.forceUpdate(this.handleRefreshWords);
   };
 
+  // function is called on a key down event for correct characters, wrong ones, and a backspace.
+  // uses the tracker in state to determine the % of accurate numbers.
+  // if the sequence is refreshed multiple times in a session, the totals will need to be saved
+  // and added to following.
+  handleAccuracyUpdater = () => {
+    // THIS VERSION WORKS AND IS FAST BUT RESETS AFTER EACH SEQUENCE REFRESH.
+    let correctNum = 0;
+    let totalCharSeen = this.state.tracker.length;
+    for(let i=0;i<this.state.tracker.length;i++){
+      if(this.state.tracker[i].correct === true){
+        correctNum++
+      }
+    }
+    console.log(correctNum, totalCharSeen)
+    const accuracyPercent = Math.round(correctNum/totalCharSeen*100)
+    this.setState({
+      accuracyPercent: accuracyPercent,
+    });  
+
+    // THIS VERSION WORKS BUT IS SLOW BC ALWAYS UPDATING STATE. CARRIES THE ACCURACY 
+    // VALUES INTO THE SEQUENCE REFRESHES || BEST SOLUTION MAY BE TO AVERAGE %'s AFTERWARDS
+    // OR TO CALCULATE FINAL % AFTER TIME RUNS OUT
+
+    // for(let i=0;i<this.state.tracker.length;i++){
+    //   if(this.state.tracker[i].correct === true){
+    //     this.setState({
+    //       correctNum: this.state.correctNum+1
+    //     });  
+    //   }
+    //   this.setState({
+    //     totalCharSeen: this.state.totalCharSeen+1
+    //   });
+    // }
+    // const accuracyPercent = Math.round(this.state.correctNum/this.state.totalCharSeen*100)
+    // console.log(this.state.correctNum,this.state.totalCharSeen,accuracyPercent)
+    // this.setState({
+    //   accuracyPercent: accuracyPercent,
+    // });  
+  }
+
   handleRefreshWords = () => {
-    console.log("refresh Conf");
     // Need to figure out how to set the index back to 0. Maybe a problem with asynchronisity.
     this.setState({
       index: 0,
@@ -164,7 +207,7 @@ class Challenge extends React.Component {
                   <Typography component="h5" variant="h5">
                     Accuracy
                   </Typography>
-                  {this.state.accuracy}%
+                  {this.state.accuracyPercent}%
                 </Box>
               </Grid>
               <Grid item xs={12} md={6}>
