@@ -1,5 +1,5 @@
 import React from "react";
-import { generateWord } from "../../../utils";
+import { generateWord, getWPM } from "../../../utils";
 import { Box, Typography } from "@material-ui/core";
 
 class Challenge extends React.Component {
