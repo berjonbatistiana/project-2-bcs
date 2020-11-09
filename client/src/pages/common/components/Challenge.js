@@ -11,8 +11,8 @@ class Challenge extends React.Component {
       punctuation: false,
     },
     tracker: [],
-    accuracy: 0,
     WPM: 0,
+    accuracyPercent: 0
   };
 
   componentDidMount() {
@@ -51,7 +51,6 @@ class Challenge extends React.Component {
   handleCorrectKeyDown = (e) => {
     const typedChar = e.key;
     const char = this.state.wordsToBeTyped[this.state.index];
-    console.log(char);
 
     if (typedChar === "Shift") return;
 
@@ -59,10 +58,12 @@ class Challenge extends React.Component {
       this.setState({
         tracker: [...this.state.tracker, { char, correct: true }],
       });
+      this.handleAccuracyUpdater()
     } else if (typedChar !== char && typedChar !== "Backspace") {
       this.setState({
         tracker: [...this.state.tracker, { char, correct: false }],
       });
+      this.handleAccuracyUpdater()
     } else {
       this.setState({
         tracker: [...this.state.tracker].slice(
@@ -82,7 +83,10 @@ class Challenge extends React.Component {
           .slice(this.state.index - 1, this.state.wordsToBeTyped.length)
           .substring(1);
       }
-      this.setState({ index: this.state.index - 1 });
+      this.setState({ 
+        index: this.state.index - 1,
+      });
+      this.handleAccuracyUpdater()
     } else {
       // beginning = this.state.wordsToBeTyped.slice(0, this.state.index + 1);
       highlighted = this.state.wordsToBeTyped[this.state.index + 1];
@@ -93,8 +97,6 @@ class Challenge extends React.Component {
         );
       }
       if (this.state.index + 1 === this.state.wordsToBeTyped.length) {
-        console.log("refresh");
-        // this.componentDidUpdate() -> could use?
         this.handleRefreshWords();
         return;
       }
@@ -131,8 +133,24 @@ class Challenge extends React.Component {
     this.forceUpdate(this.handleRefreshWords);
   };
 
+  // function is called on a key down event for correct characters, wrong ones, and a backspace.
+  // uses the tracker in state to determine the % of accurate numbers.
+  // if the sequence is refreshed multiple times in a session, the totals will need to be saved
+  // and added to following.
+  handleAccuracyUpdater = () => {
+    let correctNum = 0;
+    for(let i=0;i<this.state.tracker.length;i++){
+      if(this.state.tracker[i].correct === true){
+        correctNum++
+      }
+    }
+    const accuracyPercent = Math.round(correctNum/this.state.tracker.length*100)
+    this.setState({
+      accuracyPercent: accuracyPercent
+    });  
+  }
+
   handleRefreshWords = () => {
-    console.log("refresh Conf");
     // Need to figure out how to set the index back to 0. Maybe a problem with asynchronisity.
     this.setState({
       index: 0,
@@ -164,7 +182,7 @@ class Challenge extends React.Component {
                   <Typography component="h5" variant="h5">
                     Accuracy
                   </Typography>
-                  {this.state.accuracy}%
+                  {this.state.accuracyPercent}%
                 </Box>
               </Grid>
               <Grid item xs={12} md={6}>
