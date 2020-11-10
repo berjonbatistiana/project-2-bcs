@@ -57,6 +57,7 @@ class Challenge extends React.Component {
     };
 
     handleCorrectKeyDown = (e) => {
+      e.preventDefault();
         const typedChar = e.key;
         const char = this.state.wordsToBeTyped[this.state.index];
 
