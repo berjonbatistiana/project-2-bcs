@@ -160,12 +160,14 @@ class Challenge extends React.Component {
             case 'punctuation':
                 this.setState((prevState) => {
                     newWordOptions.punctuation = !prevState.wordOptions.punctuation;
+                    newWordOptions.quotes = false;
                     return {newWordOptions};
                 });
                 break;
             case 'quotes':
                 this.setState((prevState) => {
                     newWordOptions.quotes = !prevState.wordOptions.quotes;
+                    newWordOptions.punctuation = false;
                     return {newWordOptions};
                 });
                 break;
