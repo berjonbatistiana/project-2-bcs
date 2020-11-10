@@ -4,9 +4,7 @@ const {
   getUserScores,
   postScore,
 } = require("../../../controllers/scoreController");
-const authMiddleware = require("../../../middlewares/authorizationMiddleware");
 
-router.use(authMiddleware);
 router.route("/scores").post(postScore);
 
 router.route("/leaders").get(getLeaderboard)
