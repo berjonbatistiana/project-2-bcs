@@ -1,5 +1,5 @@
 const selectTopLeaders = `
-    SELECT highScore, username, wordsPerMin, accuracy 
+    SELECT id, highScore, username, wordsPerMin, accuracy 
     FROM scores
     ORDER BY highScore DESC
     LIMIT ?`;
