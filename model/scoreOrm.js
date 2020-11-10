@@ -1,4 +1,4 @@
-const { selectTopLeaders, insertScoreQuery } = require("./scoreQueries");
+const { selectTopLeaders, selectUserScoresQuery, insertScoreQuery } = require("./scoreQueries");
 const connection = require("../config/connection");
 
 const selectLeadersFromDb = async (top) => {
@@ -21,7 +21,13 @@ const insertIntoScoreDb = async (
   return rows[0];
 };
 
+const selectScoresFromDb = async (username) => {
+  const [rows] =  await connection.query(selectUserScoresQuery, username)
+  return rows;
+}
+
 module.exports = {
   selectLeadersFromDb,
+  selectScoresFromDb,
   insertIntoScoreDb,
 };
