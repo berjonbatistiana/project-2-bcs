@@ -1,12 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
-import { Typography, Grid, Box, Card } from "@material-ui/core";
-import TrackChangesIcon from "@material-ui/icons/TrackChanges";
-import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
+import { Typography, Grid, Box, Button } from "@material-ui/core";
 import { ChallengeResultsLineGraph } from "../components/ChallegeResultsLineGraph";
+import { Link } from "react-router-dom";
+
+
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -100,7 +98,36 @@ export function TransitionsModal(props) {
                 <Typography className={resultClasses.paper}>72</Typography>
               </Grid>
             </Grid>
-            Add button to save results as guest, to sign in, and also one to take test again.
+            <Button
+                to="signin"
+                component={Link}
+                variant="outlined"
+                style={{
+                  color: "#0099ff",
+                  borderRadius: 25,
+                  borderColor: "#0099ff",
+                }}
+              >sign in to save score</Button>
+              <Button
+                to="challenge"
+                component={Link}
+                variant="outlined"
+                style={{
+                  color: "#0099ff",
+                  borderRadius: 25,
+                  borderColor: "#0099ff",
+                }}
+              >test again</Button>
+              <Button
+                to="leaderboard"
+                component={Link}
+                variant="outlined"
+                style={{
+                  color: "#0099ff",
+                  borderRadius: 25,
+                  borderColor: "#0099ff",
+                }}
+              >add to leaderboard as guest</Button>
           </div>
         </Box>
       </div>
