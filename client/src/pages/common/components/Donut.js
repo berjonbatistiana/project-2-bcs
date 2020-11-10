@@ -6,14 +6,19 @@ export class Donut extends Component {
 
   componentDidMount() {
     const myChartRef = this.chartRef.current.getContext("2d");
-    const percent = 80;
+    let total = 0
+    console.log(this.props);
+    this.props.userData.forEach(item => {
+      total += item.accuracy;
+    })
+    const percent = Math.floor(total / this.props.userData.length);
     const data = {
-      labels: ["Red", "Blue"],
+      labels: ["Green", "Red"],
       datasets: [
         {
           data: [percent, 100 - percent],
-          backgroundColor: ["#FF6384", "#36A2EB"],
-          hoverBackgroundColor: ["#FF6384", "#36A2EB"],
+          backgroundColor: ["green", "red"],
+          hoverBackgroundColor: ["green", "red"],
         },
       ],
     };
