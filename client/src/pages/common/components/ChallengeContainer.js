@@ -29,6 +29,21 @@ export const ChallengeContainer = (props) => {
   const classes = useStyles();
   const rows = [
     [
+      {upperKey: "!", key: "1", finger: "LP", color: "#e91e63"},
+      {upperKey: "@", key: "2", finger: "LR", color: "#673ab7"},
+      {upperKey: "#", key: "3", finger: "LM", color: "#2196f3"},
+      {upperKey: "$", key: "4", finger: "LI", color: "#00bcd4"},
+      {upperKey: "%", key: "5", finger: "LI", color: "#00bcd4"},
+      {upperKey: "^", key: "6", finger: "RI", color: "#ff5722"},
+      {upperKey: "&", key: "7", finger: "RI", color: "#ff5722"},
+      {upperKey: "*", key: "8", finger: "RM", color: "#cddc39"},
+      {upperKey: "(", key: "9", finger: "RR", color: "#ffc107"},
+      {upperKey: ")", key: "0", finger: "RP", color: "#ff5722"},
+      {upperKey: "_", key: "-", finger: "RP", color: "#ff5722"},
+      {upperKey: "+", key: "=", finger: "RP", color: "#ff5722"},
+      {upperKey: "Del", key: "Del", finger: "RP", color: "#ff5722"},
+    ],
+    [
       {upperKey: "Q", key: "q", finger: "LP", color: "#e91e63"},
       {upperKey: "W", key: "w", finger: "LR", color: "#673ab7"},
       {upperKey: "E", key: "e", finger: "LM", color: "#2196f3"},
@@ -39,7 +54,9 @@ export const ChallengeContainer = (props) => {
       {upperKey: "I", key: "i", finger: "RM", color: "#cddc39"},
       {upperKey: "O", key: "o", finger: "RR", color: "#ffc107"},
       {upperKey: "P", key: "p", finger: "RP", color: "#ff5722"},
-      {upperKey: "{", key: "[", finger: "RP", color: "#ff5722"}
+      {upperKey: "{", key: "[", finger: "RP", color: "#ff5722"},
+      {upperKey: "}", key: "]", finger: "RP", color: "#ff5722"}
+
     ],
     [
       {upperKey: "A", key: "a", finger: "LP", color: "#e91e63"},
@@ -52,6 +69,7 @@ export const ChallengeContainer = (props) => {
       {upperKey: "K", key: "k", finger: "RM", color: "#cddc39"},
       {upperKey: "L", key: "l", finger: "RR", color: "#ffc107"},
       {upperKey: ":", key: ";", finger: "RP", color: "#ff5722"},
+      {upperKey: '"', key: "'", finger: "RP", color: "#ff5722"},
     ],
     [
       {upperKey: "Z", key: "z", finger: "LP", color: "#e91e63"},
@@ -63,6 +81,7 @@ export const ChallengeContainer = (props) => {
       {upperKey: "M", key: "m", finger: "RI", color: "#ff5722"},
       {upperKey: "<", key: ",", finger: "RM", color: "#cddc39"},
       {upperKey: ">", key: ".", finger: "RR", color: "#ffc107"},
+      {upperKey: '?', key: "/", finger: "RP", color: "#ff5722"},
     ],
     [
       {upperKey: " ", key: " ", finger: "T", color: "#009688"}
@@ -70,56 +89,54 @@ export const ChallengeContainer = (props) => {
   ]
 
   return (
-    <React.Fragment>
-      <Box m={12}>
-        <Card>
-          <Box m={3}>
-            <Typography component="h1" variant="h4">
-              Typing Challenge
-            </Typography>
-          </Box>
-          <Divider />
-          <Grid container>
-            <Grid item xs={9}>
-              <Box m={3}>
-                {props.challenge}
+    <Box m={12}>
+      <Card>
+        <Box m={3}>
+          <Typography component="h1" variant="h4">
+            Typing Challenge
+          </Typography>
+        </Box>
+        <Divider />
+        <Grid container>
+          <Grid item xs={9}>
+            <Box m={3}>
+              {props.challenge}
+            </Box>
+          </Grid>
+          <Grid
+            container item
+            xs={3}
+            justify="center"
+            direction="column"
+            alignItems="center"
+            style={{backgroundColor: "#f5f5f5", textAlign: "center"}}
+          >
+            <Grid item>
+              <Box mt={6} mb={3}>
+                <TrackChangesIcon/>
+                <Typography>
+                  {props.accuracy}%
+                </Typography>
               </Box>
             </Grid>
-            <Grid
-              container item
-              xs={3}
-              justify="center"
-              direction="column"
-              alignItems="center"
-              style={{backgroundColor: "#f5f5f5", textAlign: "center"}}
-            >
-              <Grid item>
-                <Box mt={6} mb={3}>
-                  <TrackChangesIcon/>
-                  <Typography>
-                    {props.accuracy}%
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item>
-                <Box mt={3} mb={6}>
-                  <DirectionsRunIcon/>
-                  <Typography>
-                    {props.wpm} WPM
-                  </Typography>
-                </Box>
-              </Grid>
+            <Grid item>
+              <Box mt={3} mb={6}>
+                <DirectionsRunIcon/>
+                <Typography>
+                  {props.wpm} WPM
+                </Typography>
+              </Box>
             </Grid>
           </Grid>
-          <Divider />
-          <Box m={3}>
-            <Box>
-              {props.toggleButton}
-            </Box>
+        </Grid>
+        <Divider />
+        <Box m={3}>
+          <Box>
+            {props.toggleButton}
           </Box>
-        </Card>
-      </Box>
-      <Box>
+        </Box>
+      </Card>
+      <Box m={3}>
         <Grid
           container
           direction="column"
@@ -142,7 +159,7 @@ export const ChallengeContainer = (props) => {
                       <Grid item key={item.key}>
                         <Paper className={item.key === " " ? classes.spacebar : classes.paper} style={{backgroundColor: props.selectedKey === item.key || props.selectedKey === item.upperKey ? item.color : "", color: props.selectedKey === item.key || props.selectedKey === item.upperKey ? "white" : ""}}>
                           <Typography variant="caption">
-                            {item.key}
+                            {props.selectedKey === item.upperKey ? item.upperKey : item.key}
                           </Typography>
                         </Paper>
                       </Grid>
@@ -154,6 +171,6 @@ export const ChallengeContainer = (props) => {
           }
         </Grid>
       </Box>
-    </React.Fragment>
+    </Box>
   );
 }
