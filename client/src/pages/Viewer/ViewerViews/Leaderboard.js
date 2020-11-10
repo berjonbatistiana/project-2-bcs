@@ -3,6 +3,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom';
 import axios from "axios";
 
 const useStyles = makeStyles({
@@ -32,6 +33,11 @@ const columns = [
 
 export const Leaderboard = () => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const handleDashboardClick = () => {
+    history.push('/');
+  }
   const [leaders, setLeaders] = useState();
   
 
@@ -66,9 +72,7 @@ export const Leaderboard = () => {
               marginTop: 30,
               marginBottom: 50,
             }}
-            onClick={() => {
-              alert("clicked");
-            }}
+            onClick={handleDashboardClick}
           >
             Return to Dashboard
           </Button>
