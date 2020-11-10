@@ -1,8 +1,9 @@
 import React from "react";
-import {generateWord, getWPM} from "../../../utils";
+import {generateQuote, generateWord, getWPM} from "../../../utils";
 import {Box, Typography} from "@material-ui/core";
 import {ChallengeContainer} from "../components";
 import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 
 class Challenge extends React.Component {
     state = {
@@ -11,6 +12,7 @@ class Challenge extends React.Component {
         highlightedWord: "",
         wordOptions: {
             punctuation: false,
+            quotes: false,
         },
         tracker: [],
         startTime: '',
@@ -27,34 +29,47 @@ class Challenge extends React.Component {
     }
 
     handleNewChallenge = () => {
-        let options;
         const {wordCount, minChar, maxChar} = this.props;
-        options = {wordCount, minChar, maxChar, ...this.state.wordOptions};
-        generateWord(options).then((res) => {
-            const newWordsToBeTyped = res.join(" ");
-            const beginning = newWordsToBeTyped.slice(0, this.state.index);
-            const highlighted = newWordsToBeTyped[this.state.index];
-            const end = newWordsToBeTyped.slice(
-                this.state.index + 1,
-                newWordsToBeTyped.length
-            );
+        const options = {wordCount, minChar, maxChar, ...this.state.wordOptions};
+        let newWordsToBeTyped;
 
-            const newHighlightedWord = (
-                <Typography>
-                    <Box fontFamily="Monospace" fontSize="h5.fontSize">
-                        {beginning}
-                        <span
-                            style={{borderBottom: "2px solid #0099ff", whiteSpace: "break-spaces"}}>{highlighted}</span>
-                        {end}
-                    </Box>
-                </Typography>
-            );
-            this.setState({
-                wordsToBeTyped: newWordsToBeTyped,
-                highlightedWord: newHighlightedWord,
+        if (options.quotes) {
+            generateQuote().then((res) => {
+                newWordsToBeTyped = res;
+                this.handleNewWords(newWordsToBeTyped);
+            })
+        } else {
+
+            generateWord(options).then((res) => {
+                newWordsToBeTyped = res.join(" ");
+                this.handleNewWords(newWordsToBeTyped);
             });
-        });
+        }
     };
+
+    handleNewWords(newWordsToBeTyped){
+        const beginning = newWordsToBeTyped.slice(0, this.state.index);
+        const highlighted = newWordsToBeTyped[this.state.index];
+        const end = newWordsToBeTyped.slice(
+            this.state.index + 1,
+            newWordsToBeTyped.length
+        );
+
+        const newHighlightedWord = (
+            <Typography>
+                <Box fontFamily="Monospace" fontSize="h5.fontSize">
+                    {beginning}
+                    <span
+                        style={{borderBottom: "2px solid #0099ff", whiteSpace: "break-spaces"}}>{highlighted}</span>
+                    {end}
+                </Box>
+            </Typography>
+        );
+        this.setState({
+            wordsToBeTyped: newWordsToBeTyped,
+            highlightedWord: newHighlightedWord,
+        });
+    }
 
     handleCorrectKeyDown = (e) => {
         const typedChar = e.key;
@@ -138,11 +153,30 @@ class Challenge extends React.Component {
         this.setState({highlightedWord: newHighlightedWord});
     };
 
-    handleAddOption = () => {
-        this.setState(({wordOptions: {punctuation}}) => {
-            return {wordOptions: {punctuation: !punctuation}};
-        });
+    handleAddOption = (e) => {
+
+        const newWordOptions = this.state.wordOptions;
+        switch (e.target.dataset.value) {
+            case 'punctuation':
+                this.setState((prevState) => {
+                    newWordOptions.punctuation = !prevState.wordOptions.punctuation;
+                    return {newWordOptions};
+                });
+                break;
+            case 'quotes':
+                this.setState((prevState) => {
+                    newWordOptions.quotes = !prevState.wordOptions.quotes;
+                    return {newWordOptions};
+                });
+                break;
+            default:
+                break;
+        }
+
+
         this.forceUpdate(this.handleRefreshWords);
+
+        console.log(this.state)
     };
 
     // function is called on a key down event for correct characters, wrong ones, and a backspace.
@@ -206,14 +240,30 @@ class Challenge extends React.Component {
         this.setState({WPM: getWPM(correct, miss, time)});
     }
 
+
     renderToggleButton = () => {
         return (
-            <ToggleButton
-                selected={this.state.wordOptions.punctuation}
-                onMouseDown={this.handleAddOption}
-            >
-                Punctuation
-            </ToggleButton>
+            <ToggleButtonGroup>
+                <ToggleButton
+                    selected={this.state.wordOptions.punctuation}
+                    onMouseDown={this.handleAddOption}
+                    data-value={'punctuation'}
+                >
+                    <Typography data-value={'punctuation'}>
+                        Punctuation
+                    </Typography>
+                </ToggleButton>
+
+                <ToggleButton
+                    selected={this.state.wordOptions.quotes}
+                    onMouseDown={this.handleAddOption}
+                    data-value={'quotes'}
+                >
+                    <Typography data-value={"quotes"}>
+                        Quote
+                    </Typography>
+                </ToggleButton>
+            </ToggleButtonGroup>
         )
     }
 
