@@ -231,6 +231,7 @@ class Challenge extends React.Component {
             />
             <TransitionsModal
               wpm={this.state.WPM}
+              accuracy={this.state.accuracyPercent}
             />
           </>
         );

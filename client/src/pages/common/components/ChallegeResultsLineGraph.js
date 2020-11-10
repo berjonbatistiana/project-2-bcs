@@ -14,7 +14,7 @@ export class ChallengeResultsLineGraph extends Component {
         datasets: [
           {
             label: "WPM",
-            data: [75, 70, 80, 80, 90, 85],
+            data: [75, 70, 80, 80, 90, 85, 85],
           },
         ],
       },
