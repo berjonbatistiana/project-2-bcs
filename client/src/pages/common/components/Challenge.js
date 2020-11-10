@@ -200,6 +200,7 @@ class Challenge extends React.Component {
         accuracy={this.state.accuracyPercent}
         wpm={this.state.WPM}
         toggleButton={this.renderToggleButton}
+        selectedKey={this.state.wordsToBeTyped[this.state.index]}
       />
     );
   }
