@@ -1,6 +1,8 @@
 import React from "react";
 import {generateWord, getWPM} from "../../../utils";
-import {Box, Grid, Typography} from "@material-ui/core";
+import {Box, Typography} from "@material-ui/core";
+import {ChallengeContainer} from "../components";
+import ToggleButton from '@material-ui/lab/ToggleButton';
 
 class Challenge extends React.Component {
     state = {
@@ -38,11 +40,14 @@ class Challenge extends React.Component {
             );
 
             const newHighlightedWord = (
-                <div>
-                    {beginning}
-                    <span style={{backgroundColor: "grey"}}>{highlighted}</span>
-                    {end}
-                </div>
+                <Typography>
+                    <Box fontFamily="Monospace" fontSize="h5.fontSize">
+                        {beginning}
+                        <span
+                            style={{borderBottom: "2px solid #0099ff", whiteSpace: "break-spaces"}}>{highlighted}</span>
+                        {end}
+                    </Box>
+                </Typography>
             );
             this.setState({
                 wordsToBeTyped: newWordsToBeTyped,
@@ -116,32 +121,27 @@ class Challenge extends React.Component {
         }
 
         const newHighlightedWord = (
-            <div>
-                {Object.values(this.state.tracker).map((i) => {
-                    return (
-                        <span style={{backgroundColor: i.correct ? "green" : "red"}}>
+            <Typography>
+                <Box fontFamily="Monospace" fontSize="h5.fontSize">
+                    {Object.values(this.state.tracker).map((i) => {
+                        return (
+                            <span style={{backgroundColor: i.correct ? "#a5d6a7" : "#ef9a9a"}}>
               {i.char}
             </span>
-                    );
-                })}
-                <span style={{backgroundColor: "grey"}}>{highlighted}</span>
-                {end}
-            </div>
+                        );
+                    })}
+                    <span style={{borderBottom: "2px solid #0099ff", whiteSpace: "break-spaces"}}>{highlighted}</span>
+                    {end}
+                </Box>
+            </Typography>
         );
         this.setState({highlightedWord: newHighlightedWord});
     };
 
-    handleAddOption = (e) => {
-        const option = e.target.dataset.value;
-        switch (option) {
-            case "punctuation":
-                this.setState(({wordOptions: {punctuation}}) => {
-                    return {wordOptions: {punctuation: !punctuation}};
-                });
-                break;
-            default:
-                break;
-        }
+    handleAddOption = () => {
+        this.setState(({wordOptions: {punctuation}}) => {
+            return {wordOptions: {punctuation: !punctuation}};
+        });
         this.forceUpdate(this.handleRefreshWords);
     };
 
@@ -206,55 +206,26 @@ class Challenge extends React.Component {
         this.setState({WPM: getWPM(correct, miss, time)});
     }
 
-    render() {
-        const style = {
-            fontSize: 30,
-            textAlign: "center",
-            margin: 100,
-        };
-
+    renderToggleButton = () => {
         return (
-            <div style={style}>
-                <Typography component="h1" variant="h2">
-                    Typing Challenge
-                </Typography>
-                <div style={{margin: 70}}>{this.state.highlightedWord}</div>
-                <div>
-                    <Grid item container xs={12}>
-                        <Grid item xs={12} md={6}>
-                            <Box m={3} style={{textAlign: "center"}}>
-                                <Typography component="h5" variant="h5">
-                                    Accuracy
-                                </Typography>
-                                {this.state.accuracyPercent}%
-                            </Box>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <Box m={3} style={{textAlign: "center"}}>
-                                <Typography component="h5" variant="h5">
-                                    Words Per Minute
-                                </Typography>
-                                {this.state.WPM}
-                            </Box>
-                        </Grid>
-                    </Grid>
-                </div>
-                <div>
-                    <Box mt={6}>
-                        <Typography
-                            style={{
-                                color: this.state.wordOptions.punctuation
-                                    ? "black"
-                                    : "lightgray",
-                            }}
-                            data-value={"punctuation"}
-                            onClick={this.handleAddOption}
-                        >
-                            Punctuation
-                        </Typography>
-                    </Box>
-                </div>
-            </div>
+            <ToggleButton
+                selected={this.state.wordOptions.punctuation}
+                onMouseDown={this.handleAddOption}
+            >
+                Punctuation
+            </ToggleButton>
+        )
+    }
+
+    render() {
+        return (
+            <ChallengeContainer
+                challenge={this.state.highlightedWord}
+                accuracy={this.state.accuracyPercent}
+                wpm={this.state.WPM}
+                toggleButton={this.renderToggleButton}
+                selectedKey={this.state.wordsToBeTyped[this.state.index]}
+            />
         );
     }
 }

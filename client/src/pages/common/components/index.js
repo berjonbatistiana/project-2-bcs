@@ -1,5 +1,6 @@
 export * from "./BlinkingHeading";
 export * from "./Challenge";
+export * from "./ChallengeContainer"
 export * from "./ChatBubble";
 export * from "./ChatContainer"
 export * from "./Donut";
