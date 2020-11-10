@@ -6,15 +6,20 @@ export class LineGraph extends Component {
 
   componentDidMount() {
     const myChartRef = this.chartRef.current.getContext("2d");
-
+    const ids = [];
+    const wpm = [];
+    for (let i = 0; i < this.props.userData.length; i++) {
+      ids.push(i + 1);
+      wpm.push(this.props.userData[i].wordsPerMin);
+    }
     new Chart(myChartRef, {
       type: "line",
       data: {
-        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        labels: [...ids].reverse(),
         datasets: [
           {
             label: "WPM",
-            data: [70, 80, 80, 90, 85],
+            data: [...wpm].reverse(),
           },
         ],
       },

@@ -5,7 +5,7 @@ const {
   postScore,
 } = require("../../../controllers/scoreController");
 
-router.route("/scores").post(postScore);
+router.route("/score").post(postScore);
 
 router.route("/leaders").get(getLeaderboard)
 

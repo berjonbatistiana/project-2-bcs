@@ -5,7 +5,7 @@ export * from "./ChatBubble";
 export * from "./ChatContainer"
 export * from "./Donut";
 export * from "./Footer";
-export * from "./FriendHighScores";
+export * from "./PersonalHighScores";
 export * from "./LineGraph";
 export * from "./SignCard";
 export * from "./TextFieldInput";
