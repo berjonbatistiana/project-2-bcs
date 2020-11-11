@@ -6,6 +6,7 @@ import TrackChangesIcon from '@material-ui/icons/TrackChanges';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import AlarmIcon from '@material-ui/icons/Alarm';
 import PanToolIcon from '@material-ui/icons/PanTool';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import FiberManualRecordOutlinedIcon from '@material-ui/icons/FiberManualRecordOutlined';
@@ -135,10 +136,18 @@ export const ChallengeContainer = (props) => {
               </Box>
             </Grid>
             <Grid item>
-              <Box mt={2} mb={4}>
+              <Box mt={2} mb={2}>
                 <DirectionsRunIcon/>
                 <Typography>
                   {props.wpm} WPM
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box mt={2} mb={4}>
+                <AlarmIcon color={props.timeLeft > 0? 'initial': 'disabled'}/>
+                <Typography color={props.timeLeft > 0? 'initial':'textSecondary'}>
+                  {props.timeLeft}s
                 </Typography>
               </Box>
             </Grid>

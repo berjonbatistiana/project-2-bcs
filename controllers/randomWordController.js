@@ -1,4 +1,6 @@
+
 const randomWord = require("random-word");
+const randomQuote = require("get-random-quote");
 
 module.exports = {
     generateWord: (req, res) => {
@@ -6,7 +8,8 @@ module.exports = {
             wordCount = 100,
             minChar = 3,
             maxChar = 15,
-            punctuation = 'false'
+            punctuation = 'false',
+            quotes = 'false'
         } = req.query;
         const words = [];
 
@@ -29,7 +32,7 @@ module.exports = {
             } while (!(newWord.length >= minChar && newWord.length <= maxChar));
 
             // if previous word had a punctuation, capitalize this one.
-            if (hadPunc){
+            if (hadPunc) {
                 hadPunc = false;
                 newWord = newWord.charAt(0).toUpperCase() + newWord.slice(1)
             }
@@ -40,11 +43,11 @@ module.exports = {
                 const whichPunc = Math.floor(Math.random() * Math.floor(punctuations.length))
                 const puncToAdd = punctuations[whichPunc];
 
-                if (words.length === 0){
+                if (words.length === 0) {
                     newWord = newWord.charAt(0).toUpperCase() + newWord.slice(1)
                 }
 
-                if (chance === 0){
+                if (chance === 0) {
                     hadPunc = whichPunc < 3;
                     newWord += puncToAdd;
                 }
@@ -56,4 +59,11 @@ module.exports = {
         res.json(words);
         return words;
     },
+
+    generateQuote: (req, res) => {
+        randomQuote().then((quote) => {
+            res.json(quote.text)
+            return quote.text;
+        })
+    }
 };
