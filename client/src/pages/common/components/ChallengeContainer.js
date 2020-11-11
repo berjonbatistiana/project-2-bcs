@@ -7,6 +7,7 @@ import TrackChangesIcon from '@material-ui/icons/TrackChanges';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import AlarmIcon from '@material-ui/icons/Alarm';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -120,10 +121,18 @@ export const ChallengeContainer = (props) => {
               </Box>
             </Grid>
             <Grid item>
-              <Box mt={3} mb={6}>
+              <Box mt={3} mb={3}>
                 <DirectionsRunIcon/>
                 <Typography>
                   {props.wpm} WPM
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box mt={3} mb={6}>
+                <AlarmIcon color={props.timeLeft > 0? 'initial': 'disabled'}/>
+                <Typography color={props.timeLeft > 0? 'initial':'textSecondary'}>
+                  {props.timeLeft}s
                 </Typography>
               </Box>
             </Grid>

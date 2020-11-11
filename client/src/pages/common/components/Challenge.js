@@ -13,6 +13,8 @@ class Challenge extends React.Component {
         wordOptions: {
             punctuation: false,
             quotes: false,
+            seconds30: true,
+            seconds60: false
         },
         tracker: [],
         startTime: '',
@@ -20,12 +22,30 @@ class Challenge extends React.Component {
         WPM: 0,
         accuracyPercent: 0,
         correctNum: 0,
-        totalCharSeen: 0
+        totalCharSeen: 0,
+        timeLeft: 30,
+        timer: null
     };
 
     componentDidMount() {
         this.handleNewChallenge();
         document.addEventListener("keydown", this.handleCorrectKeyDown);
+    }
+
+    countDown = () => {
+        if (this.state.timeLeft > 0){
+            this.state.timer = setInterval(this.handleTimer, 1000);
+        }
+    }
+
+    handleTimer = () => {
+        let seconds = this.state.timeLeft - 1;
+        this.setState({timeLeft: seconds});
+        if (seconds === 0){
+            clearInterval(this.state.timer);
+            // run end of challenge results
+            this.handleRefreshWords();
+        }
     }
 
     handleNewChallenge = () => {
@@ -47,7 +67,7 @@ class Challenge extends React.Component {
         }
     };
 
-    handleNewWords(newWordsToBeTyped){
+    handleNewWords(newWordsToBeTyped) {
         const beginning = newWordsToBeTyped.slice(0, this.state.index);
         const highlighted = newWordsToBeTyped[this.state.index];
         const end = newWordsToBeTyped.slice(
@@ -80,6 +100,9 @@ class Challenge extends React.Component {
 
         if (this.state.index === 0 && this.state.startTime === '') {
             this.state.startTime = new Date();
+            if (this.state.wordOptions.seconds30 || this.state.wordOptions.seconds60){
+                this.countDown();
+            }
         } else {
             this.handleWPMUpdater();
         }
@@ -171,6 +194,25 @@ class Challenge extends React.Component {
                     return {newWordOptions};
                 });
                 break;
+            case 'thirtyS':
+                this.setState((prevState) => {
+                    newWordOptions.seconds30 = !prevState.wordOptions.seconds30;
+                    newWordOptions.seconds60 = false;
+                    if (!newWordOptions.seconds30)
+                        clearInterval(this.state.timer)
+                    return {newWordOptions, timeLeft: 30};
+                })
+                break;
+            case 'sixtyS':
+                this.setState((prevState) => {
+                    newWordOptions.seconds60 = !prevState.wordOptions.seconds60;
+                    newWordOptions.seconds30 = false;
+                    if (!newWordOptions.seconds60)
+                        clearInterval(this.state.timer)
+
+                    return {newWordOptions, timeLeft: 60};
+                })
+                break;
             default:
                 break;
         }
@@ -223,14 +265,16 @@ class Challenge extends React.Component {
 
     handleRefreshWords = () => {
         // Need to figure out how to set the index back to 0. Maybe a problem with asynchronisity.
-        this.setState({
+        this.setState(prevState => ({
             index: 0,
             wordsToBeTyped: "",
             highlightedWord: "",
             tracker: [],
             startTime: '',
-            WPM: 0
-        });
+            WPM: 0,
+            timeLeft: prevState.wordOptions.seconds30? 30 : prevState.wordOptions.seconds60? 60 : 0
+        }));
+        clearInterval(this.state.timer);
         this.handleNewChallenge();
     };
 
@@ -265,6 +309,26 @@ class Challenge extends React.Component {
                         Quote
                     </Typography>
                 </ToggleButton>
+                <ToggleButton
+                    selected={this.state.wordOptions.seconds30}
+                    onMouseDown={this.handleAddOption}
+                    data-value={'thirtyS'}
+                >
+                    <Typography
+                        data-value={'thirtyS'}>
+                        Timed: 30s
+                    </Typography>
+                </ToggleButton>
+                <ToggleButton
+                    selected={this.state.wordOptions.seconds60}
+                    onMouseDown={this.handleAddOption}
+                    data-value={'sixtyS'}
+                >
+                    <Typography
+                        data-value={'sixtyS'}>
+                        Timed: 60s
+                    </Typography>
+                </ToggleButton>
             </ToggleButtonGroup>
         )
     }
@@ -275,6 +339,7 @@ class Challenge extends React.Component {
                 challenge={this.state.highlightedWord}
                 accuracy={this.state.accuracyPercent}
                 wpm={this.state.WPM}
+                timeLeft={this.state.timeLeft}
                 toggleButton={this.renderToggleButton}
                 selectedKey={this.state.wordsToBeTyped[this.state.index]}
             />
