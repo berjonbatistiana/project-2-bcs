@@ -3,6 +3,7 @@ import {generateWord, getWPM} from "../../../utils";
 import {Box, Typography} from "@material-ui/core";
 import {ChallengeContainer, accentColor} from "../components";
 import ToggleButton from '@material-ui/lab/ToggleButton';
+import Button from '@material-ui/core/Button';
 
 class Challenge extends React.Component {
     state = {
@@ -26,7 +27,11 @@ class Challenge extends React.Component {
         document.addEventListener("keydown", this.handleCorrectKeyDown);
     }
 
-    handleNewChallenge = () => {
+    componentWillUnmount() {
+      document.removeEventListener("keydown", this.handleCorrectKeyDown);
+    }
+
+  handleNewChallenge = () => {
         let options;
         const {wordCount, minChar, maxChar} = this.props;
         options = {wordCount, minChar, maxChar, ...this.state.wordOptions};
@@ -218,6 +223,18 @@ class Challenge extends React.Component {
         )
     }
 
+  renderRestartButton = () => {
+    return (
+      <Button
+        size="large"
+        style={{color: accentColor}}
+        onMouseDown={this.handleRefreshWords}
+      >
+        Restart
+      </Button>
+    )
+  }
+
     render() {
         return (
             <ChallengeContainer
@@ -225,6 +242,7 @@ class Challenge extends React.Component {
                 accuracy={this.state.accuracyPercent}
                 wpm={this.state.WPM}
                 toggleButton={this.renderToggleButton}
+                restartButton={this.renderRestartButton}
                 selectedKey={this.state.wordsToBeTyped[this.state.index]}
             />
         );

@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     backgroundColor: accentColor,
     borderRadius: 25,
+    '&:hover': {
+      backgroundColor: "#0276aa",
+    }
   },
   outlined: {
     color: accentColor,
@@ -58,7 +61,6 @@ export const About = () => {
               <Button
                 to="signup"
                 component={Link}
-                variant="contained"
                 className={classes.contained}
               >
                 Get Started
@@ -208,7 +210,7 @@ export const About = () => {
             <Box m={3} style={{ textAlign: "center" }}>
               <KeyboardIcon className={classes.icon}/>
               <Typography component="p" variant="body1">
-                <b>And it's so easy to learn!</b> All you need a is keyboard and a web browser.
+                <b>And it's so easy to learn!</b> All you need is a keyboard and a web browser.
               </Typography>
             </Box>
           </Grid>
