@@ -1,6 +1,9 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+
+import {accentColor} from "../components"
+
 const useStyles = makeStyles(theme => ({
   theirInput: {
     color: "black",
@@ -34,7 +37,7 @@ export const YourBubble = (props) => {
       disabled
       multiline
       rows={props.rows}
-      style={{ backgroundColor: '#0099ff', borderRadius: 25, padding: '15px 20px'}}
+      style={{ backgroundColor: accentColor, borderRadius: 25, padding: '15px 20px'}}
     />
   );
 }

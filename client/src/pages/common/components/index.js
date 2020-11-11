@@ -1,3 +1,4 @@
+export * from "./accentColor"
 export * from "./BlinkingHeading";
 export * from "./Challenge";
 export * from "./ChallengeContainer"

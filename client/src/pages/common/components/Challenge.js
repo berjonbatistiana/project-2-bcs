@@ -1,7 +1,7 @@
 import React from "react";
 import {generateWord, getWPM} from "../../../utils";
 import {Box, Typography} from "@material-ui/core";
-import {ChallengeContainer} from "../components";
+import {ChallengeContainer, accentColor} from "../components";
 import ToggleButton from '@material-ui/lab/ToggleButton';
 
 class Challenge extends React.Component {
@@ -44,7 +44,7 @@ class Challenge extends React.Component {
                     <Box fontFamily="Monospace" fontSize="h5.fontSize">
                         {beginning}
                         <span
-                            style={{borderBottom: "2px solid #0099ff", whiteSpace: "break-spaces"}}>{highlighted}</span>
+                            style={{borderBottom: `2px solid ${accentColor}`, whiteSpace: "break-spaces"}}>{highlighted}</span>
                         {end}
                     </Box>
                 </Typography>
@@ -131,7 +131,7 @@ class Challenge extends React.Component {
             </span>
                         );
                     })}
-                    <span style={{borderBottom: "2px solid #0099ff", whiteSpace: "break-spaces"}}>{highlighted}</span>
+                    <span style={{borderBottom: `2px solid ${accentColor}`, whiteSpace: "break-spaces"}}>{highlighted}</span>
                     {end}
                 </Box>
             </Typography>
