@@ -41,7 +41,7 @@ export default function ButtonAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar className={classes.colorNav} position="static">
+      <AppBar className={classes.colorNav} position="static" elevation={0}>
         <Toolbar>
           {token ? (
             <Button color="inherit" to="/" component={Link}>

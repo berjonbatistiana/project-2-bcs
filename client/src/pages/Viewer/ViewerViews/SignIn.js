@@ -2,11 +2,13 @@ import React from "react";
 import { reduxForm, Field } from "redux-form";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
+import { Grid } from "@material-ui/core/";
 
 import { setViewerToken } from "../ViewerReducer";
 
-import { SignCard, TextFieldInput } from "../../common/components";
-import { Grid } from "@material-ui/core/";
+import {accentColor, SignCard, TextFieldInput} from "../../common/components";
+import signIn from "../../common/components/signIn.svg"
+
 
 const SignIn = (props) => {
   const { handleSubmit, history } = props;
@@ -24,49 +26,48 @@ const SignIn = (props) => {
   };
 
   return (
-    <Grid
-      container
-      justify="center"
-      direction="column"
-      alignItems="center"
-      style={{ minHeight: "80vh" }}
-    >
-      <Grid item>
-        <SignCard
-          title="Sign In"
-          content={
-            <form noValidate autoComplete="off">
-              <Grid item container spacing={3}>
-                <Grid item xs={12}>
-                  <Field
-                    name="username"
-                    label="Username"
-                    component={TextFieldInput}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    name="password"
-                    label="Password"
-                    component={TextFieldInput}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    onClick={handleSubmit(handleSignIn)}
-                    variant="contained"
-                    color="primary"
-                  >
-                    Sign in
-                  </Button>
-                </Grid>
-                <p style={{ color: "red" }} id="on-error"></p>
-              </Grid>
-            </form>
-          }
-        />
-      </Grid>
-    </Grid>
+    <SignCard
+      title="Sign In"
+      image={signIn}
+      question="Don't have an account? "
+      linkTitle="Sign Up"
+      link="signup"
+      content={
+        <form noValidate autoComplete="off">
+          <Grid item container spacing={3}>
+            <Grid item xs={12}>
+              <Field
+                name="username"
+                label="Username"
+                component={TextFieldInput}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Field
+                name="password"
+                label="Password"
+                component={TextFieldInput}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                onClick={handleSubmit(handleSignIn)}
+                variant="contained"
+                style={{color: "white",
+                  backgroundColor: accentColor,
+                  borderRadius: 25,
+                  '&:hover': {
+                    backgroundColor: "#0276aa",
+                  }}}
+              >
+                Sign in
+              </Button>
+            </Grid>
+            <p style={{ color: "red" }} id="on-error"></p>
+          </Grid>
+        </form>
+      }
+    />
   );
 };
 

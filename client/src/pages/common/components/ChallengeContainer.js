@@ -11,21 +11,23 @@ import PanToolIcon from '@material-ui/icons/PanTool';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import FiberManualRecordOutlinedIcon from '@material-ui/icons/FiberManualRecordOutlined';
 
+import { secondaryColor } from "../components";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: 30,
-    width: 30,
+    height: 25,
+    width: 25,
   },
   spacebar: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: 30,
-    width: 180,
-  }
+    height: 25,
+    width: 175,
+  },
 }));
 
 export const ChallengeContainer = (props) => {
@@ -57,7 +59,7 @@ export const ChallengeContainer = (props) => {
       {upperKey: ")", key: "0", finger: "RP", color: "#ff5722"},
       {upperKey: "_", key: "-", finger: "RP", color: "#ff5722"},
       {upperKey: "+", key: "=", finger: "RP", color: "#ff5722"},
-      {upperKey: "Del", key: "Del", finger: "RP", color: "#ff5722"},
+      {upperKey: "⮐", key: "⮐", finger: "RP", color: "#ff5722"},
     ],
     [
       {upperKey: "Q", key: "q", finger: "LP", color: "#e91e63"},
@@ -105,128 +107,141 @@ export const ChallengeContainer = (props) => {
   ]
 
   return (
-    <Box m={4}>
-      <Card>
-        <Box m={2}>
-          <Typography component="h1" variant="h5">
-            Typing Challenge
-          </Typography>
-        </Box>
-        <Divider />
-        <Grid container>
-          <Grid item xs={9}>
-            <Box m={3}>
-              {props.challenge}
-            </Box>
-          </Grid>
-          <Grid
-            container item
-            xs={3}
-            justify="center"
-            direction="column"
-            alignItems="center"
-            style={{backgroundColor: "#f5f5f5", textAlign: "center"}}
-          >
-            <Grid item>
-              <Box mt={4} mb={2}>
-                <TrackChangesIcon/>
-                <Typography>
-                  {props.accuracy}%
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box mt={2} mb={2}>
-                <DirectionsRunIcon/>
-                <Typography>
-                  {props.wpm} WPM
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box mt={2} mb={4}>
-                <AlarmIcon color={props.timeLeft > 0? 'initial': 'disabled'}/>
-                <Typography color={props.timeLeft > 0? 'initial':'textSecondary'}>
-                  {props.timeLeft}s
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Divider />
-        <Box m={2}>
-          <Box>
-            {props.toggleButton}
+    <React.Fragment>
+      <Box m={4}>
+        <Card>
+          <Box m={2}>
+            <Typography component="h1" variant="h5">
+              Typing Challenge
+            </Typography>
           </Box>
-        </Box>
-      </Card>
-      <Box mt={2}>
-        <Grid
-          container
-          direction="column"
-          justify="center"
-          spacing={1}
-        >
-          {
-            rows.map(row => {
-              return (
-                <Grid
-                  item
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="flex-start"
-                  spacing={1}
-                >
-                  {row.map(item => {
-                    if (props.selectedKey === item.key || props.selectedKey === item.upperKey) {
-                      selectedFinger = item.finger;
-                    }
-                    return (
-                      <Grid item key={item.key}>
-                        <Paper className={item.key === " " ? classes.spacebar : classes.paper} style={{backgroundColor: props.selectedKey === item.key || props.selectedKey === item.upperKey ? item.color : "", color: props.selectedKey === item.key || props.selectedKey === item.upperKey ? "white" : ""}}>
-                          <Typography variant="caption">
-                            {props.selectedKey === item.upperKey ? item.upperKey : item.key}
-                          </Typography>
-                        </Paper>
-                      </Grid>
-                    )
-                  })}
-                </Grid>
-              )
-            })
-          }
-        </Grid>
-      </Box>
-      <Box m={2}>
-        <Grid
-          container
-          direction="column"
-          justify="center"
-          spacing={2}
-          alignItems="center"
-        >
-          <Grid item style={{width: "420px"}}>
+          <Divider />
+          <Grid container>
+            <Grid item xs={9}>
+              <Box m={3}>
+                {props.challenge}
+              </Box>
+            </Grid>
+            <Grid
+              container item
+              xs={3}
+              justify="center"
+              direction="column"
+              alignItems="center"
+              style={{backgroundColor: secondaryColor, textAlign: "center"}}
+            >
+              <Grid item>
+                <Box mt={4} mb={2}>
+                  <TrackChangesIcon/>
+                  <Typography>
+                    {props.accuracy}%
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item>
+                <Box mt={2} mb={4}>
+                  <DirectionsRunIcon/>
+                  <Typography>
+                    {props.wpm} WPM
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item>
+                <Box mt={2} mb={4}>
+                  <AlarmIcon color={props.timeLeft > 0? 'initial': 'disabled'}/>
+                  <Typography color={props.timeLeft > 0? 'initial':'textSecondary'}>
+                    {props.timeLeft}s
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Divider />
+          <Box m={2} display="flex" alignItems="center">
+            <Box width="100%">
+              <Box>
+                {props.toggleButton}
+              </Box>
+            </Box>
+            <Box flexShrink={0}>
+              <Box>
+                {props.restartButton}
+              </Box>
+            </Box>
+          </Box>
+        </Card>
+        <Box mt={3}>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            spacing={1}
+          >
             {
-              fingers.map(finger => {
-                if (finger.digit === selectedFinger) {
-                  return (
-                    <FiberManualRecordIcon style={{fontSize: 36, float: finger.hand, color: finger.color}}/>
-                  )
-                } else {
-                  return (
-                    <FiberManualRecordOutlinedIcon style={{fontSize: 36, float: finger.hand, color: finger.color}}/>
-                  )
-                }
+              rows.map(row => {
+                return (
+                  <Grid
+                    item
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="flex-start"
+                    spacing={1}
+                  >
+                    {row.map(item => {
+                      if (props.selectedKey === item.key || props.selectedKey === item.upperKey) {
+                        selectedFinger = item.finger;
+                      }
+                      return (
+                        <Grid item key={item.key} >
+                          <Paper
+                            elevation={0}
+                            className={item.key === " " ? classes.spacebar : classes.paper}
+                            style={{backgroundColor: props.selectedKey === item.key || props.selectedKey === item.upperKey ? item.color : secondaryColor, color: props.selectedKey === item.key || props.selectedKey === item.upperKey ? "white" : ""}}
+                          >
+                            <Typography variant="caption">
+                              {props.selectedKey === item.upperKey ? item.upperKey : item.key}
+                            </Typography>
+                          </Paper>
+                        </Grid>
+                      )
+                    })}
+                  </Grid>
+                )
               })
             }
           </Grid>
-          <Grid item>
-            <PanToolIcon style={{transform: "scaleX(-1)", fontSize: 200, float: "left", color: "#f5f5f5"}}/>
-            <PanToolIcon style={{fontSize: 200, float: "right", color: "#f5f5f5"}}/>
+        </Box>
+        <Box m={1}>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            spacing={2}
+            alignItems="center"
+          >
+            <Grid item style={{width: "420px"}}>
+              {
+                fingers.map(finger => {
+                  if (finger.digit === selectedFinger) {
+                    return (
+                      <FiberManualRecordIcon style={{fontSize: 36, float: finger.hand, color: finger.color}}/>
+                    )
+                  } else {
+                    return (
+                      <FiberManualRecordOutlinedIcon style={{fontSize: 36, float: finger.hand, color: finger.color}}/>
+                    )
+                  }
+                })
+              }
+            </Grid>
+            <Grid item>
+              <PanToolIcon style={{transform: "scaleX(-1)", fontSize: 200, float: "left", color: secondaryColor}}/>
+              <PanToolIcon style={{fontSize: 200, float: "right", color: secondaryColor}}/>
+            </Grid>
           </Grid>
-        </Grid>
+        </Box>
       </Box>
-    </Box>
+    </React.Fragment>
   );
 }

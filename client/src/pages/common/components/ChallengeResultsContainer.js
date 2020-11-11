@@ -1,9 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
-import { ChallengeResultsLineGraph } from "../components/ChallegeResultsLineGraph";
+import { ChallengeResultsLineGraph } from "../components";
 import { Link } from "react-router-dom";
-
 
 
 const useStyles = makeStyles((theme) => ({

@@ -3,6 +3,8 @@ import { Typography } from "@material-ui/core";
 import Box from '@material-ui/core/Box';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 
+import {accentColor} from "../components";
+
 export const BlinkingHeading = () => {
   const cursorBlink = () => {
     let cursor;
@@ -36,8 +38,8 @@ export const BlinkingHeading = () => {
    return (
       <Typography variant="h5" component="h1">
         <Box fontSize="h6.fontSize">
-          <span id="title"></span><span style={{ color: '#0099ff'}} id="cursor">︳</span>
-          <EmojiEmotionsIcon style={{ color: '#0099ff', float: "right"}}/>
+          <span id="title"></span><span style={{ color: accentColor}} id="cursor">︳</span>
+          <EmojiEmotionsIcon style={{ color: accentColor, float: "right"}}/>
         </Box>
       </Typography>
     )

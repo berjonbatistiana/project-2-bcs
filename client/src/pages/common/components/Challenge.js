@@ -1,10 +1,10 @@
 import React from "react";
 import {generateQuote, generateWord, getWPM} from "../../../utils";
 import {Box, Typography} from "@material-ui/core";
-import {ChallengeContainer} from "../components";
 import ToggleButton from '@material-ui/lab/ToggleButton';
+import Button from '@material-ui/core/Button';
+import {ChallengeContainer, accentColor, TransitionsModal} from "../components";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
-import { TransitionsModal } from '../components/ChallengeResultsContainer';
 
 class Challenge extends React.Component {
     state = {
@@ -31,6 +31,10 @@ class Challenge extends React.Component {
     componentDidMount() {
         this.handleNewChallenge();
         document.addEventListener("keydown", this.handleCorrectKeyDown);
+    }
+
+    componentWillUnmount() {
+      document.removeEventListener("keydown", this.handleCorrectKeyDown);
     }
 
     countDown = () => {
@@ -101,7 +105,7 @@ class Challenge extends React.Component {
         if (typedChar === "Shift") return;
 
         if (this.state.index === 0 && this.state.startTime === '') {
-            this.state.startTime = new Date();
+            this.setState({ startTime: new Date() });
             if (this.state.wordOptions.seconds30 || this.state.wordOptions.seconds60){
                 this.countDown();
             }
@@ -127,11 +131,10 @@ class Challenge extends React.Component {
                 ),
             });
         }
-        let beginning, highlighted;
+        let highlighted;
         let end = "";
         if (e.key === "Backspace") {
             if (this.state.index === 0) return;
-            // beginning = this.state.wordsToBeTyped.slice(0, this.state.index - 1);
             highlighted = this.state.wordsToBeTyped[this.state.index - 1];
             if (this.state.index !== this.state.wordsToBeTyped.length) {
                 end = this.state.wordsToBeTyped
@@ -143,7 +146,6 @@ class Challenge extends React.Component {
             });
             this.handleAccuracyUpdater()
         } else {
-            // beginning = this.state.wordsToBeTyped.slice(0, this.state.index + 1);
             highlighted = this.state.wordsToBeTyped[this.state.index + 1];
             if (this.state.index !== this.state.wordsToBeTyped.length) {
                 end = this.state.wordsToBeTyped.slice(
@@ -170,7 +172,7 @@ class Challenge extends React.Component {
             </span>
                         );
                     })}
-                    <span style={{borderBottom: "2px solid #0099ff", whiteSpace: "break-spaces"}}>{highlighted}</span>
+                    <span style={{borderBottom: `2px solid ${accentColor}`, whiteSpace: "break-spaces"}}>{highlighted}</span>
                     {end}
                 </Box>
             </Typography>
@@ -335,6 +337,18 @@ class Challenge extends React.Component {
         )
     }
 
+  renderRestartButton = () => {
+    return (
+      <Button
+        size="large"
+        style={{color: accentColor}}
+        onMouseDown={this.handleRefreshWords}
+      >
+        Restart
+      </Button>
+    )
+  }
+
     render() {
         return (
           <>
@@ -344,6 +358,7 @@ class Challenge extends React.Component {
                 wpm={this.state.WPM}
                 timeLeft={this.state.timeLeft}
                 toggleButton={this.renderToggleButton}
+                restartButton={this.renderRestartButton}
                 selectedKey={this.state.wordsToBeTyped[this.state.index]}
             />
             <TransitionsModal
