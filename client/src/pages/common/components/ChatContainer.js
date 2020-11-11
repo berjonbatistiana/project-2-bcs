@@ -2,6 +2,7 @@ import React from 'react';
 import { YourBubble, TheirBubble, BlinkingHeading } from "../components";
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import {secondaryColor} from "../components/"
 
 export const ChatContainer = () => {
   return (
@@ -22,7 +23,7 @@ export const ChatContainer = () => {
       </Grid>
       <Grid item>
         <Box display="flex">
-          <Box flexGrow={1} bgcolor="#f5f5f5" style={{ backgroundColor: '#f5f5f5', borderRadius: 25, padding: '15px 20px'}}>
+          <Box flexGrow={1} bgcolor={secondaryColor} style={{ backgroundColor: secondaryColor, borderRadius: 25, padding: '15px 20px'}}>
             <BlinkingHeading/>
           </Box>
         </Box>

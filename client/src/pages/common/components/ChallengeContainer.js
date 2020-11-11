@@ -11,6 +11,8 @@ import PanToolIcon from '@material-ui/icons/PanTool';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import FiberManualRecordOutlinedIcon from '@material-ui/icons/FiberManualRecordOutlined';
 
+import { secondaryColor } from "../components";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     height: 25,
     width: 175,
-  }
+  },
 }));
 
 export const ChallengeContainer = (props) => {
@@ -57,7 +59,7 @@ export const ChallengeContainer = (props) => {
       {upperKey: ")", key: "0", finger: "RP", color: "#ff5722"},
       {upperKey: "_", key: "-", finger: "RP", color: "#ff5722"},
       {upperKey: "+", key: "=", finger: "RP", color: "#ff5722"},
-      {upperKey: "Del", key: "Del", finger: "RP", color: "#ff5722"},
+      {upperKey: "⮐", key: "⮐", finger: "RP", color: "#ff5722"},
     ],
     [
       {upperKey: "Q", key: "q", finger: "LP", color: "#e91e63"},
@@ -126,7 +128,7 @@ export const ChallengeContainer = (props) => {
               justify="center"
               direction="column"
               alignItems="center"
-              style={{backgroundColor: "#f5f5f5", textAlign: "center"}}
+              style={{backgroundColor: secondaryColor, textAlign: "center"}}
             >
               <Grid item>
                 <Box mt={4} mb={2}>
@@ -183,8 +185,12 @@ export const ChallengeContainer = (props) => {
                         selectedFinger = item.finger;
                       }
                       return (
-                        <Grid item key={item.key}>
-                          <Paper className={item.key === " " ? classes.spacebar : classes.paper} style={{backgroundColor: props.selectedKey === item.key || props.selectedKey === item.upperKey ? item.color : "", color: props.selectedKey === item.key || props.selectedKey === item.upperKey ? "white" : ""}}>
+                        <Grid item key={item.key} >
+                          <Paper
+                            elevation={0}
+                            className={item.key === " " ? classes.spacebar : classes.paper}
+                            style={{backgroundColor: props.selectedKey === item.key || props.selectedKey === item.upperKey ? item.color : secondaryColor, color: props.selectedKey === item.key || props.selectedKey === item.upperKey ? "white" : ""}}
+                          >
                             <Typography variant="caption">
                               {props.selectedKey === item.upperKey ? item.upperKey : item.key}
                             </Typography>
@@ -222,8 +228,8 @@ export const ChallengeContainer = (props) => {
               }
             </Grid>
             <Grid item>
-              <PanToolIcon style={{transform: "scaleX(-1)", fontSize: 200, float: "left", color: "#f5f5f5"}}/>
-              <PanToolIcon style={{fontSize: 200, float: "right", color: "#f5f5f5"}}/>
+              <PanToolIcon style={{transform: "scaleX(-1)", fontSize: 200, float: "left", color: secondaryColor}}/>
+              <PanToolIcon style={{fontSize: 200, float: "right", color: secondaryColor}}/>
             </Grid>
           </Grid>
         </Box>

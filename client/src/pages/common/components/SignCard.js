@@ -1,36 +1,49 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import { Grid } from "@material-ui/core/";
+import { Typography, Grid } from "@material-ui/core"
 import Box from "@material-ui/core/Box";
+import Hidden from '@material-ui/core/Hidden';
+import { Link as RouterLink } from "react-router-dom";
+import Link from '@material-ui/core/Link';
 
-const useStyles = makeStyles({
-  root: {
-    textAlign: "center",
-    maxWidth: "400px",
-  },
-});
+
+import {accentColor, secondaryColor} from "./accentColor";
 
 export const SignCard = (props) => {
-  const classes = useStyles();
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Grid item container spacing={10}>
-          <Grid item xs={12}>
-            <Typography variant="h4" component="h1">
-              <Box fontWeight="fontWeightBold" mt={12} mb={2}>
-                {props.title}
-              </Box>
-            </Typography>
-            <Box ml={6} mr={6} mb={12}>
-              {props.content}
-            </Box>
+    <Grid
+      container
+      direction="row"
+      style={{ textAlign: "center", height: "93vh" }}
+      justify="center"
+      alignItems="stretch"
+    >
+      <Hidden xsDown>
+        <Grid justify="center" container alignItems="center" item xs={12} sm={6} md={8} style={{backgroundColor: secondaryColor, width: "100%"}}>
+          <Grid item>
+            <img src={props.image} style={{width: "75%"}}/>
           </Grid>
         </Grid>
-      </CardContent>
-    </Card>
+      </Hidden>
+      <Grid justify="center" container alignItems="center" item sm={6} md={4}>
+        <Box p={2}>
+          <Typography variant="h4" component="h1">
+            <Box fontWeight="fontWeightBold" mt={12} mb={2}>
+              {props.title}
+            </Box>
+          </Typography>
+          <Box>
+            {props.content}
+          </Box>
+          <Typography variant="body1" component="p">
+            <Box m={2}>
+              {props.question}
+              <Link to={props.link} component={RouterLink} style={{color: accentColor}}>
+                {props.linkTitle}
+              </Link>
+            </Box>
+          </Typography>
+        </Box>
+      </Grid>
+    </Grid>
   );
 };

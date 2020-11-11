@@ -11,8 +11,7 @@ import KeyboardIcon from '@material-ui/icons/Keyboard';
 import PeopleIcon from '@material-ui/icons/People';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { ChatContainer, Footer, accentColor } from "../../common/components";
-
+import { ChatContainer, Footer, accentColor, secondaryColor } from "../../common/components";
 const useStyles = makeStyles((theme) => ({
   icon: {
     fontSize: 100,
@@ -39,13 +38,14 @@ export const About = () => {
     <React.Fragment>
       <Grid
         container
+        item
         direction="row"
         style={{ minHeight: "94vh" }}
         justify="center"
         alignItems="center"
         xs={12}
       >
-        <Grid container item justify="center" item xs={10} md={6} lg={4}>
+        <Grid container justify="center" item xs={10} md={6} lg={4}>
           <Grid item>
             <Box m={3}>
               <Typography component="h2" variant="h2">
@@ -105,7 +105,7 @@ export const About = () => {
       <Grid
         container
         direction="row"
-        style={{ minHeight: "30vh", backgroundColor: "#f5f5f5" }}
+        style={{ minHeight: "30vh", backgroundColor: secondaryColor }}
         justify="center"
         alignItems="center"
       >
@@ -194,7 +194,7 @@ export const About = () => {
             <Box m={3} style={{ textAlign: "center" }}>
               <TrackChangesIcon className={classes.icon}/>
               <Typography component="p" variant="body1">
-                <b>Have Better Accuracy.</b> With more practice typing, not only can you type faster, but you can also type with fewer errors.
+                <b>Have better accuracy.</b> When you practice typing, not only will you type faster, but you will also type with fewer errors.
               </Typography>
             </Box>
           </Grid>
@@ -202,7 +202,7 @@ export const About = () => {
             <Box m={3} style={{ textAlign: "center" }}>
               <PeopleIcon className={classes.icon}/>
               <Typography component="p" variant="body1">
-                <b>Find new opportunities.</b> If you are looking for better opportunities, typing fast is desirable skill to employers.
+                <b>Find new opportunities.</b> If you are searching for new opportunities, typing fast is a desirable skill to employers.
               </Typography>
             </Box>
           </Grid>
@@ -210,7 +210,7 @@ export const About = () => {
             <Box m={3} style={{ textAlign: "center" }}>
               <KeyboardIcon className={classes.icon}/>
               <Typography component="p" variant="body1">
-                <b>And it's so easy to learn!</b> All you need is a keyboard and a web browser.
+                <b>And it's so easy to use!</b> To type with Hype Type, all you need is a keyboard and a web browser.
               </Typography>
             </Box>
           </Grid>

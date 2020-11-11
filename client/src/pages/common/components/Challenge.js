@@ -70,7 +70,7 @@ class Challenge extends React.Component {
         if (typedChar === "Shift") return;
 
         if (this.state.index === 0 && this.state.startTime === '') {
-            this.state.startTime = new Date();
+            this.setState({ startTime: new Date() });
         } else {
             this.handleWPMUpdater();
         }
@@ -93,11 +93,10 @@ class Challenge extends React.Component {
                 ),
             });
         }
-        let beginning, highlighted;
+        let highlighted;
         let end = "";
         if (e.key === "Backspace") {
             if (this.state.index === 0) return;
-            // beginning = this.state.wordsToBeTyped.slice(0, this.state.index - 1);
             highlighted = this.state.wordsToBeTyped[this.state.index - 1];
             if (this.state.index !== this.state.wordsToBeTyped.length) {
                 end = this.state.wordsToBeTyped
@@ -109,7 +108,6 @@ class Challenge extends React.Component {
             });
             this.handleAccuracyUpdater()
         } else {
-            // beginning = this.state.wordsToBeTyped.slice(0, this.state.index + 1);
             highlighted = this.state.wordsToBeTyped[this.state.index + 1];
             if (this.state.index !== this.state.wordsToBeTyped.length) {
                 end = this.state.wordsToBeTyped.slice(
