@@ -5,7 +5,7 @@ const selectTopLeaders = `
     LIMIT ?`;
 
 const selectUserScoresQuery =
-  "SELECT id, highScore, wordsPerMin, accuracy FROM scores WHERE username = ? ORDER BY id DESC;";
+  "SELECT id, username, highScore, wordsPerMin, accuracy FROM scores WHERE username = ? ORDER BY id DESC;";
 
 const insertScoreQuery =
   "INSERT INTO scores (username, highScore, wordsPerMin, accuracy) VALUES (?, ?, ?, ?);";

@@ -40,8 +40,6 @@ export const Leaderboard = () => {
   }
   const [leaders, setLeaders] = useState();
   
-
-
   useEffect(() => {
       axios.get('/api/scores/leaders').then(res => {
         console.log(res);
