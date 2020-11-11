@@ -4,6 +4,7 @@ import {Box, Typography} from "@material-ui/core";
 import {ChallengeContainer} from "../components";
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import { TransitionsModal } from '../components/ChallengeResultsContainer';
 
 class Challenge extends React.Component {
     state = {
@@ -336,6 +337,7 @@ class Challenge extends React.Component {
 
     render() {
         return (
+          <>
             <ChallengeContainer
                 challenge={this.state.highlightedWord}
                 accuracy={this.state.accuracyPercent}
@@ -344,6 +346,11 @@ class Challenge extends React.Component {
                 toggleButton={this.renderToggleButton}
                 selectedKey={this.state.wordsToBeTyped[this.state.index]}
             />
+            <TransitionsModal
+              wpm={this.state.WPM}
+              accuracy={this.state.accuracyPercent}
+            />
+          </>
         );
     }
 }
