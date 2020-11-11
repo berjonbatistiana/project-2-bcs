@@ -1,6 +1,5 @@
 import React from 'react';
-import { Typography, Grid } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
+import { Typography, Grid, Box } from "@material-ui/core";
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 import TrackChangesIcon from '@material-ui/icons/TrackChanges';
