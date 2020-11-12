@@ -5,6 +5,8 @@ import Button from "@material-ui/core/Button";
 import { Grid } from "@material-ui/core/";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import { setViewerToken } from "../ViewerReducer";
 import {accentColor, SignCard, TextFieldInput} from "../../common/components";
@@ -12,6 +14,10 @@ import signUp from "../../common/components/signUp.svg"
 
 
 class SignUp extends Component {
+  state = {
+    snackbar: false,
+  }
+
   handleSignUp = async (formValues, dispatch) => {
     try {
       const res = await axios.post("/auth/signup", formValues);
@@ -20,16 +26,20 @@ class SignUp extends Component {
       this.props.setViewerToken(res.data);
       this.props.history.push("/");
     } catch (e) {
-      const $errorComponent = document.getElementById("on-error");
-      $errorComponent.innerHTML = "";
-      $errorComponent.append(
-        "Error signing up. Username may already be taken. Please make sure you have entered a username and a password"
-      );
+      this.setState({snackbar: true});
     }
   };
 
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.setState({snackbar: false})
+  };
+
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, pristine, form } = this.props;
+    let disable = () => (!pristine && form.values && form.values.username && form.values.password && form.values.username !== "" && form.values.password !== "") ? false : true;
     return (
       <SignCard
         title="Sign Up"
@@ -56,6 +66,7 @@ class SignUp extends Component {
               </Grid>
               <Grid item xs={12}>
                 <Button
+                  disabled={disable()}
                   onClick={handleSubmit(this.handleSignUp)}
                   variant="contained"
                   style={{color: "white",
@@ -68,8 +79,18 @@ class SignUp extends Component {
                   Sign up
                 </Button>
               </Grid>
-              <div style={{ color: "red" }} id="on-error"></div>
             </Grid>
+            <Snackbar
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+              open={this.state.snackbar}
+              onClose={this.handleClose}>
+              <MuiAlert onClose={this.handleClose} severity="error">
+                The username you have entered is not available.
+              </MuiAlert>
+            </Snackbar>
           </form>
         }
       />
@@ -78,7 +99,7 @@ class SignUp extends Component {
 }
 
 function mapStateToProps(state) {
-  return { superman: state.viewer };
+  return { superman: state.viewer, form: state.form.signUpForm };
 }
 
 export const WrappedSignUp = compose(
