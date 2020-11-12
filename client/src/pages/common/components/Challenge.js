@@ -153,10 +153,10 @@ class Challenge extends React.Component {
             index = this.state.index + 1;
         }
 
-        const newHighlightedWord = (
+        const highlightedWord = (
             <Typography variant="inherit">
                 <Box fontFamily="Monospace" fontSize="h5.fontSize">
-                    {Object.values(this.state.tracker).map((i, index) => {
+                    {Object.values(tracker).map((i, index) => {
                         return (
                             <span key={index} style={{backgroundColor: i.correct ? "#a5d6a7" : "#ef9a9a"}}>
               {i.char}
@@ -249,7 +249,6 @@ class Challenge extends React.Component {
         const trackedLetters = this.state.tracker.filter(el => el.correct);
         const correct = trackedLetters.length;
         const miss = this.state.tracker.length - correct;
-        console.log(`this ${time} ${trackedLetters} ${correct} ${miss}`)
         return getWPM(correct, miss, time);
     }
 
@@ -319,7 +318,6 @@ class Challenge extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <>
                 <ChallengeContainer
