@@ -2,7 +2,6 @@ import axios from "axios";
 
 export const generateWord = async (options) => {
     try {
-        // possible @options: minChar, maxChar, wordCount
         const params = {params: options};
         const res = await axios.get('/api/words', params);
         return res.data;

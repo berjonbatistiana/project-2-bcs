@@ -12,7 +12,6 @@ const useStyles = makeStyles({
   },
 });
 const user = localStorage.getItem("user");
-console.log(user);
 
 export const Dashboard = () => {
   const classes = useStyles();

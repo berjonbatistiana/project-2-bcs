@@ -13,7 +13,6 @@ export const Footer = () => {
       style={{ minHeight: "20vh", backgroundColor: "#302E2E", color: "white" }}
       justify="space-around"
       alignItems="center"
-      xs={12}
     >
       <Grid item xs={3} lg={2}>
         <Box mb={3}>

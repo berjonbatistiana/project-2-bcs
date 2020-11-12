@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 import Navbar from "./pages/common/components/Navbar";
 import {useSelector} from "react-redux";
 import {Dashboard} from "./pages/User";
@@ -12,8 +12,8 @@ function App() {
             <Navbar/>
             <Route path="/signup" component={WrappedSignUp}/>
             <Route path="/signin" component={WrappedSignIn}/>
-            <Route path="/challenge" component={TypingChallenge}/>
-            <Route exact path='/leaderboard' component={Leaderboard}/>
+            <Route exact path='/challenge' render={token ? TypingChallenge : () => <Redirect to="/signin" />}/>
+            <Route path="/leaderboard" component={Leaderboard}/>
             <Route exact path="/" component={token ? Dashboard : About}/>
         </Router>
     );

@@ -11,7 +11,6 @@ module.exports = {
       const users = await fetchUsers();
       res.json(users);
     } catch (e) {
-      console.log(e);
       res.status(400).json(e);
     }
   },
@@ -20,7 +19,6 @@ module.exports = {
     try {
       res.json(await fetchUserByIdFromDb(userId));
     } catch (e) {
-      console.log(e);
       res.status(400).json(e);
     }
   },
@@ -35,7 +33,6 @@ module.exports = {
       const deletedUser = await deleteUserByIdFromDb(userId);
       res.json(deletedUser);
     } catch (e) {
-      console.log(e);
       res.status(400).json(e);
     }
   },

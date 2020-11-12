@@ -48,7 +48,6 @@ export function TransitionsModal(props) {
               lg={3}
               justify="center"
               direction="column"
-              alignItems="center"
               style={{ backgroundColor: "#f5f5f5", textAlign: "center" }}
             >
               <Grid item>
@@ -77,7 +76,6 @@ export function TransitionsModal(props) {
             className={resultClasses.root}
             justify="center"
             direction="column"
-            alignItems="center"
           >
             <Grid container spacing={3}>
               <Grid item xs>
