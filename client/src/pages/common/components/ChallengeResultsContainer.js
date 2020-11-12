@@ -3,6 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
 import { ChallengeResultsLineGraph } from "../components";
 import { Link } from "react-router-dom";
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -64,7 +67,9 @@ export function TransitionsModal(props) {
 
             <Grid item xs={12} sm={10} md={9} lg={9}>
               <Box m={3}>
-                <ChallengeResultsLineGraph />
+                <ChallengeResultsLineGraph 
+                  // {props.wpm}  
+                />
               </Box>
             </Grid>
           </Grid>
@@ -80,53 +85,46 @@ export function TransitionsModal(props) {
                   test type
                 </Typography>
                 <Typography className={resultClasses.paper}>
-                  time: 30s
+                  {props.wordOptions.seconds30 === true ? '30s':'60s'}
                 </Typography>
                 <Typography className={resultClasses.paper}>
-                  punctuation: on
+                  special: {props.wordOptions.punctuation === true ? 'punctuation':''}
+                  {props.wordOptions.quotes === true ? 'quote':''}
+                  {props.wordOptions.quotes === false && props.wordOptions.punctuation === false ? 'none':''}
                 </Typography>
               </Grid>
               <Grid item xs>
                 <Typography className={resultClasses.paper}>
-                  characters
+                  total characters
                 </Typography>
-                <Typography className={resultClasses.paper}>205</Typography>
+                <Typography className={resultClasses.paper}>{props.characters}</Typography>
               </Grid>
               <Grid item xs>
                 <Typography className={resultClasses.paper}>Score</Typography>
-                <Typography className={resultClasses.paper}>72</Typography>
+                <Typography className={resultClasses.paper}>{props.score}</Typography>
               </Grid>
             </Grid>
-            <Button
+          <div style={{textAlign: 'center', marginTop: 20}}>
+          <ToggleButtonGroup >
+            <ToggleButton
                 to="signin"
                 component={Link}
                 variant="outlined"
-                style={{
-                  color: "#0099ff",
-                  borderRadius: 25,
-                  borderColor: "#0099ff",
-                }}
-              >sign in to save score</Button>
-              <Button
-                to="challenge"
-                component={Link}
+              >sign in to save score</ToggleButton>
+              <ToggleButton
+                onMouseDown={props.challengeFinished = true}
+                
+                // to="challenge"
+                // component={Link}
                 variant="outlined"
-                style={{
-                  color: "#0099ff",
-                  borderRadius: 25,
-                  borderColor: "#0099ff",
-                }}
-              >test again</Button>
-              <Button
+              >test again</ToggleButton>
+              <ToggleButton
                 to="leaderboard"
                 component={Link}
                 variant="outlined"
-                style={{
-                  color: "#0099ff",
-                  borderRadius: 25,
-                  borderColor: "#0099ff",
-                }}
-              >add to leaderboard as guest</Button>
+              >add to leaderboard as guest</ToggleButton>
+            </ToggleButtonGroup>
+            </div>
           </div>
         </Box>
       </div>

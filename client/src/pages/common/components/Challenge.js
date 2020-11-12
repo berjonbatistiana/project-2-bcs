@@ -1,5 +1,5 @@
 import React from "react";
-import {generateQuote, generateWord, getWPM} from "../../../utils";
+import {generateQuote, generateWord, getWPM, getScore} from "../../../utils";
 import {Box, Typography} from "@material-ui/core";
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import Button from '@material-ui/core/Button';
@@ -25,7 +25,9 @@ class Challenge extends React.Component {
         correctNum: 0,
         totalCharSeen: 0,
         timeLeft: 30,
-        timer: null
+        timer: null,
+        score: 0,
+        challengeFinished: false
     };
 
     componentDidMount() {
@@ -49,7 +51,8 @@ class Challenge extends React.Component {
         if (seconds === 0){
             clearInterval(this.state.timer);
             // run end of challenge results
-            this.handleRefreshWords();
+            // this.handleRefreshWords();
+            this.handleScoreCalc();
         }
     }
 
@@ -154,9 +157,8 @@ class Challenge extends React.Component {
                 );
             }
             if (this.state.index + 1 === this.state.wordsToBeTyped.length) {
-                console.log("refresh");
-                // this.componentDidUpdate() -> could use?
-                this.handleRefreshWords();
+                this.handleScoreCalc();
+
                 return;
             }
             this.setState({index: this.state.index + 1});
@@ -224,7 +226,6 @@ class Challenge extends React.Component {
 
         this.forceUpdate(this.handleRefreshWords);
 
-        console.log(this.state)
     };
 
     // function is called on a key down event for correct characters, wrong ones, and a backspace.
@@ -232,7 +233,6 @@ class Challenge extends React.Component {
     // if the sequence is refreshed multiple times in a session, the totals will need to be saved
     // and added to following.
     handleAccuracyUpdater = () => {
-        // THIS VERSION WORKS AND IS FAST BUT RESETS AFTER EACH SEQUENCE REFRESH.
         let correctNum = 0;
         let totalCharSeen = this.state.tracker.length;
         for (let i = 0; i < this.state.tracker.length; i++) {
@@ -240,31 +240,10 @@ class Challenge extends React.Component {
                 correctNum++
             }
         }
-        console.log(correctNum, totalCharSeen)
         const accuracyPercent = Math.round(correctNum / totalCharSeen * 100)
         this.setState({
             accuracyPercent: accuracyPercent,
         });
-
-        // THIS VERSION WORKS BUT IS SLOW BC ALWAYS UPDATING STATE. CARRIES THE ACCURACY
-        // VALUES INTO THE SEQUENCE REFRESHES || BEST SOLUTION MAY BE TO AVERAGE %'s AFTERWARDS
-        // OR TO CALCULATE FINAL % AFTER TIME RUNS OUT
-
-        // for(let i=0;i<this.state.tracker.length;i++){
-        //   if(this.state.tracker[i].correct === true){
-        //     this.setState({
-        //       correctNum: this.state.correctNum+1
-        //     });
-        //   }
-        //   this.setState({
-        //     totalCharSeen: this.state.totalCharSeen+1
-        //   });
-        // }
-        // const accuracyPercent = Math.round(this.state.correctNum/this.state.totalCharSeen*100)
-        // console.log(this.state.correctNum,this.state.totalCharSeen,accuracyPercent)
-        // this.setState({
-        //   accuracyPercent: accuracyPercent,
-        // });
     }
 
     handleRefreshWords = () => {
@@ -290,6 +269,14 @@ class Challenge extends React.Component {
         this.setState({WPM: getWPM(correct, miss, time)});
     }
 
+    handleScoreCalc() {
+        const time = (new Date().getTime() - this.state.startTime.getTime()) / 1000 / 60;
+        const trackedLetters = this.state.tracker.filter(el => el.correct);
+        const correct = trackedLetters.length;
+        const miss = this.state.tracker.length - correct;
+        const accuracy = this.state.accuracyPercent
+        this.setState({score: getScore(correct, miss, time, accuracy), challengeFinished: true});
+    }
 
     renderToggleButton = () => {
         return (
@@ -350,7 +337,7 @@ class Challenge extends React.Component {
   }
 
     render() {
-        return (
+        return this.state.challengeFinished === false ? (
           <>
             <ChallengeContainer
                 challenge={this.state.highlightedWord}
@@ -361,13 +348,55 @@ class Challenge extends React.Component {
                 restartButton={this.renderRestartButton}
                 selectedKey={this.state.wordsToBeTyped[this.state.index]}
             />
+            </>
+            ) : (
+            <>
             <TransitionsModal
               wpm={this.state.WPM}
               accuracy={this.state.accuracyPercent}
+              score={this.state.score}
+              characters={this.state.index}
+              wordOptions={this.state.wordOptions}
+              challengeFinished={this.state.challengeFinished}
             />
-          </>
-        );
+            </>
+            )
     }
 }
+
+
+// userData ? (
+//     <div>
+//       <Grid container spacing={3} className={classes.root}>
+//         <Grid item container xs={12} md={6} lg={5}>
+//           <Grid item xs={12}>
+//             <Box mt={3}>
+//               <Typography component="h3" variant="h5">
+//                 Accuracy
+//               </Typography>
+//               <Donut userData={userData} />
+//             </Box>
+//           </Grid>
+//           <Grid item xs={12}>
+//             <Box m={3}>
+//               <Typography component="h3" variant="h5">
+//                 Recent Scores
+//               </Typography>
+//               <PersonalHighScores userData={userData} />
+//             </Box>
+//           </Grid>
+//         </Grid>
+//         <Grid item xs={12} md={6} lg={7}>
+//           <Box m={3}>
+//             <Typography component="h3" variant="h5">
+//               Progress
+//             </Typography>
+//             <LineGraph userData={userData} />
+//           </Box>
+//         </Grid>
+//       </Grid>
+//     </div>
+//   ) : (
+//     <div>Loading...</div>
 
 export default Challenge;
