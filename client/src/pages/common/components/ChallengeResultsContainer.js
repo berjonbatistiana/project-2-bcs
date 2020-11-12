@@ -112,7 +112,7 @@ export function TransitionsModal(props) {
                 variant="outlined"
               >sign in to save score</ToggleButton>
               <ToggleButton
-                onMouseDown={props.challengeFinished = true}
+                // onMouseDown={props.challengeFinished = true}
                 
                 // to="challenge"
                 // component={Link}

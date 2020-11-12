@@ -357,46 +357,11 @@ class Challenge extends React.Component {
               score={this.state.score}
               characters={this.state.index}
               wordOptions={this.state.wordOptions}
-              challengeFinished={this.state.challengeFinished}
+            //   challengeFinished={this.state.challengeFinished}
             />
             </>
             )
     }
 }
-
-
-// userData ? (
-//     <div>
-//       <Grid container spacing={3} className={classes.root}>
-//         <Grid item container xs={12} md={6} lg={5}>
-//           <Grid item xs={12}>
-//             <Box mt={3}>
-//               <Typography component="h3" variant="h5">
-//                 Accuracy
-//               </Typography>
-//               <Donut userData={userData} />
-//             </Box>
-//           </Grid>
-//           <Grid item xs={12}>
-//             <Box m={3}>
-//               <Typography component="h3" variant="h5">
-//                 Recent Scores
-//               </Typography>
-//               <PersonalHighScores userData={userData} />
-//             </Box>
-//           </Grid>
-//         </Grid>
-//         <Grid item xs={12} md={6} lg={7}>
-//           <Box m={3}>
-//             <Typography component="h3" variant="h5">
-//               Progress
-//             </Typography>
-//             <LineGraph userData={userData} />
-//           </Box>
-//         </Grid>
-//       </Grid>
-//     </div>
-//   ) : (
-//     <div>Loading...</div>
 
 export default Challenge;
