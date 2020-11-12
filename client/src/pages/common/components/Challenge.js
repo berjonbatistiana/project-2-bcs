@@ -1,5 +1,5 @@
 import React from "react";
-import {generateQuote, generateWord, getWPM} from "../../../utils";
+import {generateQuote, generateWord, getWPM, getScore} from "../../../utils";
 import {Box, Typography} from "@material-ui/core";
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import Button from '@material-ui/core/Button';
@@ -25,7 +25,9 @@ class Challenge extends React.Component {
         correctNum: 0,
         totalCharSeen: 0,
         timeLeft: 30,
-        timer: null
+        timer: null,
+        score: 0,
+        challengeFinished: false
     };
 
     componentDidMount() {
@@ -51,7 +53,9 @@ class Challenge extends React.Component {
         this.setState({timeLeft: seconds});
         if (seconds === 0) {
             clearInterval(this.state.timer);
-            this.handleRefreshWords();
+            // run end of challenge results
+            // this.handleRefreshWords();
+            this.handleScoreCalc();
         }
     }
 
@@ -148,7 +152,8 @@ class Challenge extends React.Component {
                 );
             }
             if (this.state.index + 1 === this.state.wordsToBeTyped.length) {
-                this.handleRefreshWords();
+                this.handleScoreCalc();
+
                 return;
             }
             index = this.state.index + 1;
@@ -253,6 +258,14 @@ class Challenge extends React.Component {
         return getWPM(correct, miss, time);
     }
 
+    handleScoreCalc() {
+        const time = (new Date().getTime() - this.state.startTime.getTime()) / 1000 / 60;
+        const trackedLetters = this.state.tracker.filter(el => el.correct);
+        const correct = trackedLetters.length;
+        const miss = this.state.tracker.length - correct;
+        const accuracy = this.state.accuracyPercent
+        this.setState({score: getScore(correct, miss, time, accuracy), challengeFinished: true});
+    }
 
     renderToggleButton = () => {
         return (
@@ -319,23 +332,31 @@ class Challenge extends React.Component {
     }
 
     render() {
+        return this.state.challengeFinished === false ? (
+          <>
+            <ChallengeContainer
+                challenge={this.state.highlightedWord}
+                accuracy={this.state.accuracyPercent}
+                wpm={this.state.WPM}
+                timeLeft={this.state.timeLeft}
+                toggleButton={this.renderToggleButton}
+                restartButton={this.renderRestartButton}
+                selectedKey={this.state.wordsToBeTyped[this.state.index]}
+            />
+            </>
+            ) : (
         return (
             <>
-                <ChallengeContainer
-                    challenge={this.state.highlightedWord}
-                    accuracy={this.state.accuracyPercent}
-                    wpm={this.state.WPM}
-                    timeLeft={this.state.timeLeft}
-                    toggleButton={this.renderToggleButton}
-                    restartButton={this.renderRestartButton}
-                    selectedKey={this.state.wordsToBeTyped[this.state.index]}
-                />
-                <TransitionsModal
-                    wpm={this.state.WPM}
-                    accuracy={this.state.accuracyPercent}
-                />
+            <TransitionsModal
+              wpm={this.state.WPM}
+              accuracy={this.state.accuracyPercent}
+              score={this.state.score}
+              characters={this.state.index}
+              wordOptions={this.state.wordOptions}
+            //   challengeFinished={this.state.challengeFinished}
+            />
             </>
-        );
+            )
     }
 }
 
