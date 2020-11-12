@@ -5,6 +5,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import Button from '@material-ui/core/Button';
 import {accentColor, ChallengeContainer, TransitionsModal} from "../components";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import axios from 'axios';
 
 class Challenge extends React.Component {
     state = {
@@ -265,6 +266,9 @@ class Challenge extends React.Component {
 
     handleRefreshWords = () => {
         // Need to figure out how to set the index back to 0. Maybe a problem with asynchronisity.
+        const highScore = this.state.WPM * this.state.accuracyPercent;
+        const username = localStorage.getItem("user");
+        axios.post('/api/scores/score', {highScore, username, wordsPerMin: this.state.WPM, accuracy: this.state.accuracyPercent})
         this.setState(prevState => ({
             index: 0,
             wordsToBeTyped: "",
