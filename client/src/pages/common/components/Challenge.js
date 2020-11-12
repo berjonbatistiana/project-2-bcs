@@ -44,7 +44,6 @@ class Challenge extends React.Component {
                     timer: setInterval(this.handleTimer, 1000),
                     startTime: new Date()
                 });
-
     }
 
     handleTimer = () => {
@@ -52,7 +51,6 @@ class Challenge extends React.Component {
         this.setState({timeLeft: seconds});
         if (seconds === 0) {
             clearInterval(this.state.timer);
-            // run end of challenge results
             this.handleRefreshWords();
         }
     }
@@ -85,7 +83,7 @@ class Challenge extends React.Component {
         );
 
         const newHighlightedWord = (
-            <Typography>
+            <Typography variant="inherit">
                 <Box fontFamily="Monospace" fontSize="h5.fontSize">
                     {beginning}
                     <span
@@ -150,8 +148,6 @@ class Challenge extends React.Component {
                 );
             }
             if (this.state.index + 1 === this.state.wordsToBeTyped.length) {
-                console.log("refresh");
-                // this.componentDidUpdate() -> could use?
                 this.handleRefreshWords();
                 return;
             }
@@ -222,19 +218,10 @@ class Challenge extends React.Component {
             default:
                 break;
         }
-
-
         this.forceUpdate(this.handleRefreshWords);
-
-        console.log(this.state)
     };
 
-    // function is called on a key down event for correct characters, wrong ones, and a backspace.
-    // uses the tracker in state to determine the % of accurate numbers.
-    // if the sequence is refreshed multiple times in a session, the totals will need to be saved
-    // and added to following.
     handleAccuracyUpdater = (tracker) => {
-        // THIS VERSION WORKS AND IS FAST BUT RESETS AFTER EACH SEQUENCE REFRESH.
         let correctNum = 0;
         let totalCharSeen = tracker.length;
         for (let i = 0; i < tracker.length; i++) {
@@ -243,32 +230,9 @@ class Challenge extends React.Component {
             }
         }
         return Math.round(correctNum / totalCharSeen * 100)
-        // THIS VERSION WORKS BUT IS SLOW BC ALWAYS UPDATING STATE. CARRIES THE ACCURACY
-        // VALUES INTO THE SEQUENCE REFRESHES || BEST SOLUTION MAY BE TO AVERAGE %'s AFTERWARDS
-        // OR TO CALCULATE FINAL % AFTER TIME RUNS OUT
-
-        // for(let i=0;i<this.state.tracker.length;i++){
-        //   if(this.state.tracker[i].correct === true){
-        //     this.setState({
-        //       correctNum: this.state.correctNum+1
-        //     });
-        //   }
-        //   this.setState({
-        //     totalCharSeen: this.state.totalCharSeen+1
-        //   });
-        // }
-        // const accuracyPercent = Math.round(this.state.correctNum/this.state.totalCharSeen*100)
-        // console.log(this.state.correctNum,this.state.totalCharSeen,accuracyPercent)
-        // this.setState({
-        //   accuracyPercent: accuracyPercent,
-        // });
     }
 
     handleRefreshWords = () => {
-        // Need to figure out how to set the index back to 0. Maybe a problem with asynchronisity.
-        const highScore = this.state.WPM * this.state.accuracyPercent;
-        const username = localStorage.getItem("user");
-        axios.post('/api/scores/score', {highScore, username, wordsPerMin: this.state.WPM, accuracy: this.state.accuracyPercent})
         this.setState(prevState => ({
             index: 0,
             wordsToBeTyped: "",
@@ -299,6 +263,7 @@ class Challenge extends React.Component {
                     selected={this.state.wordOptions.punctuation}
                     onMouseDown={this.handleAddOption}
                     data-value={'punctuation'}
+                    value='Punctuation'
                 >
                     <Typography data-value={'punctuation'}>
                         Punctuation
@@ -309,6 +274,7 @@ class Challenge extends React.Component {
                     selected={this.state.wordOptions.quotes}
                     onMouseDown={this.handleAddOption}
                     data-value={'quotes'}
+                    value="Quote"
                 >
                     <Typography data-value={"quotes"}>
                         Quote
@@ -318,9 +284,11 @@ class Challenge extends React.Component {
                     selected={this.state.wordOptions.seconds30}
                     onMouseDown={this.handleAddOption}
                     data-value={'thirtyS'}
+                    value="Timed: 30S"
                 >
                     <Typography
-                        data-value={'thirtyS'}>
+                        data-value={'thirtyS'}
+                        value="Timed: 30S">
                         Timed: 30s
                     </Typography>
                 </ToggleButton>
@@ -328,9 +296,11 @@ class Challenge extends React.Component {
                     selected={this.state.wordOptions.seconds60}
                     onMouseDown={this.handleAddOption}
                     data-value={'sixtyS'}
+                    value="Timed: 60S"
                 >
                     <Typography
-                        data-value={'sixtyS'}>
+                        data-value={'sixtyS'}
+                        value="Timed: 60S">
                         Timed: 60s
                     </Typography>
                 </ToggleButton>

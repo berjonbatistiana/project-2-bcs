@@ -148,8 +148,8 @@ export const ChallengeContainer = (props) => {
               </Grid>
               <Grid item>
                 <Box mt={2} mb={4}>
-                  <AlarmIcon color={props.timeLeft > 0? 'initial': 'disabled'}/>
-                  <Typography color={props.timeLeft > 0? 'initial':'textSecondary'}>
+                  <AlarmIcon color={props.timeLeft > 0? 'primary': 'disabled'}/>
+                  <Typography color={props.timeLeft > 0? 'primary':'textSecondary'}>
                     {props.timeLeft}s
                   </Typography>
                 </Box>
@@ -182,6 +182,7 @@ export const ChallengeContainer = (props) => {
                 return (
                   <Grid
                     item
+                    key={row}
                     container
                     direction="row"
                     justify="center"
@@ -222,14 +223,14 @@ export const ChallengeContainer = (props) => {
           >
             <Grid item style={{width: "420px"}}>
               {
-                fingers.map(finger => {
+                fingers.map((finger, index) => {
                   if (finger.digit === selectedFinger) {
                     return (
-                      <FiberManualRecordIcon style={{fontSize: 36, float: finger.hand, color: finger.color}}/>
+                      <FiberManualRecordIcon key={index} style={{fontSize: 36, float: finger.hand, color: finger.color}}/>
                     )
                   } else {
                     return (
-                      <FiberManualRecordOutlinedIcon style={{fontSize: 36, float: finger.hand, color: finger.color}}/>
+                      <FiberManualRecordOutlinedIcon key={index} style={{fontSize: 36, float: finger.hand, color: finger.color}}/>
                     )
                   }
                 })

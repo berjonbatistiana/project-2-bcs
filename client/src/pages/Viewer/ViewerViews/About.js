@@ -89,7 +89,7 @@ export const About = () => {
             <Typography component="h4" variant="h6">
               Hype Type is the fastest way to test and increase your typing speed.
             </Typography>
-            <Typography component="p" variant="body1">
+            <Typography component="div" variant="body1">
               <ul>
                 <li>Test your typing speed.</li>
                 <li>Track your progress.</li>
