@@ -20,7 +20,7 @@ export const SignCard = (props) => {
       <Hidden xsDown>
         <Grid justify="center" container alignItems="center" item xs={12} sm={6} md={8} style={{backgroundColor: secondaryColor, width: "100%"}}>
           <Grid item>
-            <img src={props.image} style={{width: "75%"}}/>
+            <img alt="oops" src={props.image} style={{width: "75%"}}/>
           </Grid>
         </Grid>
       </Hidden>
@@ -34,7 +34,7 @@ export const SignCard = (props) => {
           <Box>
             {props.content}
           </Box>
-          <Typography variant="body1" component="p">
+          <Typography variant="body1" component="div">
             <Box m={2}>
               {props.question}
               <Link to={props.link} component={RouterLink} style={{color: accentColor}}>
