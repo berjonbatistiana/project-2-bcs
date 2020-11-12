@@ -152,15 +152,14 @@ class Challenge extends React.Component {
                 return;
             }
             index = this.state.index + 1;
-            // this.setState({index: this.state.index + 1});
         }
 
         const highlightedWord = (
-            <Typography>
+            <Typography variant="inherit">
                 <Box fontFamily="Monospace" fontSize="h5.fontSize">
-                    {Object.values(tracker).map((i) => {
+                    {Object.values(tracker).map((i, index) => {
                         return (
-                            <span style={{backgroundColor: i.correct ? "#a5d6a7" : "#ef9a9a"}}>
+                            <span key={index} style={{backgroundColor: i.correct ? "#a5d6a7" : "#ef9a9a"}}>
               {i.char}
             </span>
                         );
@@ -174,12 +173,9 @@ class Challenge extends React.Component {
             </Typography>
         );
         this.setState({accuracyPercent, WPM, tracker, index, highlightedWord});
-
-
     };
 
     handleAddOption = (e) => {
-
         const newWordOptions = this.state.wordOptions;
         switch (e.target.dataset.value) {
             case 'punctuation':
@@ -233,6 +229,9 @@ class Challenge extends React.Component {
     }
 
     handleRefreshWords = () => {
+        const highScore = this.state.WPM * this.state.accuracyPercent;	
+        const username = localStorage.getItem("user");	
+        axios.post('/api/scores/score', {highScore, username, wordsPerMin: this.state.WPM, accuracy: this.state.accuracyPercent})
         this.setState(prevState => ({
             index: 0,
             wordsToBeTyped: "",
@@ -251,7 +250,6 @@ class Challenge extends React.Component {
         const trackedLetters = this.state.tracker.filter(el => el.correct);
         const correct = trackedLetters.length;
         const miss = this.state.tracker.length - correct;
-        console.log(`this ${time} ${trackedLetters} ${correct} ${miss}`)
         return getWPM(correct, miss, time);
     }
 
@@ -321,7 +319,6 @@ class Challenge extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <>
                 <ChallengeContainer

@@ -45,18 +45,17 @@ export default function ButtonAppBar() {
         <Toolbar>
           {token ? (
             <Toolbar>
-              <Button color="inherit" to="/" component={Link}>
-                Dashboard
-              </Button>
-              <Button
-                className={classes.menuButton}
-                component={Link}
-                to="/challenge"
-                color="inherit"
-              >
-                Typing Challenge
-              </Button>
-            </Toolbar>
+            <Button color="inherit" to="/" component={Link} className={classes.title}>
+              Dashboard
+            </Button>
+            <Button
+            component={Link}
+            to="/challenge"
+            color="inherit"
+          >
+            Typing Challenge
+          </Button>
+          </Toolbar>
           ) : (
             <Button
               className={classes.menuButton}
