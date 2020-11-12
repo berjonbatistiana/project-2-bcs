@@ -172,12 +172,9 @@ class Challenge extends React.Component {
             </Typography>
         );
         this.setState({accuracyPercent, WPM, tracker, index, highlightedWord});
-
-
     };
 
     handleAddOption = (e) => {
-
         const newWordOptions = this.state.wordOptions;
         switch (e.target.dataset.value) {
             case 'punctuation':
