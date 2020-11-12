@@ -67,7 +67,6 @@ export default function ButtonAppBar() {
               About
             </Button>
           )}
-
           <Typography variant="h6" className={classes.title}>
             <Button component={Link} to="/leaderboard" color="inherit">
               Leaderboard
