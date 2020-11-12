@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import axios from "axios";
 import { Donut, LineGraph, PersonalHighScores } from "../../common";
-import { use } from 'passport';
 
 const useStyles = makeStyles({
   root: {
