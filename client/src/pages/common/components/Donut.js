@@ -7,7 +7,6 @@ export class Donut extends Component {
   componentDidMount() {
     const myChartRef = this.chartRef.current.getContext("2d");
     let total = 0
-    console.log(this.props);
     this.props.userData.forEach(item => {
       total += item.accuracy;
     })
