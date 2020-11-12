@@ -42,7 +42,6 @@ export const Leaderboard = () => {
   
   useEffect(() => {
       axios.get('/api/scores/leaders').then(res => {
-        console.log(res);
         setLeaders(res.data)
       })
   }, []);
@@ -83,5 +82,3 @@ export const Leaderboard = () => {
     <div>Loading...</div>
   )
 }
-
-
