@@ -58,7 +58,7 @@ export const Leaderboard = () => {
             LEADERBOARD
           </Typography>
           <div
-            style={{ height: 900, backgroundColor: "#e9edf5", marginTop: 10 }}
+            style={{ height: 650, backgroundColor: "#e9edf5", marginTop: 10 }}
           >
             <DataGrid rows={leaders} columns={columns} pageSize={15}/>
           </div>
