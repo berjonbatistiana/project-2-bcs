@@ -5,7 +5,6 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import Button from '@material-ui/core/Button';
 import {ChallengeContainer, accentColor, TransitionsModal} from "../components";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
-import axios from 'axios';
 
 class Challenge extends React.Component {
     state = {
@@ -161,11 +160,11 @@ class Challenge extends React.Component {
         }
 
         const newHighlightedWord = (
-            <Typography>
+            <Typography variant="inherit">
                 <Box fontFamily="Monospace" fontSize="h5.fontSize">
-                    {Object.values(this.state.tracker).map((i) => {
+                    {Object.values(this.state.tracker).map((i, index) => {
                         return (
-                            <span style={{backgroundColor: i.correct ? "#a5d6a7" : "#ef9a9a"}}>
+                            <span key={index} style={{backgroundColor: i.correct ? "#a5d6a7" : "#ef9a9a"}}>
               {i.char}
             </span>
                         );
