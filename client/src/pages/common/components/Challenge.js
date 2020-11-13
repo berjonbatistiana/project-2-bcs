@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import {accentColor, ChallengeContainer, TransitionsModal} from "../components";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import axios from 'axios';
+import { Link } from "react-router-dom";
+
 
 class Challenge extends React.Component {
     state = {
@@ -331,6 +333,13 @@ class Challenge extends React.Component {
         )
     }
 
+    handleNewTest = () => {
+        console.log("ranNewTest")
+        this.state.challengeFinished = false
+        this.handleRefreshWords()
+        this.render()
+    }
+
     render() {
         return this.state.challengeFinished === false ? (
           <>
@@ -345,7 +354,6 @@ class Challenge extends React.Component {
             />
             </>
             ) : (
-        return (
             <>
             <TransitionsModal
               wpm={this.state.WPM}
@@ -353,8 +361,25 @@ class Challenge extends React.Component {
               score={this.state.score}
               characters={this.state.index}
               wordOptions={this.state.wordOptions}
-            //   challengeFinished={this.state.challengeFinished}
             />
+            <div style={{textAlign: 'center', marginTop: 20}}>
+          <ToggleButtonGroup >
+            <ToggleButton
+                to="signin"
+                component={Link}
+                variant="outlined"
+              >sign in to save score</ToggleButton>
+              <ToggleButton
+                onMouseDown={this.handleNewTest}
+                variant="outlined"
+              >test again</ToggleButton>
+              <ToggleButton
+                to="leaderboard"
+                component={Link}
+                variant="outlined"
+              >add to leaderboard as guest</ToggleButton>
+            </ToggleButtonGroup>
+            </div>
             </>
             )
     }

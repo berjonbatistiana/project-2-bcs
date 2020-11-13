@@ -102,27 +102,7 @@ export function TransitionsModal(props) {
                 <Typography className={resultClasses.paper}>{props.score}</Typography>
               </Grid>
             </Grid>
-          <div style={{textAlign: 'center', marginTop: 20}}>
-          <ToggleButtonGroup >
-            <ToggleButton
-                to="signin"
-                component={Link}
-                variant="outlined"
-              >sign in to save score</ToggleButton>
-              <ToggleButton
-                // onMouseDown={props.challengeFinished = true}
-                
-                // to="challenge"
-                // component={Link}
-                variant="outlined"
-              >test again</ToggleButton>
-              <ToggleButton
-                to="leaderboard"
-                component={Link}
-                variant="outlined"
-              >add to leaderboard as guest</ToggleButton>
-            </ToggleButtonGroup>
-            </div>
+          
           </div>
         </Box>
       </div>
