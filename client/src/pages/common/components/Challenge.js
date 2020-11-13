@@ -234,8 +234,8 @@ class Challenge extends React.Component {
     }
 
     handleRefreshWords = () => {
-        const highScore = this.state.WPM * this.state.accuracyPercent;	
-        const username = localStorage.getItem("user");	
+        const highScore = this.state.WPM * this.state.accuracyPercent;
+        const username = localStorage.getItem("user");
         axios.post('/api/scores/score', {highScore, username, wordsPerMin: this.state.WPM, accuracy: this.state.accuracyPercent})
         this.setState(prevState => ({
             index: 0,
@@ -331,9 +331,15 @@ class Challenge extends React.Component {
         )
     }
 
+    handleTestAgain = () => {
+        this.setState({challengeFinished: false});
+        this.handleRefreshWords();
+    }
+
     render() {
-        return this.state.challengeFinished === false ? (
-          <>
+        // return this.state.challengeFinished === false ? (
+        return (
+        <>
             <ChallengeContainer
                 challenge={this.state.highlightedWord}
                 accuracy={this.state.accuracyPercent}
@@ -343,20 +349,18 @@ class Challenge extends React.Component {
                 restartButton={this.renderRestartButton}
                 selectedKey={this.state.wordsToBeTyped[this.state.index]}
             />
-            </>
-            ) : (
-        return (
-            <>
             <TransitionsModal
+              open={this.state.challengeFinished}
+              close={() => this.setState({challengeFinished: false})}
               wpm={this.state.WPM}
               accuracy={this.state.accuracyPercent}
               score={this.state.score}
               characters={this.state.index}
               wordOptions={this.state.wordOptions}
-            //   challengeFinished={this.state.challengeFinished}
+              handleTestAgain={() => this.handleTestAgain()}
             />
             </>
-            )
+        )
     }
 }
 
