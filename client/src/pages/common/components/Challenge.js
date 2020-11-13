@@ -234,9 +234,6 @@ class Challenge extends React.Component {
     }
 
     handleRefreshWords = () => {
-        const highScore = this.state.WPM * this.state.accuracyPercent;
-        const username = localStorage.getItem("user");
-        axios.post('/api/scores/score', {highScore, username, wordsPerMin: this.state.WPM, accuracy: this.state.accuracyPercent})
         this.setState(prevState => ({
             index: 0,
             wordsToBeTyped: "",
@@ -265,6 +262,9 @@ class Challenge extends React.Component {
         const miss = this.state.tracker.length - correct;
         const accuracy = this.state.accuracyPercent
         this.setState({score: getScore(correct, miss, time, accuracy), challengeFinished: true});
+        const highScore = this.state.WPM * this.state.accuracyPercent;
+        const username = localStorage.getItem("user");
+        axios.post('/api/scores/score', {highScore, username, wordsPerMin: this.state.WPM, accuracy: this.state.accuracyPercent})
     }
 
     renderToggleButton = () => {

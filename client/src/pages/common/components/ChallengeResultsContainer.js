@@ -1,10 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
-import { ChallengeResultsLineGraph } from "../components";
+import {accentColor, ChallengeResultsLineGraph} from "../components";
 import { Link } from "react-router-dom";
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -103,24 +101,18 @@ export function TransitionsModal(props) {
             </Grid>
           </Grid>
           <div style={{textAlign: 'center', marginTop: 20}}>
-            <ToggleButtonGroup >
-              <ToggleButton
-                to="signin"
-                component={Link}
-                variant="outlined"
-              >sign in to save score</ToggleButton>
-              <ToggleButton
-                onMouseDown={props.handleTestAgain}
-                to="challenge"
-                component={Link}
-                variant="outlined"
-              >test again</ToggleButton>
-              <ToggleButton
-                to="leaderboard"
-                component={Link}
-                variant="outlined"
-              >add to leaderboard as guest</ToggleButton>
-            </ToggleButtonGroup>
+            <Button
+              onMouseDown={props.handleTestAgain}
+              component={Link}
+              variant="outlined"
+              style={{
+                color: accentColor,
+                borderRadius: 25,
+                borderColor: accentColor,
+              }}
+            >
+              test again
+            </Button>
           </div>
         </div>
       </Box>
