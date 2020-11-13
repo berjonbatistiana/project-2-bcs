@@ -26,6 +26,8 @@ export const Dashboard = () => {
       setCurrentUser(user)
   }, []);
 
+  console.log(userData)
+
   return (userData && (user === currentUser)) ? (
     <div>
       <Grid container spacing={3} className={classes.root}>

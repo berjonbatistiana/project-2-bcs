@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
-import {accentColor, ChallengeResultsLineGraph} from "../components";
+import {accentColor} from "../components";
 import { Link } from "react-router-dom";
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -57,9 +57,7 @@ export function TransitionsModal(props) {
           </Grid>
           <Grid item xs={12} sm={10} md={9} lg={9}>
             <Box m={3}>
-              <ChallengeResultsLineGraph
-                // {props.wpm}
-              />
+              {props.lineGraph}
             </Box>
           </Grid>
         </Grid>

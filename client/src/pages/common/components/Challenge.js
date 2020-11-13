@@ -2,9 +2,11 @@ import React from "react";
 import {generateQuote, generateWord, getWPM, getScore} from "../../../utils";
 import {Box, Typography} from "@material-ui/core";
 import ToggleButton from '@material-ui/lab/ToggleButton';
-import Button from '@material-ui/core/Button';
-import {accentColor, ChallengeContainer, TransitionsModal} from "../components";
+import {accentColor, ChallengeContainer, TransitionsModal, LineGraph} from "../components";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import ReplayIcon from '@material-ui/icons/Replay';
 import axios from 'axios';
 
 class Challenge extends React.Component {
@@ -123,10 +125,10 @@ class Challenge extends React.Component {
             WPM = this.handleWPMUpdater();
 
         if (typedChar === char) {
-            tracker = [...this.state.tracker, {char, correct: true}];
+            tracker = [...this.state.tracker, {char, correct: true, wordsPerMin: WPM}];
             accuracyPercent = this.handleAccuracyUpdater(tracker)
         } else if (typedChar !== char && typedChar !== "Backspace") {
-            tracker = [...this.state.tracker, {char, correct: false}];
+            tracker = [...this.state.tracker, {char, correct: false, wordsPerMin: WPM}];
             accuracyPercent = this.handleAccuracyUpdater(tracker)
         } else {
             tracker = [...this.state.tracker].slice(
@@ -162,7 +164,6 @@ class Challenge extends React.Component {
             }
             index = this.state.index + 1;
         }
-
         const highlightedWord = (
             <Typography variant="inherit">
                 <Box fontFamily="Monospace" fontSize="h5.fontSize">
@@ -363,13 +364,15 @@ class Challenge extends React.Component {
 
     renderRestartButton = () => {
         return (
-            <Button
+          <Tooltip title="Restart Challenge">
+              <IconButton
                 size="large"
                 style={{color: accentColor}}
                 onMouseDown={this.handleRefreshWords}
-            >
-                Restart
-            </Button>
+              >
+                  <ReplayIcon/>
+              </IconButton>
+          </Tooltip>
         )
     }
 
@@ -400,6 +403,7 @@ class Challenge extends React.Component {
               characters={this.state.index}
               wordOptions={this.state.wordOptions}
               handleTestAgain={() => this.handleTestAgain()}
+              lineGraph={<LineGraph userData={this.state.tracker} />}
             />
             </>
         )
