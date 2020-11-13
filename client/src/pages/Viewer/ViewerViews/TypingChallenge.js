@@ -3,6 +3,6 @@ import Challenge from "../../common/components/Challenge";
 
 export const TypingChallenge = () => {
   return (
-    <Challenge wordCount={100} minChar={1} maxChar={7}/>
+    <Challenge minChar={1} maxChar={7}/>
   );
 }

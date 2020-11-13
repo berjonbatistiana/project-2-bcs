@@ -2,9 +2,11 @@ import React from "react";
 import {generateQuote, generateWord, getWPM, getScore} from "../../../utils";
 import {Box, Typography} from "@material-ui/core";
 import ToggleButton from '@material-ui/lab/ToggleButton';
-import Button from '@material-ui/core/Button';
-import {accentColor, ChallengeContainer, TransitionsModal} from "../components";
+import {accentColor, ChallengeContainer, TransitionsModal, LineGraph} from "../components";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import ReplayIcon from '@material-ui/icons/Replay';
 import axios from 'axios';
 
 class Challenge extends React.Component {
@@ -13,9 +15,11 @@ class Challenge extends React.Component {
         wordsToBeTyped: "",
         highlightedWord: "",
         wordOptions: {
+            words50: true,
+            words100: false,
             punctuation: false,
-            quotes: false,
-            seconds30: true,
+            quotes: true,
+            seconds30: false,
             seconds60: false
         },
         tracker: [],
@@ -24,7 +28,7 @@ class Challenge extends React.Component {
         accuracyPercent: 0,
         correctNum: 0,
         totalCharSeen: 0,
-        timeLeft: 30,
+        timeLeft: 0,
         timer: null,
         score: 0,
         challengeFinished: false
@@ -60,7 +64,9 @@ class Challenge extends React.Component {
     }
 
     handleNewChallenge = () => {
-        const {wordCount, minChar, maxChar} = this.props;
+        const {minChar, maxChar} = this.props;
+        let wordCount;
+        this.state.wordOptions.words50 ? wordCount = 50 : wordCount = 100;
         const options = {wordCount, minChar, maxChar, ...this.state.wordOptions};
         let newWordsToBeTyped;
 
@@ -119,10 +125,10 @@ class Challenge extends React.Component {
             WPM = this.handleWPMUpdater();
 
         if (typedChar === char) {
-            tracker = [...this.state.tracker, {char, correct: true}];
+            tracker = [...this.state.tracker, {char, correct: true, wordsPerMin: WPM}];
             accuracyPercent = this.handleAccuracyUpdater(tracker)
         } else if (typedChar !== char && typedChar !== "Backspace") {
-            tracker = [...this.state.tracker, {char, correct: false}];
+            tracker = [...this.state.tracker, {char, correct: false, wordsPerMin: WPM}];
             accuracyPercent = this.handleAccuracyUpdater(tracker)
         } else {
             tracker = [...this.state.tracker].slice(
@@ -158,7 +164,6 @@ class Challenge extends React.Component {
             }
             index = this.state.index + 1;
         }
-
         const highlightedWord = (
             <Typography variant="inherit">
                 <Box fontFamily="Monospace" fontSize="h5.fontSize">
@@ -182,6 +187,8 @@ class Challenge extends React.Component {
 
     handleAddOption = (e) => {
         const newWordOptions = this.state.wordOptions;
+        console.log(newWordOptions);
+        console.log(e.target.dataset.value)
         switch (e.target.dataset.value) {
             case 'punctuation':
                 this.setState((prevState) => {
@@ -216,6 +223,20 @@ class Challenge extends React.Component {
                     return {newWordOptions, timeLeft: 60};
                 })
                 break;
+            case '50':
+                this.setState((prevState) => {
+                    newWordOptions.words50 = !prevState.wordOptions.words50;
+                    newWordOptions.words100 = !prevState.wordOptions.words50;
+                    return {newWordOptions};
+                })
+                break;
+            case '100':
+                this.setState((prevState) => {
+                    newWordOptions.words100 = !prevState.wordOptions.words100;
+                    newWordOptions.words50 = !prevState.wordOptions.words50;
+                    return {newWordOptions};
+                })
+                break;
             default:
                 break;
         }
@@ -234,9 +255,6 @@ class Challenge extends React.Component {
     }
 
     handleRefreshWords = () => {
-        const highScore = this.state.WPM * this.state.accuracyPercent;	
-        const username = localStorage.getItem("user");	
-        axios.post('/api/scores/score', {highScore, username, wordsPerMin: this.state.WPM, accuracy: this.state.accuracyPercent})
         this.setState(prevState => ({
             index: 0,
             wordsToBeTyped: "",
@@ -265,11 +283,36 @@ class Challenge extends React.Component {
         const miss = this.state.tracker.length - correct;
         const accuracy = this.state.accuracyPercent
         this.setState({score: getScore(correct, miss, time, accuracy), challengeFinished: true});
+        const highScore = this.state.WPM * this.state.accuracyPercent;
+        const username = localStorage.getItem("user");
+        axios.post('/api/scores/score', {highScore, username, wordsPerMin: this.state.WPM, accuracy: this.state.accuracyPercent})
     }
 
     renderToggleButton = () => {
         return (
             <ToggleButtonGroup>
+                <ToggleButton
+                  selected={this.state.wordOptions.words50}
+                  onMouseDown={this.handleAddOption}
+                  data-value={'50'}
+                  value="50"
+                  disabled={this.state.wordOptions.quotes ? true : false}
+                >
+                    <Typography data-value={'50'}>
+                        50
+                    </Typography>
+                </ToggleButton>
+                <ToggleButton
+                  selected={this.state.wordOptions.words100}
+                  onMouseDown={this.handleAddOption}
+                  data-value={'100'}
+                  value="100"
+                  disabled={this.state.wordOptions.quotes ? true : false}
+                >
+                    <Typography data-value={'100'}>
+                        100
+                    </Typography>
+                </ToggleButton>
                 <ToggleButton
                     selected={this.state.wordOptions.punctuation}
                     onMouseDown={this.handleAddOption}
@@ -321,19 +364,27 @@ class Challenge extends React.Component {
 
     renderRestartButton = () => {
         return (
-            <Button
+          <Tooltip title="Restart Challenge">
+              <IconButton
                 size="large"
                 style={{color: accentColor}}
                 onMouseDown={this.handleRefreshWords}
-            >
-                Restart
-            </Button>
+              >
+                  <ReplayIcon/>
+              </IconButton>
+          </Tooltip>
         )
     }
 
+    handleTestAgain = () => {
+        this.setState({challengeFinished: false});
+        this.handleRefreshWords();
+    }
+
     render() {
-        return this.state.challengeFinished === false ? (
-          <>
+        // return this.state.challengeFinished === false ? (
+        return (
+        <>
             <ChallengeContainer
                 challenge={this.state.highlightedWord}
                 accuracy={this.state.accuracyPercent}
@@ -343,20 +394,19 @@ class Challenge extends React.Component {
                 restartButton={this.renderRestartButton}
                 selectedKey={this.state.wordsToBeTyped[this.state.index]}
             />
-            </>
-            ) : (
-        return (
-            <>
             <TransitionsModal
+              open={this.state.challengeFinished}
+              close={() => this.setState({challengeFinished: false})}
               wpm={this.state.WPM}
               accuracy={this.state.accuracyPercent}
               score={this.state.score}
               characters={this.state.index}
               wordOptions={this.state.wordOptions}
-            //   challengeFinished={this.state.challengeFinished}
+              handleTestAgain={() => this.handleTestAgain()}
+              lineGraph={<LineGraph userData={this.state.tracker} />}
             />
             </>
-            )
+        )
     }
 }
 
