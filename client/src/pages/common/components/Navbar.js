@@ -74,8 +74,8 @@ export default function ButtonAppBar() {
 
           {token ? (
             <Toolbar>
-              <Typography variant="h6" className={classes.title}>
-                Hello, {user}
+              <Typography variant="button" className={classes.title}>
+                Hello, {user}!
               </Typography>
               <Button color="inherit" onClick={handleSignOut}>
                 Sign Out

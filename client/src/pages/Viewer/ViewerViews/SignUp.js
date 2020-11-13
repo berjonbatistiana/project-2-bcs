@@ -24,7 +24,7 @@ class SignUp extends Component {
       localStorage.setItem("token", res.data);
       localStorage.setItem("user", formValues.username);
       this.props.setViewerToken(res.data);
-      this.props.history.push("/");
+      this.props.history.push("/challenge");
     } catch (e) {
       this.setState({snackbar: true});
     }

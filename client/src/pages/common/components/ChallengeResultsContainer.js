@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 const gridResultStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    paddingTop: theme.spacing(2),
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -31,22 +30,17 @@ export function TransitionsModal(props) {
   const classes = useStyles();
   const resultClasses = gridResultStyles();
   const body = (
-    <div className={resultClasses.paper}>
-      <Box m={12} >
-        <Typography variant="h2" style={{ textAlign: "center" }}>
+    <div className={resultClasses.paper} style={{ textAlign: "center" }}>
+      <Box m={6} >
+        <Typography variant="h2">
           Results
         </Typography>
         <Grid container>
           <Grid
-            container
-            item
-            xs={12}
-            sm={2}
-            md={3}
-            lg={3}
+            container item xs={12} sm={2} md={3} lg={3}
             justify="center"
             direction="column"
-            style={{ backgroundColor: "#f5f5f5", textAlign: "center" }}
+            style={{ backgroundColor: "#f5f5f5" }}
           >
             <Grid item>
               <Box mt={6} mb={3}>
@@ -56,12 +50,11 @@ export function TransitionsModal(props) {
             </Grid>
             <Grid item>
               <Box mt={3} mb={6}>
-                <Typography>Acc</Typography>
+                <Typography>Accuracy</Typography>
                 <Typography variant="h2">{props.accuracy} %</Typography>
               </Box>
             </Grid>
           </Grid>
-
           <Grid item xs={12} sm={10} md={9} lg={9}>
             <Box m={3}>
               <ChallengeResultsLineGraph
@@ -70,40 +63,47 @@ export function TransitionsModal(props) {
             </Box>
           </Grid>
         </Grid>
-        <div
-          className={resultClasses.root}
-          justify="center"
-          direction="column"
-        >
-          <Grid container spacing={3}>
-            <Grid item xs>
-              <Typography className={resultClasses.paper}>
-                test type
-              </Typography>
-              <Typography className={resultClasses.paper}>
-                {props.wordOptions.seconds30 === true ? '30s':'60s'}
-              </Typography>
-              <Typography className={resultClasses.paper}>
-                special: {props.wordOptions.punctuation === true ? 'punctuation':''}
-                {props.wordOptions.quotes === true ? 'quote':''}
-                {props.wordOptions.quotes === false && props.wordOptions.punctuation === false ? 'none':''}
-              </Typography>
-            </Grid>
-            <Grid item xs>
-              <Typography className={resultClasses.paper}>
-                total characters
-              </Typography>
-              <Typography className={resultClasses.paper}>{props.characters}</Typography>
-            </Grid>
-            <Grid item xs>
-              <Typography className={resultClasses.paper}>Score</Typography>
-              <Typography className={resultClasses.paper}>{props.score}</Typography>
-            </Grid>
+        <Grid spacing={2} container className={resultClasses.root}>
+          <Grid item xs={3}>
+            <Typography className={resultClasses.paper}>Test Type:</Typography>
+            <Typography className={resultClasses.paper}>
+              {props.wordOptions.punctuation === true ? 'Punctuation':''}
+              {props.wordOptions.quotes === true ? 'Quote':''}
+              {props.wordOptions.quotes === false && props.wordOptions.punctuation === false ? 'Words':''}
+            </Typography>
           </Grid>
-          <div style={{textAlign: 'center', marginTop: 20}}>
+          <Grid item xs={3}>
+            <Typography className={resultClasses.paper}>Timed:</Typography>
+            <Typography className={resultClasses.paper}>
+              {props.wordOptions.seconds30 === true ? '30s':''}
+              {props.wordOptions.seconds60 === true ? '60s':''}
+              {props.wordOptions.seconds30 === false && props.wordOptions.seconds60 === false ? 'N/A':''}
+            </Typography>
+          </Grid>
+          <Grid item xs={3}>
+            <Typography className={resultClasses.paper}>Total Characters:</Typography>
+            <Typography className={resultClasses.paper}>{props.characters}</Typography>
+          </Grid>
+          <Grid item xs={3}>
+            <Typography className={resultClasses.paper}>Score:</Typography>
+            <Typography className={resultClasses.paper}>{props.score}</Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Button
+              component={Link}
+              to="/"
+              style={{
+                color: accentColor,
+                borderRadius: 25,
+                borderColor: accentColor,
+              }}
+            >
+              go to dashboard
+            </Button>
+          </Grid>
+          <Grid item xs={4}>
             <Button
               onMouseDown={props.handleTestAgain}
-              component={Link}
               variant="outlined"
               style={{
                 color: accentColor,
@@ -113,11 +113,25 @@ export function TransitionsModal(props) {
             >
               test again
             </Button>
-          </div>
-        </div>
+          </Grid>
+          <Grid item xs={4}>
+            <Button
+              component={Link}
+              to="/leaderboard"
+              style={{
+                color: accentColor,
+                borderRadius: 25,
+                borderColor: accentColor,
+              }}
+            >
+              go to leaderboard
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </div>
   )
+
   return (
     <Modal
       className={classes.modal}

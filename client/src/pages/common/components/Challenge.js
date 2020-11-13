@@ -14,8 +14,8 @@ class Challenge extends React.Component {
         highlightedWord: "",
         wordOptions: {
             punctuation: false,
-            quotes: false,
-            seconds30: true,
+            quotes: true,
+            seconds30: false,
             seconds60: false
         },
         tracker: [],
@@ -24,7 +24,7 @@ class Challenge extends React.Component {
         accuracyPercent: 0,
         correctNum: 0,
         totalCharSeen: 0,
-        timeLeft: 30,
+        timeLeft: 0,
         timer: null,
         score: 0,
         challengeFinished: false
