@@ -148,8 +148,8 @@ export const ChallengeContainer = (props) => {
               </Grid>
               <Grid item>
                 <Box mt={2} mb={4}>
-                  <AlarmIcon color={props.timeLeft > 0? 'primary': 'disabled'}/>
-                  <Typography color={props.timeLeft > 0? 'primary':'textSecondary'}>
+                  <AlarmIcon color={props.timeLeft > 0? 'initial': 'disabled'}/>
+                  <Typography color={props.timeLeft > 0? 'initial':'textSecondary'}>
                     {props.timeLeft}s
                   </Typography>
                 </Box>
