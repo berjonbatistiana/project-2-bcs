@@ -13,6 +13,8 @@ class Challenge extends React.Component {
         wordsToBeTyped: "",
         highlightedWord: "",
         wordOptions: {
+            words50: true,
+            words100: false,
             punctuation: false,
             quotes: true,
             seconds30: false,
@@ -60,7 +62,9 @@ class Challenge extends React.Component {
     }
 
     handleNewChallenge = () => {
-        const {wordCount, minChar, maxChar} = this.props;
+        const {minChar, maxChar} = this.props;
+        let wordCount;
+        this.state.wordOptions.words50 ? wordCount = 50 : wordCount = 100;
         const options = {wordCount, minChar, maxChar, ...this.state.wordOptions};
         let newWordsToBeTyped;
 
@@ -182,6 +186,8 @@ class Challenge extends React.Component {
 
     handleAddOption = (e) => {
         const newWordOptions = this.state.wordOptions;
+        console.log(newWordOptions);
+        console.log(e.target.dataset.value)
         switch (e.target.dataset.value) {
             case 'punctuation':
                 this.setState((prevState) => {
@@ -214,6 +220,20 @@ class Challenge extends React.Component {
                         clearInterval(this.state.timer)
 
                     return {newWordOptions, timeLeft: 60};
+                })
+                break;
+            case '50':
+                this.setState((prevState) => {
+                    newWordOptions.words50 = !prevState.wordOptions.words50;
+                    newWordOptions.words100 = !prevState.wordOptions.words50;
+                    return {newWordOptions};
+                })
+                break;
+            case '100':
+                this.setState((prevState) => {
+                    newWordOptions.words100 = !prevState.wordOptions.words100;
+                    newWordOptions.words50 = !prevState.wordOptions.words50;
+                    return {newWordOptions};
                 })
                 break;
             default:
@@ -270,6 +290,28 @@ class Challenge extends React.Component {
     renderToggleButton = () => {
         return (
             <ToggleButtonGroup>
+                <ToggleButton
+                  selected={this.state.wordOptions.words50}
+                  onMouseDown={this.handleAddOption}
+                  data-value={'50'}
+                  value="50"
+                  disabled={this.state.wordOptions.quotes ? true : false}
+                >
+                    <Typography data-value={'50'}>
+                        50
+                    </Typography>
+                </ToggleButton>
+                <ToggleButton
+                  selected={this.state.wordOptions.words100}
+                  onMouseDown={this.handleAddOption}
+                  data-value={'100'}
+                  value="100"
+                  disabled={this.state.wordOptions.quotes ? true : false}
+                >
+                    <Typography data-value={'100'}>
+                        100
+                    </Typography>
+                </ToggleButton>
                 <ToggleButton
                     selected={this.state.wordOptions.punctuation}
                     onMouseDown={this.handleAddOption}
