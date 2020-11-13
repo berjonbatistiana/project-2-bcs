@@ -11,31 +11,36 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
 });
-const user = localStorage.getItem("user");
 
 export const Dashboard = () => {
   const classes = useStyles();
   const [userData, setUserData] = useState();
-  
+  const [currentUser, setCurrentUser] = useState();
+
+  const user = localStorage.getItem("user");
+
   useEffect(() => {
       axios.get(`/api/scores/${user}`).then(res => {
         setUserData(res.data)
       })
+      setCurrentUser(user)
   }, []);
 
-  return userData ? (
+  console.log(userData)
+
+  return (userData && (user === currentUser)) ? (
     <div>
       <Grid container spacing={3} className={classes.root}>
-        <Grid item container xs={12} md={6} lg={5}>
-          <Grid item xs={12}>
-            <Box mt={3}>
+        <Grid item container justify="center" xs={12} lg={4}>
+          <Grid item xs={8} sm={6} lg={12}>
+            <Box m={3}>
               <Typography component="h3" variant="h5">
                 Accuracy
               </Typography>
               <Donut userData={userData} />
             </Box>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6} lg={12}>
             <Box m={3}>
               <Typography component="h3" variant="h5">
                 Recent Scores
@@ -44,7 +49,7 @@ export const Dashboard = () => {
             </Box>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={6} lg={7}>
+        <Grid item xs={12} lg={8}>
           <Box m={3}>
             <Typography component="h3" variant="h5">
               Progress

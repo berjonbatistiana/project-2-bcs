@@ -4,12 +4,17 @@ import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 import TrackChangesIcon from '@material-ui/icons/TrackChanges';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  ThemeProvider,
+  createMuiTheme,
+  makeStyles
+} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import AlarmIcon from '@material-ui/icons/Alarm';
 import PanToolIcon from '@material-ui/icons/PanTool';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import FiberManualRecordOutlinedIcon from '@material-ui/icons/FiberManualRecordOutlined';
+import { lightBlue } from '@material-ui/core/colors';
 
 import { secondaryColor } from "../components";
 
@@ -29,6 +34,12 @@ const useStyles = makeStyles((theme) => ({
     width: 175,
   },
 }));
+
+const theme = createMuiTheme({
+  palette: {
+    primary: lightBlue,
+  },
+});
 
 export const ChallengeContainer = (props) => {
   const classes = useStyles();
@@ -107,7 +118,7 @@ export const ChallengeContainer = (props) => {
   ]
 
   return (
-    <React.Fragment>
+    <ThemeProvider theme={theme}>
       <Box m={4}>
         <Card>
           <Box m={2}>
@@ -131,7 +142,7 @@ export const ChallengeContainer = (props) => {
               style={{backgroundColor: secondaryColor, textAlign: "center"}}
             >
               <Grid item>
-                <Box mt={4} mb={2}>
+                <Box mt={3} mb={1}>
                   <TrackChangesIcon/>
                   <Typography>
                     {props.accuracy}%
@@ -139,7 +150,7 @@ export const ChallengeContainer = (props) => {
                 </Box>
               </Grid>
               <Grid item>
-                <Box mt={2} mb={4}>
+                <Box mt={1} mb={1}>
                   <DirectionsRunIcon/>
                   <Typography>
                     {props.wpm} WPM
@@ -147,7 +158,7 @@ export const ChallengeContainer = (props) => {
                 </Box>
               </Grid>
               <Grid item>
-                <Box mt={2} mb={4}>
+                <Box mt={1} mb={3}>
                   <AlarmIcon color={props.timeLeft > 0? 'initial': 'disabled'}/>
                   <Typography color={props.timeLeft > 0? 'initial':'textSecondary'}>
                     {props.timeLeft}s
@@ -243,6 +254,6 @@ export const ChallengeContainer = (props) => {
           </Grid>
         </Box>
       </Box>
-    </React.Fragment>
+    </ThemeProvider>
   );
 }
