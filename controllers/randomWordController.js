@@ -62,6 +62,7 @@ module.exports = {
                 quotes = quotes.replace('\[', '');
                 quotes = quotes.replace('\]', '');
                 quotes = quotes.replace(/[\n\r]/g, ' ');
+                quotes.trim();
                 res.send(quotes)
             });
         } catch (e) {
