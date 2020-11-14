@@ -1,5 +1,5 @@
 import React from "react";
-import { generateQuote, generateWord, getWPM, getScore } from "../../../utils";
+import {generateQuote, generateWord, getWPM, getScore, postScore} from "../../../utils";
 import { Box, Typography } from "@material-ui/core";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import {
@@ -317,12 +317,19 @@ class Challenge extends React.Component {
     });
     const highScore = this.state.WPM * this.state.accuracyPercent;
     const username = localStorage.getItem("user");
-    axios.post("/api/scores/score", {
+    postScore({
       highScore,
       username,
       wordsPerMin: this.state.WPM,
-      accuracy: this.state.accuracyPercent,
-    });
+      accuracy: this.state.accuracyPercent
+    }).catch(console.error);
+
+    // axios.post("/api/scores/score", {
+    //   highScore,
+    //   username,
+    //   wordsPerMin: this.state.WPM,
+    //   accuracy: this.state.accuracyPercent,
+    // });
   }
 
   renderToggleButton = () => {
