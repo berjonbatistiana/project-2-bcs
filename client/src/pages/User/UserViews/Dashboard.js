@@ -6,7 +6,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
-import { Donut, LineGraph, PersonalHighScores } from "../../common";
+import { Donut, LineGraph, PersonalHighScores, accentColor } from "../../common";
 
 const theme = createMuiTheme();
 
