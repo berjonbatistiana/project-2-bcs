@@ -78,7 +78,7 @@ export const Leaderboard = () => {
           }}
           onClick={handleDashboardClick}
         >
-          {token ? "Return to Dashboard" : "Return to About"}
+          {token ? "Return to Dashboard" : "Return to Home"}
         </Button>
         <br />
       </div>
