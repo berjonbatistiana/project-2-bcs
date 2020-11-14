@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { Link, useHistory } from "react-router-dom";
-
+import logo from '../components/HypeTypeLogoInverted.v0.png';
 import { useSelector, useDispatch } from "react-redux";
 import { setViewerToken } from "../../Viewer";
 
@@ -64,12 +64,12 @@ export function Navbar() {
               to="/"
               color="inherit"
             >
-              About
+              <img src={logo} alt="HypeTypeLogo" style={{height:30}}/>
             </Button>
           )}
           <Typography variant="h6" className={classes.title}>
-            <Button component={Link} to="/leaderboard" color="inherit">
-              Leaderboard
+            <Button component={Link} to="/" color="inherit">
+              Hype Type
             </Button>
           </Typography>
 
@@ -84,6 +84,9 @@ export function Navbar() {
             </Toolbar>
           ) : (
             <div>
+              <Button component={Link} to="/leaderboard" color="inherit">
+              Leaderboard
+            </Button>
               <Button to="/signup" component={Link} color="inherit">
                 Sign Up
               </Button>
