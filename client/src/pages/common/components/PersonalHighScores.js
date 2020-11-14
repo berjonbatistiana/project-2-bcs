@@ -30,8 +30,8 @@ export const PersonalHighScores = (props) => {
   };
 
   return (
-    <Paper className={classes.root}>
-      <TableContainer >
+    <Paper className={classes.root} elevation={0}>
+      <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
