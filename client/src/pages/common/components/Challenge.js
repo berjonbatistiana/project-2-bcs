@@ -116,6 +116,8 @@ class Challenge extends React.Component {
 
         if (typedChar === "Shift") return;
 
+        if (this.state.challengeFinished) return;
+
         if (this.state.index === 0 && this.state.startTime === '') {
             if (this.state.wordOptions.seconds30 || this.state.wordOptions.seconds60) {
                 this.countDown();
@@ -266,6 +268,7 @@ class Challenge extends React.Component {
         }));
         clearInterval(this.state.timer);
         this.handleNewChallenge();
+        document.addEventListener("keydown", this.handleCorrectKeyDown);
     };
 
     handleWPMUpdater() {
@@ -277,6 +280,7 @@ class Challenge extends React.Component {
     }
 
     handleScoreCalc() {
+        document.removeEventListener("keydown", this.handleCorrectKeyDown);
         const time = (new Date().getTime() - this.state.startTime.getTime()) / 1000 / 60;
         const trackedLetters = this.state.tracker.filter(el => el.correct);
         const correct = trackedLetters.length;
@@ -296,7 +300,7 @@ class Challenge extends React.Component {
                   onMouseDown={this.handleAddOption}
                   data-value={'50'}
                   value="50"
-                  disabled={this.state.wordOptions.quotes ? true : false}
+                  disabled={this.state.wordOptions.quotes}
                 >
                     <Typography data-value={'50'}>
                         50
@@ -307,7 +311,7 @@ class Challenge extends React.Component {
                   onMouseDown={this.handleAddOption}
                   data-value={'100'}
                   value="100"
-                  disabled={this.state.wordOptions.quotes ? true : false}
+                  disabled={this.state.wordOptions.quotes}
                 >
                     <Typography data-value={'100'}>
                         100
