@@ -10,6 +10,7 @@ import TrackChangesIcon from "@material-ui/icons/TrackChanges";
 import KeyboardIcon from "@material-ui/icons/Keyboard";
 import PeopleIcon from "@material-ui/icons/People";
 import { makeStyles } from "@material-ui/core/styles";
+import HypeType from "./HypeType.gif"
 
 import {
   ChatContainer,
@@ -86,7 +87,7 @@ export const About = () => {
         justify="center"
         alignItems="center"
       >
-        <Grid item xs={10} md={8}>
+        <Grid item xs={10} lg={4}>
           <Box m={3} style={{ color: "white" }}>
             <Typography component="h3" variant="button">
               What is Hype Type?
@@ -103,8 +104,12 @@ export const About = () => {
               </ul>
               Hype Type has helped hundreds of individuals improve their typing
               speeds by over 20 words per minute on average! <br />
-              (Add screenshot on either side)
             </Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={8} lg={4}>
+          <Box m={3} style={{ color: "white" }}>
+            <img src={HypeType} alt="Hype Type screenshot" width="100%"/>
           </Box>
         </Grid>
       </Grid>
