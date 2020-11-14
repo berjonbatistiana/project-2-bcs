@@ -1,18 +1,19 @@
 import React from "react";
 import {generateQuote, generateWord, getWPM, getScore, postScore} from "../../../utils";
 import { Box, Typography } from "@material-ui/core";
-import ToggleButton from "@material-ui/lab/ToggleButton";
 import {
   accentColor,
   ChallengeContainer,
   TransitionsModal,
   LineGraph,
+  ToggleButtonOptions,
+
+
 } from "../components";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import ReplayIcon from "@material-ui/icons/Replay";
-import axios from "axios";
 
 class Challenge extends React.Component {
   state = {
@@ -61,8 +62,6 @@ class Challenge extends React.Component {
     this.setState({ timeLeft: seconds });
     if (seconds === 0) {
       clearInterval(this.state.timer);
-      // run end of challenge results
-      // this.handleRefreshWords();
       this.handleScoreCalc();
     }
   };
@@ -323,74 +322,15 @@ class Challenge extends React.Component {
       wordsPerMin: this.state.WPM,
       accuracy: this.state.accuracyPercent
     }).catch(console.error);
-
-    // axios.post("/api/scores/score", {
-    //   highScore,
-    //   username,
-    //   wordsPerMin: this.state.WPM,
-    //   accuracy: this.state.accuracyPercent,
-    // });
   }
 
   renderToggleButton = () => {
     return (
-      <ToggleButtonGroup>
-        <ToggleButton
-          selected={this.state.wordOptions.words50}
-          onMouseDown={this.handleAddOption}
-          data-value={"50"}
-          value="50"
-          disabled={this.state.wordOptions.quotes}
-        >
-          <Typography data-value={"50"}>50</Typography>
-        </ToggleButton>
-        <ToggleButton
-          selected={this.state.wordOptions.words100}
-          onMouseDown={this.handleAddOption}
-          data-value={"100"}
-          value="100"
-          disabled={this.state.wordOptions.quotes}
-        >
-          <Typography data-value={"100"}>100</Typography>
-        </ToggleButton>
-        <ToggleButton
-          selected={this.state.wordOptions.punctuation}
-          onMouseDown={this.handleAddOption}
-          data-value={"punctuation"}
-          value="Punctuation"
-        >
-          <Typography data-value={"punctuation"}>Punctuation</Typography>
-        </ToggleButton>
-
-        <ToggleButton
-          selected={this.state.wordOptions.quotes}
-          onMouseDown={this.handleAddOption}
-          data-value={"quotes"}
-          value="Quote"
-        >
-          <Typography data-value={"quotes"}>Quote</Typography>
-        </ToggleButton>
-        <ToggleButton
-          selected={this.state.wordOptions.seconds30}
-          onMouseDown={this.handleAddOption}
-          data-value={"thirtyS"}
-          value="Timed: 30S"
-        >
-          <Typography data-value={"thirtyS"} value="Timed: 30S">
-            Timed: 30s
-          </Typography>
-        </ToggleButton>
-        <ToggleButton
-          selected={this.state.wordOptions.seconds60}
-          onMouseDown={this.handleAddOption}
-          data-value={"sixtyS"}
-          value="Timed: 60S"
-        >
-          <Typography data-value={"sixtyS"} value="Timed: 60S">
-            Timed: 60s
-          </Typography>
-        </ToggleButton>
-      </ToggleButtonGroup>
+      <ToggleButtonOptions
+          options={this.state.wordOptions}
+          handleAddOption={this.handleAddOption}
+      >
+      </ToggleButtonOptions>
     );
   };
 
@@ -414,7 +354,6 @@ class Challenge extends React.Component {
   };
 
   render() {
-    // return this.state.challengeFinished === false ? (
     return (
       <>
         <ChallengeContainer
