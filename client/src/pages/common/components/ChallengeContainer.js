@@ -119,8 +119,8 @@ export const ChallengeContainer = (props) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box m={4}>
-        <Card>
+      <Box>
+        <Card elevation={0} style={{border: "1px solid #e0e0e0", borderRadius: 25}}>
           <Box m={2}>
             <Typography component="h1" variant="h5">
               Typing Challenge

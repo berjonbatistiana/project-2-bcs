@@ -116,16 +116,16 @@ export const About = () => {
             </Typography>
             <Box m={2} >
               <Typography component="p" variant="body2">
-                Test your typing speed with our typing challenge.
+                Sign in to test your typing speed with our typing challenge.
               </Typography>
             </Box>
             <Button
-              to="challenge"
+              to="signin"
               component={Link}
               variant="outlined"
               className={classes.outlined}
             >
-              Typing Challenge
+              Sign In
             </Button>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -134,7 +134,7 @@ export const About = () => {
             </Typography>
             <Box m={2}>
               <Typography component="p" variant="body2">
-                Create an account to track your progress!
+                Creating an account will help you track your progress!
               </Typography>
             </Box>
             <Button

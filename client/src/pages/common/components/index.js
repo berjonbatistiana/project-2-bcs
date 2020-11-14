@@ -8,7 +8,9 @@ export * from "./ChatBubble";
 export * from "./ChatContainer"
 export * from "./Donut";
 export * from "./Footer";
-export * from "./PersonalHighScores";
 export * from "./LineGraph";
+export * from "./Navbar";
+export * from "./PersonalHighScores";
 export * from "./SignCard";
 export * from "./TextFieldInput";
+export * from "./UserNavbar";

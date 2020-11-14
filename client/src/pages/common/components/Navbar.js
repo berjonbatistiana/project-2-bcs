@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAppBar() {
+export function Navbar() {
   const classes = useStyles();
   const { token } = useSelector((state) => state.viewer);
   const user = localStorage.getItem("user");
