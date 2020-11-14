@@ -22,7 +22,7 @@ export class LineGraph extends Component {
           {
             label: "WPM",
             data: [...wpm].reverse(),
-            backgroundColor: '#e1f5fe',
+            backgroundColor: 'rgba(3, 169, 244, 0.2)',
             borderColor: '#03a9f4'
           },
         ],
