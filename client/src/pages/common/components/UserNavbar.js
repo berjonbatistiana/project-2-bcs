@@ -18,7 +18,7 @@ import KeyboardIcon from "@material-ui/icons/Keyboard";
 import AssessmentIcon from "@material-ui/icons/Assessment";
 import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
-
+import logo from '../components/HypeTypeLogo.v1.png';
 import { setViewerToken } from "../../Viewer";
 import { Leaderboard, TypingChallenge } from "../../Viewer/ViewerViews";
 import { Dashboard } from "../../User/UserViews";
@@ -128,8 +128,9 @@ export function UserNavbar() {
             className={clsx({
               [classes.hide]: !open,
             })}
-            style={{ marginRight: 91 }}
+            style={{ marginRight: 30 }}
           >
+            <img src={logo} alt="HypeTypeLogo" style={{height:25}}/>
             Hype Type
           </Typography>
           <IconButton
