@@ -45,18 +45,17 @@ export default function ButtonAppBar() {
         <Toolbar>
           {token ? (
             <Toolbar>
-              <Button color="inherit" to="/" component={Link}>
-                Dashboard
-              </Button>
-              <Button
-                className={classes.menuButton}
-                component={Link}
-                to="/challenge"
-                color="inherit"
-              >
-                Typing Challenge
-              </Button>
-            </Toolbar>
+            <Button color="inherit" to="/" component={Link} className={classes.title}>
+              Dashboard
+            </Button>
+            <Button
+            component={Link}
+            to="/challenge"
+            color="inherit"
+          >
+            Typing Challenge
+          </Button>
+          </Toolbar>
           ) : (
             <Button
               className={classes.menuButton}
@@ -75,8 +74,8 @@ export default function ButtonAppBar() {
 
           {token ? (
             <Toolbar>
-              <Typography variant="h6" className={classes.title}>
-                Hello, {user}
+              <Typography variant="button" className={classes.title}>
+                Hello, {user}!
               </Typography>
               <Button color="inherit" onClick={handleSignOut}>
                 Sign Out

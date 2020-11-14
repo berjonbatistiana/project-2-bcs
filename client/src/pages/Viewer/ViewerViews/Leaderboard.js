@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     width: '100%',
     maxWidth: 600,
     display: 'block',
-    marginLeft: 'auto', 
+    marginLeft: 'auto',
     marginRight: 'auto',
   },
 });
@@ -39,7 +39,7 @@ export const Leaderboard = () => {
     history.push('/');
   }
   const [leaders, setLeaders] = useState();
-  
+
   useEffect(() => {
       axios.get('/api/scores/leaders').then(res => {
         setLeaders(res.data)
@@ -47,37 +47,35 @@ export const Leaderboard = () => {
   }, []);
 
   return leaders ? (
-    <>
-      <div style={{ backgroundColor: "#f0f2f5" }}>
-        <div className={classes.root}>
-          <Typography
-            style={{ textAlign: "center", paddingTop: 30 }}
-            variant="h2"
-            gutterBottom
-          >
-            LEADERBOARD
-          </Typography>
-          <div
-            style={{ height: 900, backgroundColor: "#e9edf5", marginTop: 10 }}
-          >
-            <DataGrid rows={leaders} columns={columns} pageSize={15}/>
-          </div>
-          <Button
-            style={{
-              display: "block",
-              marginLeft: "auto",
-              marginRight: "auto",
-              marginTop: 30,
-              marginBottom: 50,
-            }}
-            onClick={handleDashboardClick}
-          >
-            Return to Dashboard
-          </Button>
-            <br/>
+    <div style={{ backgroundColor: "#f0f2f5" }}>
+      <div className={classes.root}>
+        <Typography
+          style={{ textAlign: "center", paddingTop: 30 }}
+          variant="h2"
+          gutterBottom
+        >
+          LEADERBOARD
+        </Typography>
+        <div
+          style={{ height: 650, backgroundColor: "#e9edf5", marginTop: 10 }}
+        >
+          <DataGrid rows={leaders} columns={columns} pageSize={15}/>
         </div>
+        <Button
+          style={{
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: 30,
+            marginBottom: 50,
+          }}
+          onClick={handleDashboardClick}
+        >
+          Return to Dashboard
+        </Button>
+          <br/>
       </div>
-    </>
+    </div>
   ) : (
     <div>Loading...</div>
   )

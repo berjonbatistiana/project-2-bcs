@@ -1,10 +1,12 @@
 import React from "react";
-import {generateQuote, generateWord, getWPM} from "../../../utils";
+import {generateQuote, generateWord, getWPM, getScore} from "../../../utils";
 import {Box, Typography} from "@material-ui/core";
 import ToggleButton from '@material-ui/lab/ToggleButton';
-import Button from '@material-ui/core/Button';
-import {accentColor, ChallengeContainer, TransitionsModal} from "../components";
+import {accentColor, ChallengeContainer, TransitionsModal, LineGraph} from "../components";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import ReplayIcon from '@material-ui/icons/Replay';
 import axios from 'axios';
 
 class Challenge extends React.Component {
@@ -13,9 +15,11 @@ class Challenge extends React.Component {
         wordsToBeTyped: "",
         highlightedWord: "",
         wordOptions: {
+            words50: true,
+            words100: false,
             punctuation: false,
-            quotes: false,
-            seconds30: true,
+            quotes: true,
+            seconds30: false,
             seconds60: false
         },
         tracker: [],
@@ -24,8 +28,10 @@ class Challenge extends React.Component {
         accuracyPercent: 0,
         correctNum: 0,
         totalCharSeen: 0,
-        timeLeft: 30,
-        timer: null
+        timeLeft: 0,
+        timer: null,
+        score: 0,
+        challengeFinished: false
     };
 
     componentDidMount() {
@@ -51,12 +57,16 @@ class Challenge extends React.Component {
         this.setState({timeLeft: seconds});
         if (seconds === 0) {
             clearInterval(this.state.timer);
-            this.handleRefreshWords();
+            // run end of challenge results
+            // this.handleRefreshWords();
+            this.handleScoreCalc();
         }
     }
 
     handleNewChallenge = () => {
-        const {wordCount, minChar, maxChar} = this.props;
+        const {minChar, maxChar} = this.props;
+        let wordCount;
+        this.state.wordOptions.words50 ? wordCount = 50 : wordCount = 100;
         const options = {wordCount, minChar, maxChar, ...this.state.wordOptions};
         let newWordsToBeTyped;
 
@@ -106,6 +116,8 @@ class Challenge extends React.Component {
 
         if (typedChar === "Shift") return;
 
+        if (this.state.challengeFinished) return;
+
         if (this.state.index === 0 && this.state.startTime === '') {
             if (this.state.wordOptions.seconds30 || this.state.wordOptions.seconds60) {
                 this.countDown();
@@ -115,10 +127,10 @@ class Challenge extends React.Component {
             WPM = this.handleWPMUpdater();
 
         if (typedChar === char) {
-            tracker = [...this.state.tracker, {char, correct: true}];
+            tracker = [...this.state.tracker, {char, correct: true, wordsPerMin: WPM}];
             accuracyPercent = this.handleAccuracyUpdater(tracker)
         } else if (typedChar !== char && typedChar !== "Backspace") {
-            tracker = [...this.state.tracker, {char, correct: false}];
+            tracker = [...this.state.tracker, {char, correct: false, wordsPerMin: WPM}];
             accuracyPercent = this.handleAccuracyUpdater(tracker)
         } else {
             tracker = [...this.state.tracker].slice(
@@ -148,19 +160,18 @@ class Challenge extends React.Component {
                 );
             }
             if (this.state.index + 1 === this.state.wordsToBeTyped.length) {
-                this.handleRefreshWords();
+                this.handleScoreCalc();
+
                 return;
             }
             index = this.state.index + 1;
-            // this.setState({index: this.state.index + 1});
         }
-
         const highlightedWord = (
-            <Typography>
+            <Typography variant="inherit">
                 <Box fontFamily="Monospace" fontSize="h5.fontSize">
-                    {Object.values(tracker).map((i) => {
+                    {Object.values(tracker).map((i, index) => {
                         return (
-                            <span style={{backgroundColor: i.correct ? "#a5d6a7" : "#ef9a9a"}}>
+                            <span key={index} style={{backgroundColor: i.correct ? "#a5d6a7" : "#ef9a9a"}}>
               {i.char}
             </span>
                         );
@@ -174,13 +185,12 @@ class Challenge extends React.Component {
             </Typography>
         );
         this.setState({accuracyPercent, WPM, tracker, index, highlightedWord});
-
-
     };
 
     handleAddOption = (e) => {
-
         const newWordOptions = this.state.wordOptions;
+        console.log(newWordOptions);
+        console.log(e.target.dataset.value)
         switch (e.target.dataset.value) {
             case 'punctuation':
                 this.setState((prevState) => {
@@ -215,6 +225,20 @@ class Challenge extends React.Component {
                     return {newWordOptions, timeLeft: 60};
                 })
                 break;
+            case '50':
+                this.setState((prevState) => {
+                    newWordOptions.words50 = !prevState.wordOptions.words50;
+                    newWordOptions.words100 = !prevState.wordOptions.words50;
+                    return {newWordOptions};
+                })
+                break;
+            case '100':
+                this.setState((prevState) => {
+                    newWordOptions.words100 = !prevState.wordOptions.words100;
+                    newWordOptions.words50 = !prevState.wordOptions.words50;
+                    return {newWordOptions};
+                })
+                break;
             default:
                 break;
         }
@@ -247,6 +271,7 @@ class Challenge extends React.Component {
         }));
         clearInterval(this.state.timer);
         this.handleNewChallenge();
+        document.addEventListener("keydown", this.handleCorrectKeyDown);
     };
 
     handleWPMUpdater() {
@@ -254,14 +279,47 @@ class Challenge extends React.Component {
         const trackedLetters = this.state.tracker.filter(el => el.correct);
         const correct = trackedLetters.length;
         const miss = this.state.tracker.length - correct;
-        console.log(`this ${time} ${trackedLetters} ${correct} ${miss}`)
         return getWPM(correct, miss, time);
     }
 
+    handleScoreCalc() {
+        document.removeEventListener("keydown", this.handleCorrectKeyDown);
+        const time = (new Date().getTime() - this.state.startTime.getTime()) / 1000 / 60;
+        const trackedLetters = this.state.tracker.filter(el => el.correct);
+        const correct = trackedLetters.length;
+        const miss = this.state.tracker.length - correct;
+        const accuracy = this.state.accuracyPercent
+        this.setState({score: getScore(correct, miss, time, accuracy), challengeFinished: true});
+        const highScore = this.state.WPM * this.state.accuracyPercent;
+        const username = localStorage.getItem("user");
+        axios.post('/api/scores/score', {highScore, username, wordsPerMin: this.state.WPM, accuracy: this.state.accuracyPercent})
+    }
 
     renderToggleButton = () => {
         return (
             <ToggleButtonGroup>
+                <ToggleButton
+                  selected={this.state.wordOptions.words50}
+                  onMouseDown={this.handleAddOption}
+                  data-value={'50'}
+                  value="50"
+                  disabled={this.state.wordOptions.quotes}
+                >
+                    <Typography data-value={'50'}>
+                        50
+                    </Typography>
+                </ToggleButton>
+                <ToggleButton
+                  selected={this.state.wordOptions.words100}
+                  onMouseDown={this.handleAddOption}
+                  data-value={'100'}
+                  value="100"
+                  disabled={this.state.wordOptions.quotes}
+                >
+                    <Typography data-value={'100'}>
+                        100
+                    </Typography>
+                </ToggleButton>
                 <ToggleButton
                     selected={this.state.wordOptions.punctuation}
                     onMouseDown={this.handleAddOption}
@@ -313,35 +371,49 @@ class Challenge extends React.Component {
 
     renderRestartButton = () => {
         return (
-            <Button
+          <Tooltip title="Restart Challenge">
+              <IconButton
                 size="large"
                 style={{color: accentColor}}
                 onMouseDown={this.handleRefreshWords}
-            >
-                Restart
-            </Button>
+              >
+                  <ReplayIcon/>
+              </IconButton>
+          </Tooltip>
         )
     }
 
+    handleTestAgain = () => {
+        this.setState({challengeFinished: false});
+        this.handleRefreshWords();
+    }
+
     render() {
-        console.log(this.state)
+        // return this.state.challengeFinished === false ? (
         return (
-            <>
-                <ChallengeContainer
-                    challenge={this.state.highlightedWord}
-                    accuracy={this.state.accuracyPercent}
-                    wpm={this.state.WPM}
-                    timeLeft={this.state.timeLeft}
-                    toggleButton={this.renderToggleButton}
-                    restartButton={this.renderRestartButton}
-                    selectedKey={this.state.wordsToBeTyped[this.state.index]}
-                />
-                <TransitionsModal
-                    wpm={this.state.WPM}
-                    accuracy={this.state.accuracyPercent}
-                />
+        <>
+            <ChallengeContainer
+                challenge={this.state.highlightedWord}
+                accuracy={this.state.accuracyPercent}
+                wpm={this.state.WPM}
+                timeLeft={this.state.timeLeft}
+                toggleButton={this.renderToggleButton}
+                restartButton={this.renderRestartButton}
+                selectedKey={this.state.wordsToBeTyped[this.state.index]}
+            />
+            <TransitionsModal
+              open={this.state.challengeFinished}
+              close={() => this.setState({challengeFinished: false})}
+              wpm={this.state.WPM}
+              accuracy={this.state.accuracyPercent}
+              score={this.state.score}
+              characters={this.state.index}
+              wordOptions={this.state.wordOptions}
+              handleTestAgain={() => this.handleTestAgain()}
+              lineGraph={<LineGraph userData={this.state.tracker} />}
+            />
             </>
-        );
+        )
     }
 }
 
