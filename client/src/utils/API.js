@@ -18,3 +18,19 @@ export const generateQuote = async () => {
     throw new Error(e);
   }
 };
+
+
+export const postScore = async ({highScore, username, wordsPerMin, accuracy}) => {
+
+  try {
+    await axios.post("/api/scores/score", {
+      highScore,
+      username,
+      wordsPerMin,
+      accuracy
+    });
+  } catch (e){
+    throw new Error(e);
+  }
+
+};
