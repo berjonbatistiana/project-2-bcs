@@ -50,20 +50,24 @@ module.exports = {
             axios.get(url).then((aRes) => {
                 const rawQuotes = aRes.data.quotes;
                 const arrQuotes = [];
-
                 console.log(rawQuotes)
                 rawQuotes.forEach(el => {
-                    arrQuotes.push(el.quote);
+
+                    let singleQuote = el.quote
+                        .replace('\[...\]', '')
+                        .replace('…', '')
+                        .replace('...', '')
+                        .replace('[', '')
+                        .replace(']', '')
+                        .replace('[]', '')
+                        .replace(/[\n\r]/g, ' ')
+                        .replace('–', '--')
+                        .trim();
+
+                    arrQuotes.push(singleQuote.charAt(0).toUpperCase() + singleQuote.slice(1));
                 });
                 let quotes = arrQuotes.join(' ');
-                quotes = quotes.replace('\[...\]', '');
-                quotes = quotes.replace('…', '');
-                quotes = quotes.replace('...', '');
-                quotes = quotes.replace('\[', '');
-                quotes = quotes.replace('\]', '');
-                quotes = quotes.replace(/[\n\r]/g, ' ');
-                quotes.trim();
-                res.send(quotes)
+                res.send(quotes);
             });
         } catch (e) {
             throw new Error(e);
