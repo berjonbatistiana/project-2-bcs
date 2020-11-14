@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { reduxForm, Field } from "redux-form";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 import { Grid } from "@material-ui/core/";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { useSelector } from "react-redux";
 
 import { setViewerToken } from "../ViewerReducer";
-
 import {accentColor, SignCard, TextFieldInput} from "../../common/components";
 import signIn from "../../common/components/signIn.svg"
 
-
 const SignIn = (props) => {
-  const { handleSubmit, history } = props;
+  const form = useSelector(state => state.form.signInForm)
+  const [snackbar, setSnackbar] = useState(false);
+  const { handleSubmit, pristine, history } = props;
+  let disable = () => (!pristine && form.values && form.values.username && form.values.password && form.values.username !== "" && form.values.password !== "") ? false : true;
+
   const handleSignIn = async (formValues, dispatch) => {
     try {
       const res = await axios.post("/auth/signin", formValues);
@@ -20,9 +25,14 @@ const SignIn = (props) => {
       dispatch(setViewerToken(res.data));
       history.push("/");
     } catch (e) {
-      const $errorComponent = document.getElementById("on-error");
-      $errorComponent.append("Invalid credentials");
+      setSnackbar(true);
     }
+  };
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbar(false);
   };
 
   return (
@@ -51,6 +61,7 @@ const SignIn = (props) => {
             </Grid>
             <Grid item xs={12}>
               <Button
+                disabled={disable()}
                 onClick={handleSubmit(handleSignIn)}
                 variant="contained"
                 style={{color: "white",
@@ -63,8 +74,18 @@ const SignIn = (props) => {
                 Sign in
               </Button>
             </Grid>
-            <p style={{ color: "red" }} id="on-error"></p>
           </Grid>
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
+            open={snackbar}
+            onClose={handleClose}>
+            <MuiAlert onClose={handleClose} severity="error">
+              We couldn’t find an account matching the username and password you entered. Please check your username and password and try again.
+            </MuiAlert>
+          </Snackbar>
         </form>
       }
     />
