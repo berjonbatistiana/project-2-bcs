@@ -17,7 +17,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import KeyboardIcon from "@material-ui/icons/Keyboard";
 import AssessmentIcon from "@material-ui/icons/Assessment";
 import MenuIcon from "@material-ui/icons/Menu";
-import Typography from "@material-ui/core/Typography";
+import {Typography, Grid} from "@material-ui/core";
 import logo from '../components/HypeTypeLogo.v1.png';
 import { setViewerToken } from "../../Viewer";
 import { Leaderboard, TypingChallenge } from "../../Viewer/ViewerViews";
@@ -130,8 +130,14 @@ export function UserNavbar() {
             })}
             style={{ marginRight: 30 }}
           >
-            <img src={logo} alt="HypeTypeLogo" style={{height:25}}/>
-            Hype Type
+            <Grid container alignItems="center">
+              <Grid item xs={6}>
+                <img src={logo} alt="HypeTypeLogo" style={{height:25}}/>
+              </Grid>
+              <Grid item xs={6}>
+                Hype Type
+              </Grid>
+            </Grid>
           </Typography>
           <IconButton
             onClick={handleDrawerClose}
