@@ -1,4 +1,8 @@
-const { selectLeadersFromDb, selectScoresFromDb, insertIntoScoreDb } = require("../model/scoreOrm");
+const {
+  selectLeadersFromDb,
+  selectScoresFromDb,
+  insertIntoScoreDb,
+} = require("../model/scoreOrm");
 
 module.exports = {
   getLeaderboard: async (req, res) => {

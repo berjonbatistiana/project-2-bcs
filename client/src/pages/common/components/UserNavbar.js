@@ -1,68 +1,68 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import { Route, Redirect} from "react-router-dom";
-import {useSelector, useDispatch} from "react-redux";
+import React from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import { Route, Redirect } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory, Link, useLocation } from "react-router-dom";
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import KeyboardIcon from '@material-ui/icons/Keyboard';
-import AssessmentIcon from '@material-ui/icons/Assessment';
-import MenuIcon from '@material-ui/icons/Menu';
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import KeyboardIcon from "@material-ui/icons/Keyboard";
+import AssessmentIcon from "@material-ui/icons/Assessment";
+import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
 
-import {setViewerToken} from "../../Viewer";
-import {Leaderboard, TypingChallenge} from "../../Viewer/ViewerViews";
-import {Dashboard} from "../../User/UserViews";
-import {accentColor} from "../components"
+import { setViewerToken } from "../../Viewer";
+import { Leaderboard, TypingChallenge } from "../../Viewer/ViewerViews";
+import { Dashboard } from "../../User/UserViews";
+import { accentColor } from "../components";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    display: "flex",
   },
   menuButton: {
     marginRight: -4,
   },
   hide: {
-    display: 'none',
+    display: "none",
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    whiteSpace: 'nowrap',
+    whiteSpace: "nowrap",
   },
   drawerOpen: {
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
   drawerClose: {
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    overflowX: 'hidden',
+    overflowX: "hidden",
     width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       width: theme.spacing(7),
     },
   },
   toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
@@ -128,7 +128,7 @@ export function UserNavbar() {
             className={clsx({
               [classes.hide]: !open,
             })}
-            style={{marginRight: 91}}
+            style={{ marginRight: 91 }}
           >
             Hype Type
           </Typography>
@@ -145,19 +145,30 @@ export function UserNavbar() {
         <List>
           <ListItem button to="/" color="inherit" component={Link}>
             <ListItemIcon>
-              <DashboardIcon style={{color: location.pathname === "/" ? accentColor : ""}}/>
+              <DashboardIcon
+                style={{ color: location.pathname === "/" ? accentColor : "" }}
+              />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItem>
           <ListItem button color="inherit" to="/challenge" component={Link}>
             <ListItemIcon>
-              <KeyboardIcon style={{color: location.pathname === "/challenge" ? accentColor : ""}}/>
+              <KeyboardIcon
+                style={{
+                  color: location.pathname === "/challenge" ? accentColor : "",
+                }}
+              />
             </ListItemIcon>
             <ListItemText primary="Typing Challenge" />
           </ListItem>
           <ListItem button color="inherit" to="/leaderboard" component={Link}>
             <ListItemIcon>
-              <AssessmentIcon style={{color: location.pathname === "/leaderboard" ? accentColor : ""}}/>
+              <AssessmentIcon
+                style={{
+                  color:
+                    location.pathname === "/leaderboard" ? accentColor : "",
+                }}
+              />
             </ListItemIcon>
             <ListItemText primary="Leaderboard" />
           </ListItem>
@@ -166,18 +177,26 @@ export function UserNavbar() {
         <List>
           <ListItem button color="inherit" onClick={handleSignOut}>
             <ListItemIcon>
-              <ExitToAppIcon/>
+              <ExitToAppIcon />
             </ListItemIcon>
             <ListItemText primary="Sign Out" />
           </ListItem>
         </List>
       </Drawer>
       <main className={classes.content}>
-        <Route exact path='/challenge' render={token ? TypingChallenge : ""}/>
-        <Route path="/leaderboard" component={token ? Leaderboard : ""}/>
-        <Route exact path="/" component={token? Dashboard : ""}/>
-        <Route exact path="/signin" render={token ? () => <Redirect to="/"/> : ""} />
-        <Route exact path="/signup" render={token ? () => <Redirect to="/"/> : ""}/>
+        <Route exact path="/challenge" render={token ? TypingChallenge : ""} />
+        <Route path="/leaderboard" component={token ? Leaderboard : ""} />
+        <Route exact path="/" component={token ? Dashboard : ""} />
+        <Route
+          exact
+          path="/signin"
+          render={token ? () => <Redirect to="/" /> : ""}
+        />
+        <Route
+          exact
+          path="/signup"
+          render={token ? () => <Redirect to="/" /> : ""}
+        />
       </main>
     </div>
   );
