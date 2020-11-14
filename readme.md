@@ -16,9 +16,15 @@ HypeType is a typing challenge project created in React.js. As of late, the job 
 
 ### The Typing Challenge
 
+The typing challenge page is where all of the action happens. You can start a challenge with different options to customize the words you are aiming to type and practice. This page comes with a keybaord and fingers that even tell you which key to type, with which finger! Check it out in action below! 
+
 ### Dashboard
 
-### Leaderboards
+The dashboard is a place where you can go to check out all of your own personal stats. See your average accuracy, your most recent scores and a graph of your progress over your last runs. Check out an example below!
+
+### Leaderboard
+
+The leaderboard is the spot where you can check how you stack up again competition. It shows the top 10 scores of all time from different users. The more you practice, the more likely you will make it up there!
 
 ## Contributors
 
