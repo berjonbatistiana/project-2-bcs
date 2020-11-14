@@ -403,7 +403,7 @@ class Challenge extends React.Component {
               close={() => this.setState({challengeFinished: false})}
               wpm={this.state.WPM}
               accuracy={this.state.accuracyPercent}
-              score={this.state.score}
+              score={this.state.WPM * this.state.accuracyPercent}
               characters={this.state.index}
               wordOptions={this.state.wordOptions}
               handleTestAgain={() => this.handleTestAgain()}
