@@ -7,7 +7,7 @@ const {
 
 router.route("/score").post(postScore);
 
-router.route("/leaders").get(getLeaderboard)
+router.route("/leaders").get(getLeaderboard);
 
 router.route("/:username").get(getUserScores);
 

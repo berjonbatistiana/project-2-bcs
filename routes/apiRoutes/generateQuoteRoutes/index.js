@@ -1,10 +1,7 @@
-const router = require('express').Router();
+const router = require("express").Router();
 
-const {
-    generateQuote
-} = require('../../../controllers/randomWordController');
+const { generateQuote } = require("../../../controllers/randomWordController");
 
-router.route('/')
-    .get(generateQuote);
+router.route("/").get(generateQuote);
 
 module.exports = router;

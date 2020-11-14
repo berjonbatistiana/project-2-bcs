@@ -6,10 +6,10 @@ export class Donut extends Component {
 
   componentDidMount() {
     const myChartRef = this.chartRef.current.getContext("2d");
-    let total = 0
-    this.props.userData.forEach(item => {
+    let total = 0;
+    this.props.userData.forEach((item) => {
       total += item.accuracy;
-    })
+    });
     const percent = Math.floor(total / this.props.userData.length);
     const data = {
       labels: ["Green", "Red"],

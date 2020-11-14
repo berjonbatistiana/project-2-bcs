@@ -9,11 +9,11 @@ export class LineGraph extends Component {
     const wpm = [];
     const labels = [];
     let ctr = 0;
-    this.props.userData.forEach(item => {
+    this.props.userData.forEach((item) => {
       ctr++;
       wpm.push(item.wordsPerMin);
-      labels.push(ctr.toString())
-    })
+      labels.push(ctr.toString());
+    });
     new Chart(myChartRef, {
       type: "line",
       data: {
@@ -22,8 +22,8 @@ export class LineGraph extends Component {
           {
             label: "WPM",
             data: [...wpm].reverse(),
-            backgroundColor: 'rgba(3, 169, 244, 0.2)',
-            borderColor: '#03a9f4'
+            backgroundColor: "rgba(3, 169, 244, 0.2)",
+            borderColor: "#03a9f4",
           },
         ],
       },
@@ -33,7 +33,7 @@ export class LineGraph extends Component {
 
   render() {
     return (
-      <div style={{width: "100%", overflowX: "auto", overflowY: "hidden"}}>
+      <div style={{ width: "100%", overflowX: "auto", overflowY: "hidden" }}>
         <canvas id="myChart" ref={this.chartRef} />
       </div>
     );

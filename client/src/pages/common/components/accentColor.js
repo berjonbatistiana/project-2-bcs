@@ -1,2 +1,2 @@
-export const accentColor = "#03a9f4"
-export const secondaryColor = "#eeeeee"
+export const accentColor = "#03a9f4";
+export const secondaryColor = "#eeeeee";

@@ -5,18 +5,17 @@ import Button from "@material-ui/core/Button";
 import { Grid } from "@material-ui/core/";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import { setViewerToken } from "../ViewerReducer";
-import {accentColor, SignCard, TextFieldInput} from "../../common/components";
-import signUp from "../../common/components/signUp.svg"
-
+import { accentColor, SignCard, TextFieldInput } from "../../common/components";
+import signUp from "../../common/components/signUp.svg";
 
 class SignUp extends Component {
   state = {
     snackbar: false,
-  }
+  };
 
   handleSignUp = async (formValues, dispatch) => {
     try {
@@ -26,20 +25,28 @@ class SignUp extends Component {
       this.props.setViewerToken(res.data);
       this.props.history.push("/challenge");
     } catch (e) {
-      this.setState({snackbar: true});
+      this.setState({ snackbar: true });
     }
   };
 
   handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
-    this.setState({snackbar: false})
+    this.setState({ snackbar: false });
   };
 
   render() {
     const { handleSubmit, pristine, form } = this.props;
-    let disable = () => (!pristine && form.values && form.values.username && form.values.password && form.values.username !== "" && form.values.password !== "") ? false : true;
+    let disable = () =>
+      !pristine &&
+      form.values &&
+      form.values.username &&
+      form.values.password &&
+      form.values.username !== "" &&
+      form.values.password !== ""
+        ? false
+        : true;
     return (
       <SignCard
         title="Sign Up"
@@ -69,12 +76,14 @@ class SignUp extends Component {
                   disabled={disable()}
                   onClick={handleSubmit(this.handleSignUp)}
                   variant="contained"
-                  style={{color: "white",
+                  style={{
+                    color: "white",
                     backgroundColor: accentColor,
                     borderRadius: 25,
-                    '&:hover': {
+                    "&:hover": {
                       backgroundColor: "#0276aa",
-                    }}}
+                    },
+                  }}
                 >
                   Sign up
                 </Button>
@@ -82,11 +91,12 @@ class SignUp extends Component {
             </Grid>
             <Snackbar
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
+                vertical: "top",
+                horizontal: "center",
               }}
               open={this.state.snackbar}
-              onClose={this.handleClose}>
+              onClose={this.handleClose}
+            >
               <MuiAlert onClose={this.handleClose} severity="error">
                 The username you have entered is not available.
               </MuiAlert>

@@ -1,2 +1,2 @@
-export * from './API'
-export * from './WPM'
+export * from "./API";
+export * from "./WPM";
