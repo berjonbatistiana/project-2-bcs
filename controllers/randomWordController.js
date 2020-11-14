@@ -1,6 +1,5 @@
-
-const randomWord = require("random-word");
-const randomQuote = require("get-random-quote");
+const randomWord = require("random-words");
+const axios = require('axios')
 
 module.exports = {
     generateWord: (req, res) => {
@@ -9,7 +8,6 @@ module.exports = {
             minChar = 3,
             maxChar = 15,
             punctuation = 'false',
-            quotes = 'false'
         } = req.query;
         const words = [];
         const punctuations = '!?.;,';
@@ -47,9 +45,27 @@ module.exports = {
         return words;
     },
     generateQuote: (req, res) => {
-        randomQuote().then((quote) => {
-            res.json(quote.text)
-            return quote.text;
-        })
+        try {
+            const url = "https://opinionated-quotes-api.gigalixirapp.com/v1/quotes?rand=t&n=3&tags=short"
+            axios.get(url).then((aRes) => {
+                const rawQuotes = aRes.data.quotes;
+                const arrQuotes = [];
+
+                console.log(rawQuotes)
+                rawQuotes.forEach(el => {
+                    arrQuotes.push(el.quote);
+                });
+                let quotes = arrQuotes.join(' ');
+                quotes = quotes.replace('\[...\]', '');
+                quotes = quotes.replace('…', '');
+                quotes = quotes.replace('...', '');
+                quotes = quotes.replace('\[', '');
+                quotes = quotes.replace('\]', '');
+                quotes = quotes.replace(/[\n\r]/g, ' ');
+                res.send(quotes)
+            });
+        } catch (e) {
+            throw new Error(e);
+        }
     }
 };
