@@ -5,8 +5,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
+import {accentColor} from "../../common/components";
+import {useSelector} from "react-redux";
 
-const useStyles = makeStyles({
+  const useStyles = makeStyles({
   root: {
     width: '100%',
     maxWidth: 600,
@@ -32,6 +34,7 @@ const columns = [
 ];
 
 export const Leaderboard = () => {
+  const {token} = useSelector((state) => state.viewer);
   const classes = useStyles();
   const history = useHistory();
 
@@ -47,22 +50,26 @@ export const Leaderboard = () => {
   }, []);
 
   return leaders ? (
-    <div style={{ backgroundColor: "#f0f2f5" }}>
+    <div>
       <div className={classes.root}>
         <Typography
-          style={{ textAlign: "center", paddingTop: 30 }}
-          variant="h2"
+          style={{ textAlign: "center"}}
+          variant="h3"
           gutterBottom
         >
           LEADERBOARD
         </Typography>
         <div
-          style={{ height: 650, backgroundColor: "#e9edf5", marginTop: 10 }}
+          style={{ height: 650, backgroundColor: 'rgba(3, 169, 244, 0.1)', marginTop: 10 }}
         >
           <DataGrid rows={leaders} columns={columns} pageSize={15}/>
         </div>
         <Button
+          variant="outlined"
           style={{
+            color: accentColor,
+            borderRadius: 25,
+            borderColor: accentColor,
             display: "block",
             marginLeft: "auto",
             marginRight: "auto",
@@ -71,7 +78,7 @@ export const Leaderboard = () => {
           }}
           onClick={handleDashboardClick}
         >
-          Return to Dashboard
+          {token ? 'Return to Dashboard' : 'Return to About'}
         </Button>
           <br/>
       </div>
