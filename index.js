@@ -10,6 +10,9 @@ const PORT = process.env.PORT || 3001;
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile("./client/public/index.html");
+  });
 }
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
