@@ -16,8 +16,8 @@ export class Donut extends Component {
       datasets: [
         {
           data: [percent, 100 - percent],
-          backgroundColor: ["#4caf50", "#f44336"],
-          hoverBackgroundColor: ["#4caf50", "#f44336"],
+          backgroundColor: ["#03a9f4", "#e91e63"],
+          hoverBackgroundColor: ["#03a9f4", "#e91e63"],
         },
       ],
     };
