@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function UserNavbar() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
