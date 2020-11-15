@@ -1,5 +1,8 @@
 import Chart from "chart.js";
 import React, { Component } from "react";
+import {Typography} from "@material-ui/core";
+import ListItem from "@material-ui/core/ListItem";
+import {Link} from "react-router-dom";
 
 export class Donut extends Component {
   chartRef = React.createRef();
@@ -10,7 +13,7 @@ export class Donut extends Component {
     this.props.userData.forEach((item) => {
       total += item.accuracy;
     });
-    const percent = Math.floor(total / this.props.userData.length);
+    let percent = Math.floor(total / this.props.userData.length);
     const data = {
       labels: ["Green", "Red"],
       datasets: [
@@ -23,16 +26,17 @@ export class Donut extends Component {
     };
     const doughnutCenterText = {
       beforeDraw: function (chart) {
-        var width = chart.chart.width,
+        let width = chart.chart.width,
           height = chart.chart.height,
           ctx = chart.chart.ctx;
 
         ctx.restore();
-        var fontSize = (height / 120).toFixed(2);
+        let fontSize = (height / 120).toFixed(2);
         ctx.font = fontSize + "em sans-serif";
         ctx.textBaseline = "middle";
 
-        var text = percent + "%",
+        let text = percent?
+          percent  + "%" : "Please do a challenge.",
           textX = Math.round((width - ctx.measureText(text).width) / 2),
           textY = height / 2;
 
