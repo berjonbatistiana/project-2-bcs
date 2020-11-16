@@ -1,33 +1,30 @@
 import React, { useState } from "react";
 import { reduxForm, Field } from "redux-form";
-import axios from "axios";
 import Button from "@material-ui/core/Button";
 import { Grid } from "@material-ui/core/";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { useSelector } from "react-redux";
-
 import { setViewerToken } from "../ViewerReducer";
 import { accentColor, SignCard, TextFieldInput } from "../../common/components";
 import signIn from "../../common/components/signIn.svg";
+import {postSignIn} from "../../../utils";
 
 const SignIn = (props) => {
   const form = useSelector((state) => state.form.signInForm);
   const [snackbar, setSnackbar] = useState(false);
   const { handleSubmit, pristine, history } = props;
   let disable = () =>
-    !pristine &&
-    form.values &&
-    form.values.username &&
-    form.values.password &&
-    form.values.username !== "" &&
-    form.values.password !== ""
-      ? false
-      : true;
+    !(!pristine &&
+      form.values &&
+      form.values.username &&
+      form.values.password &&
+      form.values.username !== "" &&
+      form.values.password !== "");
 
   const handleSignIn = async (formValues, dispatch) => {
     try {
-      const res = await axios.post("/auth/signin", formValues);
+      const res = await postSignIn(formValues);
       localStorage.setItem("token", res.data);
       localStorage.setItem("user", formValues.username);
       dispatch(setViewerToken(res.data));
@@ -74,7 +71,7 @@ const SignIn = (props) => {
                 variant="contained"
                 style={{
                   color: "white",
-                  backgroundColor: accentColor,
+                  backgroundColor: disable()? 'lightgray' : accentColor,
                   borderRadius: 25,
                   "&:hover": {
                     backgroundColor: "#0276aa",

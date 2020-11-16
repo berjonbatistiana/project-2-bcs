@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
-import axios from "axios";
 import Button from "@material-ui/core/Button";
 import { Grid } from "@material-ui/core/";
 import { connect } from "react-redux";
@@ -11,6 +10,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { setViewerToken } from "../ViewerReducer";
 import { accentColor, SignCard, TextFieldInput } from "../../common/components";
 import signUp from "../../common/components/signUp.svg";
+import {postSignUp} from "../../../utils";
 
 class SignUp extends Component {
   state = {
@@ -19,7 +19,7 @@ class SignUp extends Component {
 
   handleSignUp = async (formValues, dispatch) => {
     try {
-      const res = await axios.post("/auth/signup", formValues);
+      const res = await postSignUp(formValues);
       localStorage.setItem("token", res.data);
       localStorage.setItem("user", formValues.username);
       this.props.setViewerToken(res.data);
@@ -39,14 +39,12 @@ class SignUp extends Component {
   render() {
     const { handleSubmit, pristine, form } = this.props;
     let disable = () =>
-      !pristine &&
-      form.values &&
-      form.values.username &&
-      form.values.password &&
-      form.values.username !== "" &&
-      form.values.password !== ""
-        ? false
-        : true;
+      !(!pristine &&
+        form.values &&
+        form.values.username &&
+        form.values.password &&
+        form.values.username !== "" &&
+        form.values.password !== "");
     return (
       <SignCard
         title="Sign Up"
@@ -78,7 +76,7 @@ class SignUp extends Component {
                   variant="contained"
                   style={{
                     color: "white",
-                    backgroundColor: accentColor,
+                    backgroundColor: disable()? 'lightgray' : accentColor,
                     borderRadius: 25,
                     "&:hover": {
                       backgroundColor: "#0276aa",

@@ -4,10 +4,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 import { accentColor } from "../../common/components";
 import { useSelector } from "react-redux";
 import Box from "@material-ui/core/Box";
+import {getLeaders} from "../../../utils";
 
 const useStyles = makeStyles({
   root: {
@@ -46,9 +46,9 @@ export const Leaderboard = () => {
   const [leaders, setLeaders] = useState();
 
   useEffect(() => {
-    axios.get("/api/scores/leaders").then((res) => {
-      setLeaders(res.data);
-    });
+    getLeaders().then(result =>{
+      setLeaders(result.data)
+    } )
   }, []);
 
   return leaders ? (
