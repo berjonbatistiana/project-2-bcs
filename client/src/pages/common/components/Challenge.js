@@ -124,8 +124,9 @@ class Challenge extends React.Component {
       WPM = "-",
       tracker = [{}],
       index;
+    const matcher = /^[a-zA-Z0-9!?,.;:'"\/\-#]$/;
 
-    if (typedChar === "Shift") return;
+    if(!typedChar.match(matcher) && typedChar !== 'Backspace' && typedChar !== ' ') return;
 
     if (this.state.challengeFinished) return;
 
