@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+import {createMuiTheme, makeStyles} from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
-import axios from "axios";
-import { Donut, LineGraph, PersonalHighScores, accentColor } from "../../common";
+import {Donut, LineGraph, PersonalHighScores} from "../../common";
+import {getUserScore} from "../../../utils";
 
 const theme = createMuiTheme();
 
@@ -26,7 +26,7 @@ export const Dashboard = () => {
   const user = localStorage.getItem("user");
 
   useEffect(() => {
-    axios.get(`/api/scores/${user}`).then((res) => {
+    getUserScore(user).then((res) => {
       setUserData(res.data);
     });
     setCurrentUser(user);
@@ -78,7 +78,7 @@ export const Dashboard = () => {
               <Typography component="h3" variant="h6">
                 Accuracy
               </Typography>
-              <Donut userData={userData} />
+              <Donut userData={userData}/>
             </Box>
           </Grid>
           <Grid
@@ -94,7 +94,7 @@ export const Dashboard = () => {
               <Typography component="h3" variant="h6">
                 Recent Scores
               </Typography>
-              <PersonalHighScores userData={userData} />
+              <PersonalHighScores userData={userData}/>
             </Box>
           </Grid>
         </Grid>
@@ -111,7 +111,7 @@ export const Dashboard = () => {
             <Typography component="h3" variant="h6">
               Progress
             </Typography>
-            <LineGraph userData={userData} />
+            <LineGraph userData={userData}/>
           </Box>
         </Grid>
       </Grid>
