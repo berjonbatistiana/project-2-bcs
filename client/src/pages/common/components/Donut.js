@@ -1,8 +1,5 @@
 import Chart from "chart.js";
 import React, { Component } from "react";
-import {Typography} from "@material-ui/core";
-import ListItem from "@material-ui/core/ListItem";
-import {Link} from "react-router-dom";
 
 export class Donut extends Component {
   chartRef = React.createRef();

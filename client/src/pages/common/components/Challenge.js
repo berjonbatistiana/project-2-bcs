@@ -10,10 +10,10 @@ import {
 
 
 } from "../components";
-import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import ReplayIcon from "@material-ui/icons/Replay";
+import {ProgressBar} from "./ProgressBar";
 
 class Challenge extends React.Component {
   state = {
@@ -356,6 +356,9 @@ class Challenge extends React.Component {
   render() {
     return (
       <>
+        <ProgressBar
+          progress={this.state.index / this.state.wordsToBeTyped.length * 100}>
+        </ProgressBar>
         <ChallengeContainer
           challenge={this.state.highlightedWord}
           accuracy={this.state.accuracyPercent}
