@@ -29,6 +29,15 @@ export const PersonalHighScores = (props) => {
     setPage(0);
   };
 
+  let tableRows = 0
+  tableRows += props.userData.length;
+
+  const newArr = [];
+  newArr.push(...props.userData);
+  newArr.forEach(obj => {
+    obj.tableId = tableRows--;
+  })
+
   return (
     <Paper className={classes.root} elevation={0}>
       <TableContainer>
@@ -43,12 +52,12 @@ export const PersonalHighScores = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.userData
+            {newArr
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
                 <TableRow hover tabIndex={-1} key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.id}
+                  <TableCell>
+                    {row.tableId}
                   </TableCell>
                   <TableCell align="right">{row.highScore}</TableCell>
                   <TableCell align="right">{row.wordsPerMin}</TableCell>
