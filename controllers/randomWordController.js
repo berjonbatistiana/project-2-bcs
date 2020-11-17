@@ -63,6 +63,7 @@ module.exports = {
             .replace("[]", "")
             .replace(/[\n\r]/g, " ")
             .replace("–", "--")
+            .replace("’", "'")
             .trim();
 
           arrQuotes.push(
