@@ -10,12 +10,8 @@ class Challenge extends React.Component {
     wordsToBeTyped: "",
     highlightedWord: "",
     wordOptions: {
-      words50: true,
-      words100: false,
-      punctuation: false,
       quotes: true,
-      seconds30: false,
-      seconds60: false,
+      seconds30: true,
     },
     tracker: [],
     startTime: "",
@@ -23,7 +19,7 @@ class Challenge extends React.Component {
     accuracyPercent: 0,
     correctNum: 0,
     totalCharSeen: 0,
-    timeLeft: 0,
+    timeLeft: 30,
     timer: null,
     score: 0,
     challengeFinished: false,
@@ -218,11 +214,7 @@ class Challenge extends React.Component {
       tracker: [],
       startTime: "",
       WPM: 0,
-      timeLeft: prevState.wordOptions.seconds30
-        ? 30
-        : prevState.wordOptions.seconds60
-          ? 60
-          : 0,
+      timeLeft: 30,
     }));
     clearInterval(this.state.timer);
     this.handleNewChallenge();
@@ -274,6 +266,7 @@ class Challenge extends React.Component {
           wpm={this.state.WPM}
           timeLeft={this.state.timeLeft}
           selectedKey={this.state.wordsToBeTyped[this.state.index]}
+          progress={this.state.index / this.state.wordsToBeTyped.length * 100}
         />
         <TransitionsModal
           open={this.state.challengeFinished}

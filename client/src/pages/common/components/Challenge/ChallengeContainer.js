@@ -1,22 +1,15 @@
 import React from "react";
-import { Typography, Grid, Box } from "@material-ui/core";
+import {Box, Grid, Typography} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import Divider from "@material-ui/core/Divider";
-import TrackChangesIcon from "@material-ui/icons/TrackChanges";
-import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
-import {
-  ThemeProvider,
-  createMuiTheme,
-  makeStyles,
-} from "@material-ui/core/styles";
+import {createMuiTheme, makeStyles, ThemeProvider,} from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import AlarmIcon from "@material-ui/icons/Alarm";
 import PanToolIcon from "@material-ui/icons/PanTool";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import FiberManualRecordOutlinedIcon from "@material-ui/icons/FiberManualRecordOutlined";
-import { lightBlue } from "@material-ui/core/colors";
+import {lightBlue} from "@material-ui/core/colors";
 
-import { secondaryColor } from "../";
+import {secondaryColor} from "../";
+import {WordsContainer} from "../WordsContainer";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,128 +38,84 @@ export const ChallengeContainer = (props) => {
   const classes = useStyles();
   let selectedFinger = "";
   const fingers = [
-    { digit: "LP", hand: "left", color: "#e91e63" },
-    { digit: "LR", hand: "left", color: "#673ab7" },
-    { digit: "LM", hand: "left", color: "#2196f3" },
-    { digit: "LI", hand: "left", color: "#00bcd4" },
-    { digit: "T", hand: "left", color: "#009688" },
-    { digit: "RP", hand: "right", color: "#ff5722" },
-    { digit: "RR", hand: "right", color: "#ffc107" },
-    { digit: "RM", hand: "right", color: "#cddc39" },
-    { digit: "RI", hand: "right", color: "#4caf50" },
-    { digit: "T", hand: "right", color: "#009688" },
+    {digit: "LP", hand: "left", color: "#e91e63"},
+    {digit: "LR", hand: "left", color: "#673ab7"},
+    {digit: "LM", hand: "left", color: "#2196f3"},
+    {digit: "LI", hand: "left", color: "#00bcd4"},
+    {digit: "T", hand: "left", color: "#009688"},
+    {digit: "RP", hand: "right", color: "#ff5722"},
+    {digit: "RR", hand: "right", color: "#ffc107"},
+    {digit: "RM", hand: "right", color: "#cddc39"},
+    {digit: "RI", hand: "right", color: "#4caf50"},
+    {digit: "T", hand: "right", color: "#009688"},
   ];
   const rows = [
     [
-      { upperKey: "!", key: "1", finger: "LP", color: "#e91e63" },
-      { upperKey: "@", key: "2", finger: "LR", color: "#673ab7" },
-      { upperKey: "#", key: "3", finger: "LM", color: "#2196f3" },
-      { upperKey: "$", key: "4", finger: "LI", color: "#00bcd4" },
-      { upperKey: "%", key: "5", finger: "LI", color: "#00bcd4" },
-      { upperKey: "^", key: "6", finger: "RI", color: "#4caf50" },
-      { upperKey: "&", key: "7", finger: "RI", color: "#4caf50" },
-      { upperKey: "*", key: "8", finger: "RM", color: "#cddc39" },
-      { upperKey: "(", key: "9", finger: "RR", color: "#ffc107" },
-      { upperKey: ")", key: "0", finger: "RP", color: "#ff5722" },
-      { upperKey: "_", key: "-", finger: "RP", color: "#ff5722" },
-      { upperKey: "+", key: "=", finger: "RP", color: "#ff5722" },
-      { upperKey: "⮐", key: "⮐", finger: "RP", color: "#ff5722" },
+      {upperKey: "!", key: "1", finger: "LP", color: "#e91e63"},
+      {upperKey: "@", key: "2", finger: "LR", color: "#673ab7"},
+      {upperKey: "#", key: "3", finger: "LM", color: "#2196f3"},
+      {upperKey: "$", key: "4", finger: "LI", color: "#00bcd4"},
+      {upperKey: "%", key: "5", finger: "LI", color: "#00bcd4"},
+      {upperKey: "^", key: "6", finger: "RI", color: "#4caf50"},
+      {upperKey: "&", key: "7", finger: "RI", color: "#4caf50"},
+      {upperKey: "*", key: "8", finger: "RM", color: "#cddc39"},
+      {upperKey: "(", key: "9", finger: "RR", color: "#ffc107"},
+      {upperKey: ")", key: "0", finger: "RP", color: "#ff5722"},
+      {upperKey: "_", key: "-", finger: "RP", color: "#ff5722"},
+      {upperKey: "+", key: "=", finger: "RP", color: "#ff5722"},
+      {upperKey: "⮐", key: "⮐", finger: "RP", color: "#ff5722"},
     ],
     [
-      { upperKey: "Q", key: "q", finger: "LP", color: "#e91e63" },
-      { upperKey: "W", key: "w", finger: "LR", color: "#673ab7" },
-      { upperKey: "E", key: "e", finger: "LM", color: "#2196f3" },
-      { upperKey: "R", key: "r", finger: "LI", color: "#00bcd4" },
-      { upperKey: "T", key: "t", finger: "LI", color: "#00bcd4" },
-      { upperKey: "Y", key: "y", finger: "RI", color: "#4caf50" },
-      { upperKey: "U", key: "u", finger: "RI", color: "#4caf50" },
-      { upperKey: "I", key: "i", finger: "RM", color: "#cddc39" },
-      { upperKey: "O", key: "o", finger: "RR", color: "#ffc107" },
-      { upperKey: "P", key: "p", finger: "RP", color: "#ff5722" },
-      { upperKey: "{", key: "[", finger: "RP", color: "#ff5722" },
-      { upperKey: "}", key: "]", finger: "RP", color: "#ff5722" },
+      {upperKey: "Q", key: "q", finger: "LP", color: "#e91e63"},
+      {upperKey: "W", key: "w", finger: "LR", color: "#673ab7"},
+      {upperKey: "E", key: "e", finger: "LM", color: "#2196f3"},
+      {upperKey: "R", key: "r", finger: "LI", color: "#00bcd4"},
+      {upperKey: "T", key: "t", finger: "LI", color: "#00bcd4"},
+      {upperKey: "Y", key: "y", finger: "RI", color: "#4caf50"},
+      {upperKey: "U", key: "u", finger: "RI", color: "#4caf50"},
+      {upperKey: "I", key: "i", finger: "RM", color: "#cddc39"},
+      {upperKey: "O", key: "o", finger: "RR", color: "#ffc107"},
+      {upperKey: "P", key: "p", finger: "RP", color: "#ff5722"},
+      {upperKey: "{", key: "[", finger: "RP", color: "#ff5722"},
+      {upperKey: "}", key: "]", finger: "RP", color: "#ff5722"},
     ],
     [
-      { upperKey: "A", key: "a", finger: "LP", color: "#e91e63" },
-      { upperKey: "S", key: "s", finger: "LR", color: "#673ab7" },
-      { upperKey: "D", key: "d", finger: "LM", color: "#2196f3" },
-      { upperKey: "F", key: "f", finger: "LI", color: "#00bcd4" },
-      { upperKey: "G", key: "g", finger: "LI", color: "#00bcd4" },
-      { upperKey: "H", key: "h", finger: "RI", color: "#4caf50" },
-      { upperKey: "J", key: "j", finger: "RI", color: "#4caf50" },
-      { upperKey: "K", key: "k", finger: "RM", color: "#cddc39" },
-      { upperKey: "L", key: "l", finger: "RR", color: "#ffc107" },
-      { upperKey: ":", key: ";", finger: "RP", color: "#ff5722" },
-      { upperKey: '"', key: "'", finger: "RP", color: "#ff5722" },
+      {upperKey: "A", key: "a", finger: "LP", color: "#e91e63"},
+      {upperKey: "S", key: "s", finger: "LR", color: "#673ab7"},
+      {upperKey: "D", key: "d", finger: "LM", color: "#2196f3"},
+      {upperKey: "F", key: "f", finger: "LI", color: "#00bcd4"},
+      {upperKey: "G", key: "g", finger: "LI", color: "#00bcd4"},
+      {upperKey: "H", key: "h", finger: "RI", color: "#4caf50"},
+      {upperKey: "J", key: "j", finger: "RI", color: "#4caf50"},
+      {upperKey: "K", key: "k", finger: "RM", color: "#cddc39"},
+      {upperKey: "L", key: "l", finger: "RR", color: "#ffc107"},
+      {upperKey: ":", key: ";", finger: "RP", color: "#ff5722"},
+      {upperKey: '"', key: "'", finger: "RP", color: "#ff5722"},
     ],
     [
-      { upperKey: "Z", key: "z", finger: "LP", color: "#e91e63" },
-      { upperKey: "X", key: "x", finger: "LR", color: "#673ab7" },
-      { upperKey: "C", key: "c", finger: "LM", color: "#2196f3" },
-      { upperKey: "V", key: "v", finger: "LI", color: "#00bcd4" },
-      { upperKey: "B", key: "b", finger: "LI", color: "#00bcd4" },
-      { upperKey: "N", key: "n", finger: "RI", color: "#4caf50" },
-      { upperKey: "M", key: "m", finger: "RI", color: "#4caf50" },
-      { upperKey: "<", key: ",", finger: "RM", color: "#cddc39" },
-      { upperKey: ">", key: ".", finger: "RR", color: "#ffc107" },
-      { upperKey: "?", key: "/", finger: "RP", color: "#ff5722" },
+      {upperKey: "Z", key: "z", finger: "LP", color: "#e91e63"},
+      {upperKey: "X", key: "x", finger: "LR", color: "#673ab7"},
+      {upperKey: "C", key: "c", finger: "LM", color: "#2196f3"},
+      {upperKey: "V", key: "v", finger: "LI", color: "#00bcd4"},
+      {upperKey: "B", key: "b", finger: "LI", color: "#00bcd4"},
+      {upperKey: "N", key: "n", finger: "RI", color: "#4caf50"},
+      {upperKey: "M", key: "m", finger: "RI", color: "#4caf50"},
+      {upperKey: "<", key: ",", finger: "RM", color: "#cddc39"},
+      {upperKey: ">", key: ".", finger: "RR", color: "#ffc107"},
+      {upperKey: "?", key: "/", finger: "RP", color: "#ff5722"},
     ],
-    [{ upperKey: " ", key: " ", finger: "T", color: "#009688" }],
+    [{upperKey: " ", key: " ", finger: "T", color: "#009688"}],
   ];
 
+  props = {title: "Typing Challenge", ...props};
   return (
     <ThemeProvider theme={theme}>
       <Box>
         <Card
           elevation={0}
-          style={{ border: "1px solid #e0e0e0", borderRadius: 25 }}
+          style={{border: "1px solid #e0e0e0", borderRadius: 25}}
         >
-          <Box m={2}>
-            <Typography component="h1" variant="h5">
-              Typing Challenge
-            </Typography>
-          </Box>
-          <Divider />
-          <Grid container>
-            <Grid item xs={9}>
-              <Box m={3}>{props.challenge}</Box>
-            </Grid>
-            <Grid
-              container
-              item
-              xs={3}
-              justify="center"
-              direction="column"
-              alignItems="center"
-              style={{ backgroundColor: secondaryColor, textAlign: "center" }}
-            >
-              <Grid item>
-                <Box mt={3} mb={1}>
-                  <TrackChangesIcon />
-                  <Typography>{props.accuracy}%</Typography>
-                </Box>
-              </Grid>
-              <Grid item>
-                <Box mt={1} mb={1}>
-                  <DirectionsRunIcon />
-                  <Typography>{props.wpm} WPM</Typography>
-                </Box>
-              </Grid>
-              <Grid item>
-                <Box mt={1} mb={3}>
-                  <AlarmIcon
-                    color={props.timeLeft > 0 ? "initial" : "disabled"}
-                  />
-                  <Typography
-                    color={props.timeLeft > 0 ? "initial" : "textSecondary"}
-                  >
-                    {props.timeLeft}s
-                  </Typography>
-                </Box>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Divider />
+          <WordsContainer {...props} />
           <Box m={2} display="flex" alignItems="center">
             <Box width="100%">
               <Box>{props.toggleButton}</Box>
@@ -238,7 +187,7 @@ export const ChallengeContainer = (props) => {
             spacing={2}
             alignItems="center"
           >
-            <Grid item style={{ width: "420px" }}>
+            <Grid item style={{width: "420px"}}>
               {fingers.map((finger, index) => {
                 if (finger.digit === selectedFinger) {
                   return (
@@ -275,7 +224,7 @@ export const ChallengeContainer = (props) => {
                 }}
               />
               <PanToolIcon
-                style={{ fontSize: 200, float: "right", color: secondaryColor }}
+                style={{fontSize: 200, float: "right", color: secondaryColor}}
               />
             </Grid>
           </Grid>
