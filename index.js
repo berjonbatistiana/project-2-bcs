@@ -11,9 +11,13 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 io.on('connection', socket => {
-  socket.on('message', ({name, message}) => {
-    console.log('New socket connection');
-  })
+  console.log('New socket connection');
+
+  socket.emit('message', 'You have entered a lobby');
+  // socket.on('message', message => {
+
+
+  // })
 })
 
 const PORT = process.env.PORT || 3001;

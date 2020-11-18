@@ -1,17 +1,19 @@
-import React, {Component} from "react";
+import React from "react";
 import LinearWithValueLabel from "./LinearProgressWithLabel"
+import io from "socket.io-client";
 
-export class ProgressBar extends Component {
+const socket = io();
 
-  componentDidMount() {
+socket.on('message', message => {
+  console.log(message);
 
-  }
+})
 
-  render() {
-    return (
-      <div>
-        <LinearWithValueLabel progress={this.props.progress? this.props.progress : 0}/>
-      </div>
-    );
-  }
-}
+
+export const ProgressBar = (props) => {
+  return (
+    <div>
+      <LinearWithValueLabel progress={props.progress ? props.progress : 0}/>
+    </div>
+  );
+};

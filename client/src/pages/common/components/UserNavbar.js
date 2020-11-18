@@ -9,8 +9,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { Route, Redirect } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory, Link, useLocation } from "react-router-dom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -20,8 +19,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import {Typography, Grid} from "@material-ui/core";
 import logo from '../components/HypeTypeLogo.v1.png';
 import { setViewerToken } from "../../Viewer";
-import { Leaderboard, TypingChallenge } from "../../Viewer/ViewerViews";
-import { Dashboard } from "../../User/UserViews";
 import { accentColor } from "../components";
 
 const drawerWidth = 240;
@@ -66,14 +63,10 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
+  }
 }));
 
-export function UserNavbar() {
+export function UserNavbar(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
@@ -85,7 +78,6 @@ export function UserNavbar() {
     setOpen(false);
   };
 
-  const { token } = useSelector((state) => state.viewer);
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -125,6 +117,7 @@ export function UserNavbar() {
             <MenuIcon />
           </IconButton>
           <Typography
+            component={'span'}
             className={clsx({
               [classes.hide]: !open,
             })}
@@ -168,6 +161,16 @@ export function UserNavbar() {
             </ListItemIcon>
             <ListItemText primary="Typing Challenge" />
           </ListItem>
+          <ListItem button color="inherit" to="/arena" component={Link}>
+            <ListItemIcon>
+              <KeyboardIcon
+                style={{
+                  color: location.pathname === "/arena" ? accentColor : "",
+                }}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Typing Arena" />
+          </ListItem>
           <ListItem button color="inherit" to="/leaderboard" component={Link}>
             <ListItemIcon>
               <AssessmentIcon
@@ -190,21 +193,7 @@ export function UserNavbar() {
           </ListItem>
         </List>
       </Drawer>
-      <main className={classes.content}>
-        <Route exact path="/challenge" render={token ? TypingChallenge : ""} />
-        <Route path="/leaderboard" component={token ? Leaderboard : ""} />
-        <Route exact path="/" component={token ? Dashboard : ""} />
-        <Route
-          exact
-          path="/signin"
-          render={token ? () => <Redirect to="/" /> : ""}
-        />
-        <Route
-          exact
-          path="/signup"
-          render={token ? () => <Redirect to="/" /> : ""}
-        />
-      </main>
+      {props.routes}
     </div>
   );
 }

@@ -30,7 +30,7 @@ export const Dashboard = () => {
       setUserData(res.data);
     });
     setCurrentUser(user);
-  }, []);
+  }, [user]);
 
   return userData && user === currentUser ? (
     <div>

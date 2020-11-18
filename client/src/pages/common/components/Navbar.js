@@ -53,6 +53,7 @@ export function Navbar() {
               >
                 Dashboard
               </Button>
+
               <Button component={Link} to="/challenge" color="inherit">
                 Typing Challenge
               </Button>

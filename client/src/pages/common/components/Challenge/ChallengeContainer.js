@@ -16,7 +16,7 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import FiberManualRecordOutlinedIcon from "@material-ui/icons/FiberManualRecordOutlined";
 import { lightBlue } from "@material-ui/core/colors";
 
-import { secondaryColor } from "../components";
+import { secondaryColor } from "../";
 
 const useStyles = makeStyles((theme) => ({
   paper: {

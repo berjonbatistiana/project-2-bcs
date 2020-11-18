@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
@@ -32,14 +31,6 @@ function LinearProgressWithLabel(props) {
   );
 }
 
-LinearProgressWithLabel.propTypes = {
-  /**
-   * The value of the progress indicator for the determinate and buffer variants.
-   * Value between 0 and 100.
-   */
-  value: PropTypes.number.isRequired,
-};
-
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -48,7 +39,6 @@ const useStyles = makeStyles({
 
 export default function LinearWithValueLabel(props) {
   const classes = useStyles();
-  console.log(props.progress);
   return (
     <div className={classes.root}>
       <LinearProgressWithLabel value={props.progress}/>
